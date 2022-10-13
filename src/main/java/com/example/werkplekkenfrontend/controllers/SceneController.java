@@ -6,11 +6,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SceneController {
-    public SceneController(Stage stage) {
-        this.stage = stage;
-    }
-
-    private final Stage stage;
+    private Stage stage;
 
     public ViewController showView(String xmlFileName) {
         ViewController controller = null;
@@ -27,4 +23,8 @@ public class SceneController {
         }
         return controller;
     }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    };
 }

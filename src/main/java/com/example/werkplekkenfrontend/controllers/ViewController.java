@@ -1,5 +1,8 @@
 package com.example.werkplekkenfrontend.controllers;
 
-public interface ViewController {
+import com.example.werkplekkenfrontend.Main;
+import javafx.scene.Scene;
 
+public interface ViewController {
+    void updateView();
 }

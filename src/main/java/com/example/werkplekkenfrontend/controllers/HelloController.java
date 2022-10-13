@@ -1,6 +1,7 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 public class HelloController implements ViewController {
@@ -14,5 +15,10 @@ public class HelloController implements ViewController {
 
     public void setText(String text) {
         welcomeText.setText(text);
+    }
+
+    @Override
+    public void updateView() {
+
     }
 }
