@@ -1,18 +1,14 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.models.AdminBuildingElement;
 import com.example.werkplekkenfrontend.models.Building;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AdminBuildingsViewController implements ViewController{
     @FXML
@@ -41,8 +37,8 @@ public class AdminBuildingsViewController implements ViewController{
 
     private void showBuildingsOnView(List<Building> buildings){
         for(Building building : buildings){
-            Label buildingLabel = new Label(building.getName());
-            buildings_container.getChildren().add(buildingLabel);
+            AdminBuildingElement element = new AdminBuildingElement(building);
+            buildings_container.getChildren().add(element.getBuildingBox());
         }
     }
 
@@ -52,6 +48,10 @@ public class AdminBuildingsViewController implements ViewController{
         Building denHaag = new Building(UUID.randomUUID(), "Get Fucked Club", "HELL00", "Den Haag", "somewhere over the rainbow");
         testBuildings.add(leiden);
         testBuildings.add(denHaag);
+    }
+
+    private void openEditView(){
+
     }
 
     @Override
