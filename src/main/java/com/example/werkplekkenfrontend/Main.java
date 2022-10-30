@@ -1,5 +1,6 @@
 package com.example.werkplekkenfrontend;
 
+import com.example.werkplekkenfrontend.controllers.AdminBuildingsViewController;
 import com.example.werkplekkenfrontend.controllers.HelloController;
 import com.example.werkplekkenfrontend.controllers.SceneController;
 import com.example.werkplekkenfrontend.controllers.ViewController;
@@ -14,8 +15,9 @@ public class Main extends Application {
     public void start(Stage stage) {
         Main.sceneController.setStage(stage);
 
-        HelloController controller = (HelloController)Main.sceneController.showView("hello-view.fxml");
+        AdminBuildingsViewController controller = (AdminBuildingsViewController)Main.sceneController.showView("admin-buildings-view.fxml");
         controller.setText("Dumb bitch");
+        controller.updateView();
     }
 
     public static void main(String[] args) {
