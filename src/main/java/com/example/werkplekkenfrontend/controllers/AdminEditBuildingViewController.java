@@ -10,23 +10,20 @@ import java.util.UUID;
 
 public class AdminEditBuildingViewController implements ViewController{
 
-    TextArea name = new TextArea();
-    TextArea zipcode = new TextArea();
-    TextArea city = new TextArea();
-    TextArea adress = new TextArea();
-    HBox row_2_container = new HBox(zipcode, city);
     @FXML
-    public VBox building_container = new VBox(name, row_2_container, adress);
+    public TextArea name;
+    @FXML
+    public TextArea zipcode;
+    @FXML
+    public TextArea city;
+    @FXML
+    public TextArea adress;
 
     private void showBuildingDetails(Building building){
         name.setText(building.getName());
         zipcode.setText(building.getZipcode());
         city.setText(building.getCity());
         adress.setText(building.getAdress());
-
-        building_container.getChildren().add(name);
-        building_container.getChildren().add(row_2_container);
-        building_container.getChildren().add(adress);
     }
 
     public void onCancelClick(){

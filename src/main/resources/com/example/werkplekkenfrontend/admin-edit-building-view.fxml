@@ -6,6 +6,7 @@
         <?import javafx.scene.control.Button?>
         <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.control.TextArea?>
 <VBox minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditBuildingViewController">
     <VBox>
         <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
@@ -16,7 +17,13 @@
             <Button text="Apply" onAction="#onApplyClick"/>
         </HBox>
 
-        <VBox fx:id="building_container">
+        <VBox>
+            <TextArea fx:id="name"/>
+            <HBox>
+                <TextArea fx:id="zipcode"/>
+                <TextArea fx:id="city"/>
+            </HBox>
+            <TextArea fx:id="adress"/>
         </VBox>
     </VBox>
 
