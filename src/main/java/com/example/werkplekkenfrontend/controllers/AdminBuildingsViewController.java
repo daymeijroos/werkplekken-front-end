@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.AdminBuildingElement;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Building;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +15,8 @@ import java.util.UUID;
 public class AdminBuildingsViewController implements ViewController{
     @FXML
     public VBox buildings_container;
+    @FXML
+    public VBox main_container;
 
     @FXML
     public void onReturnClick() {
@@ -53,5 +56,6 @@ public class AdminBuildingsViewController implements ViewController{
     public void updateView() {
         List<Building> buildingsFromDao = setupTestData();
         showBuildingsOnView(buildingsFromDao);
+        main_container.getChildren().add(new NavBarElement().getBuildingBox());
     }
 }
