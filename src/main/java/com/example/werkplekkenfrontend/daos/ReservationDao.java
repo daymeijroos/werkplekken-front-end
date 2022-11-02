@@ -87,7 +87,7 @@ public class ReservationDao implements Dao<Reservation> {
     public int post(Reservation object) {
         int response = 0;
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/post/" + object.id);
+            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
             URLConnection con = url.openConnection();
             HttpURLConnection http = (HttpURLConnection) con;
             http.setRequestMethod("POST");
@@ -122,7 +122,37 @@ public class ReservationDao implements Dao<Reservation> {
     //WE DO NOT CARE ABOUT PATCH
     @Override
     public int patch(Reservation object) {
-        return 0;
+        int response = 0;
+        try {
+            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
+            URLConnection con = url.openConnection();
+            HttpURLConnection http = (HttpURLConnection) con;
+            http.setRequestMethod("PATCH");
+            http.setDoOutput(true);
+
+            String format = """
+                    [
+                        { "op": "replace", "path": "/dateIn", "value": "{0}" },
+                        { "op": "replace", "path": "/dateOut", "value": "{1}" },
+                        { "op": "replace", "path": "/user_id", "value": "{2}" },
+                        { "op": "replace", "path": "/space_id", "value": "{3}" }
+                        { "op": "replace", "path": "/amountOfPeople", "value": "{4}" }
+                    ]""";
+            String json = String.format(format,  object.dateIn, object.dateOut, object.userId, object.spaceId, object.amountOfPeople);
+
+            byte[] out = json.getBytes(StandardCharsets.UTF_8);
+            int length = out.length;
+
+            http.setFixedLengthStreamingMode(length);
+            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            http.connect();
+            try(OutputStream os = http.getOutputStream()) {
+                os.write(out);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return response;
     }
 
     @Override
