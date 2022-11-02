@@ -4,14 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.UUID;
 
 public class Reservation {
-    public Reservation() {
-        this.id = null;
-        this.userId = null;
-        this.dateIn = null;
-        this.dateOut = null;
-        this.amountOfPeople = 0;
-        this.spaceId = null;
-    };
+    public Reservation() {}
 
     public Reservation(String id, String userId, Long dateIn, Long dateOut, int amountOfPeople, String spaceId) {
         this.id = id;

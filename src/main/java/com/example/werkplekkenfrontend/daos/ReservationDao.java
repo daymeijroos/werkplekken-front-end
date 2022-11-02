@@ -32,7 +32,6 @@ public class ReservationDao implements Dao<Reservation> {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
-
         try {
             responseBody = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(HttpResponse::body)
@@ -52,7 +51,6 @@ public class ReservationDao implements Dao<Reservation> {
 
         String url = project_settings.baseURL + "/v1/api/reservation/";
         String responseBody = fetchResponseBodyFromURL(url);
-
         JSONArray responseJSON = new JSONArray(responseBody);
 
         try {
@@ -72,8 +70,7 @@ public class ReservationDao implements Dao<Reservation> {
     public Reservation get(UUID id) {
         Reservation reservation = new Reservation();
 
-
-        String url = project_settings.baseURL + "/v1/api/reservation/" + id;
+        String url = project_settings.baseURL + "/reservation/" + id;
         String responseBody = fetchResponseBodyFromURL(url);
         JSONArray responseJSON = new JSONArray(responseBody);
 
@@ -96,7 +93,15 @@ public class ReservationDao implements Dao<Reservation> {
             http.setRequestMethod("POST");
             http.setDoOutput(true);
 
-            String format = "{\"id\":\"{0}\",\"userId\":\"{1}\",\"dateIn\":\"{2}\",\"dateOut\":\"{3}\",\"amountOfPeople\":\"{4}\",\"spaceId\":\"{5}\"}";
+            String format = """     
+                            {
+                                id: {0},
+                                userId: {1},
+                                dateIn: {2},
+                                dateOut: {3},
+                                amountOfPeople: {4}, 
+                                spaceId: {5}
+                            }""";
             String json = String.format(format, object.id, object.userId, object.dateIn, object.dateOut, object.amountOfPeople, object.spaceId);
 
             byte[] out = json.getBytes(StandardCharsets.UTF_8);
@@ -111,7 +116,6 @@ public class ReservationDao implements Dao<Reservation> {
         } catch (Exception e) {
             System.out.println(e);
         }
-
         return response;
     }
 
@@ -125,7 +129,7 @@ public class ReservationDao implements Dao<Reservation> {
     public int delete(Reservation object) {
         int response = 0;
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/delete/" + object.id);
+            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setDoOutput(true);
             httpCon.setRequestProperty(
