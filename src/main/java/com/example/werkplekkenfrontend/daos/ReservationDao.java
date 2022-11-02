@@ -6,20 +6,28 @@ import com.example.werkplekkenfrontend.project_settings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URI;
+import java.io.OutputStream;
+import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
-    @Override
-    public ArrayList<Reservation> getAll() {
-        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+    private Reservation ReservationFromJSON(JSONObject objectJSON) {
+        Reservation reservation = new Reservation();
+        reservation.id = objectJSON.getString("id");
+        reservation.userId = objectJSON.getString("userId");
+        reservation.dateIn = objectJSON.getLong("dateIn");
+        reservation.dateOut = objectJSON.getLong("dateOut");
+        reservation.amountOfPeople = objectJSON.getInt("amountOfPeople");
+        reservation.spaceId = objectJSON.getString("spaceId");
+        return reservation;
+    }
 
+    private String fetchResponseBodyFromURL(String url) {
         String responseBody;
-        String url = project_settings.baseURL + "/v1/api/reservation/";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -35,19 +43,22 @@ public class ReservationDao implements Dao<Reservation> {
             return null;
         }
 
+        return responseBody;
+    }
+
+    @Override
+    public ArrayList<Reservation> getAll() {
+        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+
+        String url = project_settings.baseURL + "/v1/api/reservation/";
+        String responseBody = fetchResponseBodyFromURL(url);
+
         JSONArray responseJSON = new JSONArray(responseBody);
 
         try {
             for (int i = 0; i < responseJSON.length(); i++) {
                 JSONObject objectJSON = responseJSON.getJSONObject(i);
-                Reservation reservation = new Reservation();
-
-                reservation.id = objectJSON.getString("id");
-                reservation.userId = objectJSON.getString("userId");
-                reservation.dateIn = objectJSON.getLong("dateIn");
-                reservation.dateOut = objectJSON.getLong("dateOut");
-                reservation.amountOfPeople = objectJSON.getInt("amountOfPeople");
-                reservation.spaceId = objectJSON.getString("spaceId");
+                Reservation reservation = ReservationFromJSON(objectJSON);
 
                 reservations.add(reservation);
             }
@@ -59,14 +70,52 @@ public class ReservationDao implements Dao<Reservation> {
 
     @Override
     public Reservation get(UUID id) {
-        return null;
+        Reservation reservation = new Reservation();
+
+
+        String url = project_settings.baseURL + "/v1/api/reservation/" + id;
+        String responseBody = fetchResponseBodyFromURL(url);
+        JSONArray responseJSON = new JSONArray(responseBody);
+
+        try {
+            JSONObject objectJSON = responseJSON.getJSONObject(0);
+            reservation = ReservationFromJSON(objectJSON);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return reservation;
     }
 
     @Override
     public int post(Reservation object) {
-        return 0;
+        int response = 0;
+        try {
+            URL url = new URL(project_settings.baseURL + "/reservation/post/" + object.id);
+            URLConnection con = url.openConnection();
+            HttpURLConnection http = (HttpURLConnection) con;
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+
+            String format = "{\"id\":\"{0}\",\"userId\":\"{1}\",\"dateIn\":\"{2}\",\"dateOut\":\"{3}\",\"amountOfPeople\":\"{4}\",\"spaceId\":\"{5}\"}";
+            String json = String.format(format, object.id, object.userId, object.dateIn, object.dateOut, object.amountOfPeople, object.spaceId);
+
+            byte[] out = json.getBytes(StandardCharsets.UTF_8);
+            int length = out.length;
+
+            http.setFixedLengthStreamingMode(length);
+            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            http.connect();
+            try(OutputStream os = http.getOutputStream()) {
+                os.write(out);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return response;
     }
 
+    //WE DO NOT CARE ABOUT PATCH
     @Override
     public int patch(Reservation object) {
         return 0;
@@ -74,6 +123,18 @@ public class ReservationDao implements Dao<Reservation> {
 
     @Override
     public int delete(Reservation object) {
-        return 0;
+        int response = 0;
+        try {
+            URL url = new URL(project_settings.baseURL + "/reservation/delete/" + object.id);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setRequestProperty(
+                    "Content-Type", "application/x-www-form-urlencoded");
+            httpCon.setRequestMethod("DELETE");
+            httpCon.connect();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return response;
     }
 }
