@@ -2,11 +2,12 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.AdminBuildingElement;
+import com.example.werkplekkenfrontend.elements.MessageElement;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Building;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class AdminBuildingsViewController implements ViewController{
     @FXML
     public VBox main_container;
 
+    Popup messagePopup;
+
     @FXML
     public void onReturnClick() {
         ViewController controller = Main.sceneController.showView("admin-view.fxml");
@@ -26,8 +29,9 @@ public class AdminBuildingsViewController implements ViewController{
 
     @FXML
     public void onAddBuildingClick() {
-        ViewController controller = Main.sceneController.showView("admin-edit-building-view.fxml");
-        controller.updateView();
+        //ViewController controller = Main.sceneController.showView("admin-edit-building-view.fxml");
+        //controller.updateView();
+        messagePopup.show(Main.publicStage);
     }
 
     public void onEditBuildingClick(Building building) {
@@ -57,5 +61,6 @@ public class AdminBuildingsViewController implements ViewController{
         List<Building> buildingsFromDao = setupTestData();
         showBuildingsOnView(buildingsFromDao);
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
+        messagePopup = new MessageElement("Too many Buildings added already", "ok").getPopup();
     }
 }

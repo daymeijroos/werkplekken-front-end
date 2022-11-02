@@ -7,9 +7,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static SceneController sceneController = new SceneController();
+    public static Stage publicStage;
 
     @Override
     public void start(Stage stage) {
+        publicStage = stage;
         Main.sceneController.setStage(stage);
         ViewController controller = sceneController.showView("admin-view.fxml");
         controller.updateView();
