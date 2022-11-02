@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         Main.sceneController.setStage(stage);
-        ViewController controller = sceneController.showView("admin-buildings-view.fxml");
+        ViewController controller = sceneController.showView("admin-view.fxml");
         controller.updateView();
         // testAdminBuildingsViewController();
         // testAdminEditBuildingViewController();

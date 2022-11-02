@@ -17,7 +17,8 @@ public class AdminBuildingsViewController implements ViewController{
 
     @FXML
     public void onReturnClick() {
-        // go back to admin view
+        ViewController controller = Main.sceneController.showView("admin-view.fxml");
+        controller.updateView();
     }
 
     @FXML
