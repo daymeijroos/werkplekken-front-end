@@ -1,6 +1,7 @@
 package com.example.werkplekkenfrontend.controllers;
 
-import com.example.werkplekkenfrontend.models.AdminBuildingElement;
+import com.example.werkplekkenfrontend.Main;
+import com.example.werkplekkenfrontend.elements.AdminBuildingElement;
 import com.example.werkplekkenfrontend.models.Building;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,51 +13,44 @@ import java.util.UUID;
 
 public class AdminBuildingsViewController implements ViewController{
     @FXML
-    public Label exampleText;
-    @FXML
     public VBox buildings_container;
 
     @FXML
     public void onReturnClick() {
-        exampleText.setText("Return is clicked");
+        // go back to admin view
     }
 
     @FXML
     public void onAddBuildingClick() {
-        exampleText.setText("Add Building is clicked");
+        ViewController controller = Main.sceneController.showView("admin-edit-building-view.fxml");
+        controller.updateView();
     }
 
-    @FXML
     public void onEditBuildingClick(Building building) {
-        exampleText.setText("Edit Building " + building.getName() + " is clicked");
-    }
-
-    public void setText(String text) {
-        exampleText.setText(text);
+        AdminEditBuildingViewController controller = (AdminEditBuildingViewController) Main.sceneController.showView("admin-edit-building-view.fxml");
+        controller.buildingID = building.getId();
+        controller.updateView();
     }
 
     private void showBuildingsOnView(List<Building> buildings){
         for(Building building : buildings){
-            AdminBuildingElement element = new AdminBuildingElement(building);
+            AdminBuildingElement element = new AdminBuildingElement(this, building);
             buildings_container.getChildren().add(element.getBuildingBox());
         }
     }
 
-    List<Building> testBuildings = new ArrayList<>();
-    private void setupTestData(){
+    private List<Building> setupTestData(){
+        List<Building> testBuildings = new ArrayList<>();
         Building leiden = new Building(UUID.randomUUID(), "Cool Kids Club", "IL2016", "Leiden", "naast het station");
         Building denHaag = new Building(UUID.randomUUID(), "Get Fucked Club", "HELL00", "Den Haag", "somewhere over the rainbow");
         testBuildings.add(leiden);
         testBuildings.add(denHaag);
-    }
-
-    private void openEditView(){
-
+        return testBuildings;
     }
 
     @Override
     public void updateView() {
-        setupTestData();
-        showBuildingsOnView(testBuildings);
+        List<Building> buildingsFromDao = setupTestData();
+        showBuildingsOnView(buildingsFromDao);
     }
 }

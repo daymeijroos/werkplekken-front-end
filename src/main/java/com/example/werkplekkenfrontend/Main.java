@@ -6,19 +6,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    static SceneController sceneController = new SceneController();
+    public static SceneController sceneController = new SceneController();
 
     @Override
     public void start(Stage stage) {
         Main.sceneController.setStage(stage);
-
-        //testAdminBuildingsViewController();
-        testAdminEditBuildingViewController();
+        ViewController controller = sceneController.showView("admin-buildings-view.fxml");
+        controller.updateView();
+        // testAdminBuildingsViewController();
+        // testAdminEditBuildingViewController();
     }
 
     private void testAdminBuildingsViewController(){
         AdminBuildingsViewController controller = (AdminBuildingsViewController)Main.sceneController.showView("admin-buildings-view.fxml");
-        controller.setText("Dumb bitch");
         controller.updateView();
     }
 

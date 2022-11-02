@@ -13,8 +13,8 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
-            <Button text="Cancel" onAction="#onCancelClick"/>
-            <Button text="Apply" onAction="#onApplyClick"/>
+            <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
+            <Button text="Apply" onAction="#onApplyClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
         </HBox>
 
         <VBox>
