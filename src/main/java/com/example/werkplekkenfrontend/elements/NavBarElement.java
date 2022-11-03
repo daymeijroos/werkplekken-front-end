@@ -2,12 +2,13 @@ package com.example.werkplekkenfrontend.elements;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.controllers.ViewController;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class NavBarElement {
     String adminPageFXML = "admin-view.fxml";
-    String userPageFXML = "user-view.fxml";
+    String accountPageFXML = "account-view.fxml";
     String reservationPageFXML = "reservation-view.fxml";
 
     HBox buildingBox;
@@ -17,8 +18,8 @@ public class NavBarElement {
         controller.updateView();
     }
 
-    public void onUserButtonClick(){
-        ViewController controller = Main.sceneController.showView(userPageFXML);
+    public void onAccountButtonClick(){
+        ViewController controller = Main.sceneController.showView(accountPageFXML);
         controller.updateView();
     }
 
@@ -29,12 +30,13 @@ public class NavBarElement {
 
     public NavBarElement(){
         Button adminButton = new Button("admin");
-        Button userButton = new Button("user");
+        Button accountButton = new Button("account");
         Button reservationButton = new Button("reservation");
         adminButton.setOnAction(actionEvent -> onAdminButtonClick());
-        // userButton.setOnAction(actionEvent -> onUserButtonClick());
+        accountButton.setOnAction(actionEvent -> onAccountButtonClick());
         // reservationButton.setOnAction(actionEvent -> onReservationButtonClick());
-        buildingBox = new HBox(userButton, reservationButton, adminButton);
+        buildingBox = new HBox(accountButton, reservationButton, adminButton);
+        buildingBox.setAlignment(Pos.CENTER);
     }
 
     public HBox getBuildingBox() {

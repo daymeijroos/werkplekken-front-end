@@ -25,4 +25,8 @@ public class DaoReplicator {
     public static void PATCH_Building(Building building){
 
     }
+
+    public static User getUserInfoFromID(UUID id){
+        return new User(id, "Michael", "Afton", "FredbearEntertainment.Nightshift@gmail.com");
+    }
 }
