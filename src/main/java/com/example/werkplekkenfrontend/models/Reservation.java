@@ -1,12 +1,13 @@
 package com.example.werkplekkenfrontend.models;
 
 import java.lang.reflect.Constructor;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Reservation {
     public Reservation() {}
 
-    public Reservation(String id, String userId, Long dateIn, Long dateOut, int amountOfPeople, String spaceId) {
+    public Reservation(String id, String userId, LocalDate dateIn, LocalDate dateOut, int amountOfPeople, String spaceId) {
         this.id = id;
         this.userId = userId;
         this.dateIn = dateIn;
@@ -17,8 +18,8 @@ public class Reservation {
 
     public String id;
     public String userId;
-    public Long dateIn;
-    public Long dateOut;
+    public LocalDate dateIn;
+    public LocalDate dateOut;
     public int amountOfPeople;
     public String spaceId;
 }

@@ -12,6 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
@@ -19,21 +20,20 @@ public class ReservationDao implements Dao<Reservation> {
         Reservation reservation = new Reservation();
         reservation.id = objectJSON.getString("id");
         reservation.userId = objectJSON.getString("userId");
-        reservation.dateIn = objectJSON.getLong("dateIn");
-        reservation.dateOut = objectJSON.getLong("dateOut");
+        reservation.dateIn = LocalDate.parse(objectJSON.getString("dateIn"));
+        reservation.dateOut = LocalDate.parse(objectJSON.getString("dateOut"));
         reservation.amountOfPeople = objectJSON.getInt("amountOfPeople");
         reservation.spaceId = objectJSON.getString("spaceId");
         return reservation;
     }
 
     private String fetchResponseBodyFromURL(String url) {
-        String responseBody;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
         try {
-            responseBody = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(HttpResponse::body)
                     .join();
         } catch(Exception e) {
@@ -41,8 +41,6 @@ public class ReservationDao implements Dao<Reservation> {
             System.out.println(e);
             return null;
         }
-
-        return responseBody;
     }
 
     @Override
@@ -99,7 +97,7 @@ public class ReservationDao implements Dao<Reservation> {
                                 userId: {1},
                                 dateIn: {2},
                                 dateOut: {3},
-                                amountOfPeople: {4}, 
+                                amountOfPeople: {4},
                                 spaceId: {5}
                             }""";
             String json = String.format(format, object.id, object.userId, object.dateIn, object.dateOut, object.amountOfPeople, object.spaceId);

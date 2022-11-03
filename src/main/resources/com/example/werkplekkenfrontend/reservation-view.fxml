@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextArea?>
+<?import jfxtras.scene.control.CalendarPicker?>
+<?import javafx.scene.control.DatePicker?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.MakeReservationViewController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <HBox>
+        <Button text="Annuleren" onAction="#cancelMakingReservation"/>
+        <Button text="Filters" onAction="#showFiltersView"/>
+    </HBox>
+    <VBox>
+        <HBox>
+            <Text>Gebouw</Text>
+            <Button text="Pick..."/>
+        </HBox>
+        <HBox>
+            <Text>Begin tijd</Text>
+            <DatePicker fx:id="beginTime"/>
+        </HBox>
+        <HBox>
+            <Text>Eind tijd</Text>
+            <DatePicker fx:id="endTime"/>
+        </HBox>
+        <Button text="Toepassen"/>
+    </VBox>
+    <VBox fx:id="nestBox"/>
+</VBox>
+
