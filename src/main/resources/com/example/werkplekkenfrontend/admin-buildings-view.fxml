@@ -14,6 +14,6 @@
         <Button text="Return" onAction="#onReturnClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
         <Button text="+" onAction="#onAddBuildingClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
     </HBox>
-    <VBox fx:id="buildings_container"/>
+    <VBox fx:id="buildings_container" alignment="CENTER" spacing="50"/>
 </VBox>
 
