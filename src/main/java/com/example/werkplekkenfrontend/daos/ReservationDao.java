@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
-    private Reservation ReservationFromJSON(JSONObject objectJSON) {
+    public Reservation ReservationFromJSON(JSONObject objectJSON) {
         Reservation reservation = new Reservation();
         reservation.id = objectJSON.getString("id");
         reservation.userId = objectJSON.getString("userId");
