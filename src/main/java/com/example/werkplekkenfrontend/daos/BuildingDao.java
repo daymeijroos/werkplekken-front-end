@@ -52,7 +52,7 @@ public class BuildingDao implements Dao<Building>{
     public ArrayList<Building> getAll() {
         ArrayList<Building> buildings = new ArrayList<>();
 
-        String url = project_settings.baseURL + "/v1/api/building/";
+        String url = project_settings.baseURL + "/api/building/";
         String responseBody = fetchResponseBodyFromURL(url);
         JSONArray responseJSON = new JSONArray(responseBody);
 
