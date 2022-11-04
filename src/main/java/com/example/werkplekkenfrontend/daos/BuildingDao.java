@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class BuildingDao implements Dao<Building>{
-    private Building BuildingFromJSON(JSONObject objectJSON) {
+    public Building BuildingFromJSON(JSONObject objectJSON) {
         Building building = new Building();
         building.setId(UUID.fromString(objectJSON.getString("id")));
         building.setName(objectJSON.getString("name"));
@@ -29,7 +29,7 @@ public class BuildingDao implements Dao<Building>{
         return building;
     }
 
-    private String fetchResponseBodyFromURL(String url) {
+    public String fetchResponseBodyFromURL(String url) {
         String responseBody;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
