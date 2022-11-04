@@ -1,10 +1,8 @@
-package com.example.werkplekkenfrontend.daos;
-
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public interface Dao<Type> {
-    List<Type> getAll();
+    ArrayList<Type> getAll();
     Type get(UUID id);
     int post(Type object);
     int patch(Type object);
