@@ -13,19 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         publicStage = stage;
         Main.sceneController.setStage(stage);
-        ViewController controller = sceneController.showView("admin-view.fxml");
-        controller.updateView();
-        // testAdminBuildingsViewController();
-        // testAdminEditBuildingViewController();
-    }
-
-    private void testAdminBuildingsViewController(){
-        AdminBuildingsViewController controller = (AdminBuildingsViewController)Main.sceneController.showView("admin-buildings-view.fxml");
-        controller.updateView();
-    }
-
-    private void testAdminEditBuildingViewController(){
-        AdminEditBuildingViewController controller = (AdminEditBuildingViewController)Main.sceneController.showView("admin-edit-building-view.fxml");
+        ViewController controller = sceneController.showView("login-view.fxml");
         controller.updateView();
     }
 

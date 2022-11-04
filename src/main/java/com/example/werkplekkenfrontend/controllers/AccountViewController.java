@@ -1,12 +1,11 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.models.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
 import java.util.UUID;
@@ -26,7 +25,8 @@ public class AccountViewController implements ViewController{
     }
 
     public void onLogOutClick() {
-
+        ViewController controller = Main.sceneController.showView("login-view.fxml");
+        controller.updateView();
     }
 
     @Override
