@@ -1,5 +1,3 @@
-package com.example.werkplekkenfrontend.daos;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
