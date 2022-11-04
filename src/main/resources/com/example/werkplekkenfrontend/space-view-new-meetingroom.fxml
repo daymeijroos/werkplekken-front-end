@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-      prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditWorkspaceViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.werkplekkenfrontend.controllers.AdminNewMeetingroomViewController">
    <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0" spacing="200">
       <padding>
          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -18,8 +18,8 @@
       <Button cancelButton="true" onAction="#onCancelClick" prefHeight="50" prefWidth="200" text="Cancel"/>
       <Button defaultButton="true" onAction="#onApplyClick" prefHeight="80" prefWidth="80" text="Apply"/>
    </HBox>
-   <FlowPane prefHeight="39.0" prefWidth="600.0">
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="werkplek">
+   <FlowPane prefHeight="34.0" prefWidth="600.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="vergaderruimte">
          <FlowPane.margin>
             <Insets left="550.0"/>
          </FlowPane.margin>
@@ -29,20 +29,40 @@
       <padding>
          <Insets left="110.0"/>
       </padding>
-      <TextArea prefHeight="34.0" prefWidth="338.0" promptText="naam">
+      <TextArea prefHeight="46.0" prefWidth="342.0" promptText="naam">
          <FlowPane.margin>
             <Insets left="300.0"/>
          </FlowPane.margin>
       </TextArea>
    </FlowPane>
-   <FlowPane prefHeight="90.0" prefWidth="600.0">
+   <FlowPane prefHeight="55.0" prefWidth="600.0">
       <padding>
          <Insets left="110.0"/>
       </padding>
-      <TextArea prefHeight="39.0" prefWidth="342.0" promptText="capaciteit">
+      <TextArea prefHeight="45.0" prefWidth="342.0" promptText="capaciteit">
          <FlowPane.margin>
             <Insets left="300.0"/>
          </FlowPane.margin>
       </TextArea>
+   </FlowPane>
+   <FlowPane prefHeight="74.0" prefWidth="600.0">
+      <padding>
+         <Insets left="110.0"/>
+      </padding>
+      <TextArea prefHeight="38.0" prefWidth="134.0" promptText="faciliteit">
+         <FlowPane.margin>
+            <Insets left="300.0"/>
+         </FlowPane.margin>
+      </TextArea>
+      <Button mnemonicParsing="false" text="Add">
+         <FlowPane.margin>
+            <Insets left="10.0"/>
+         </FlowPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Delete">
+         <FlowPane.margin>
+            <Insets left="10.0"/>
+         </FlowPane.margin>
+      </Button>
    </FlowPane>
 </VBox>
