@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TestReservationDao {
     @Test
-    void should_returnBuilding_when_buildingFromJSONIsCalled(){
+    void should_return_reservation_when_buildingFromJSON_is_called(){
         //asses
         ReservationDao reservationDaoInTesting = new ReservationDao();
         Reservation expectedReservation = new Reservation("1", "1", new Long("18051333"), new Long("18051340"), 2, "Tram");
