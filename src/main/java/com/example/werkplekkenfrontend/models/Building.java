@@ -17,6 +17,10 @@ public class Building {
         this.adress = adress;
     }
 
+    public Building(){
+
+    }
+
     public UUID getId() {
         return id;
     }
@@ -35,5 +39,25 @@ public class Building {
 
     public String getAdress() {
         return adress;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 }
