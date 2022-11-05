@@ -6,33 +6,33 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.AdminMeetingroomViewController">
-   <children>
-      <VBox prefHeight="56.0" prefWidth="600.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#OnNewMeetingroomButtonClick" prefHeight="25.0" prefWidth="152.0" text="New Vergaderruimte">
-               <VBox.margin>
-                  <Insets left="500.0" />
-               </VBox.margin>
-            </Button>
-         </children></VBox>
-      <FlowPane prefHeight="130.0" prefWidth="600.0">
-         <children>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="100.0" prefWidth="296.0" style="-fx-background-color: fffafa;" text="Vergaderruimte">
-               <FlowPane.margin>
-                  <Insets left="300.0" />
-               </FlowPane.margin>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="110.0" />
-         </padding>
-      </FlowPane>
-      <FlowPane prefHeight="125.0" prefWidth="600.0">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </FlowPane>
-   </children>
-   <VBox fx:id="meetingrooms_container" prefHeight="345.0" prefWidth="1080.0" />
+<VBox fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1080.0"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.werkplekkenfrontend.controllers.AdminMeetingroomViewController">
+   <VBox prefHeight="56.0" prefWidth="600.0">
+      <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
+         <Button mnemonicParsing="false" onAction="#OnNewMeetingroomButtonClick" prefHeight="25.0" prefWidth="152.0"
+                 text="New Vergaderruimte">
+            <VBox.margin>
+               <Insets left="500.0"/>
+            </VBox.margin>
+         </Button>
+   </VBox>
+   <FlowPane prefHeight="130.0" prefWidth="600.0">
+         <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="100.0" prefWidth="296.0"
+                style="-fx-background-color: fffafa;" text="Vergaderruimte">
+            <FlowPane.margin>
+               <Insets left="300.0"/>
+            </FlowPane.margin>
+         </Label>
+      <padding>
+         <Insets left="110.0"/>
+      </padding>
+   </FlowPane>
+   <FlowPane prefHeight="125.0" prefWidth="600.0">
+      <VBox.margin>
+         <Insets/>
+      </VBox.margin>
+   </FlowPane>
+   <VBox fx:id="meetingrooms_container" prefHeight="345.0" prefWidth="1080.0"/>
 </VBox>

@@ -8,6 +8,7 @@
 
 <VBox fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.AdminWorkspaceViewController">
    <VBox prefHeight="56.0" prefWidth="600.0">
+      <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
       <Button mnemonicParsing="false" onAction="#OnNewWorkspaceButtonClick" prefHeight="25.0" prefWidth="152.0" text="New Werkplek">
          <VBox.margin>
             <Insets bottom="10.0" left="500.0" />
