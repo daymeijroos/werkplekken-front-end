@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.AdminWorkspaceElement;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Space;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ public class AdminWorkspaceViewController implements ViewController{
     @FXML
     public VBox workspaces_container;
 
+    @FXML
+    public VBox main_container;
 
     @FXML
     void OnNewWorkspaceButtonClick(ActionEvent event) {
@@ -42,6 +45,7 @@ public class AdminWorkspaceViewController implements ViewController{
     public void updateView() {
         List<Space> spacesFromDao = setupTestData();
         showSpacesOnView(spacesFromDao);
+        main_container.getChildren().add(new NavBarElement().getBuildingBox());
 
     }
 

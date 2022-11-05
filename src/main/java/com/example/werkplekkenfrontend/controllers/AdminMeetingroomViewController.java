@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.AdminMeetingroomElement;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Space;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import java.util.UUID;
 
 public class AdminMeetingroomViewController implements ViewController{
 
+    @FXML
+    public VBox main_container;
     @FXML
     public VBox meetingrooms_container;
 
@@ -52,6 +55,7 @@ public class AdminMeetingroomViewController implements ViewController{
     public void updateView() {
         List<Space> spacesFromDao = setupTestData();
         showSpacesOnView(spacesFromDao);
+        main_container.getChildren().add(new NavBarElement().getBuildingBox());
 
     }
 

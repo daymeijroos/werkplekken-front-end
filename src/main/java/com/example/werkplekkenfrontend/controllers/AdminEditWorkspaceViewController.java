@@ -26,14 +26,14 @@ public class AdminEditWorkspaceViewController implements ViewController{
     }
     @FXML
     void onApplyClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-space-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
         controller.updateView();
 
     }
 
     @FXML
     void onCancelClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-space-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
         controller.updateView();
     }
 
