@@ -1,47 +1,70 @@
 package com.example.werkplekkenfrontend.controllers;
+import com.example.werkplekkenfrontend.Main;
+import com.example.werkplekkenfrontend.elements.MessageElement;
+import javafx.scene.control.PasswordField;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
-import com.example.werkplekkenfrontend.daos.LoginDao;
-import com.example.werkplekkenfrontend.daos.UserDao;
-import com.example.werkplekkenfrontend.models.User;
-import org.json.JSONObject;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class LoginController {
-    private String JWT = "";
-    private User userLoggedIn = null;
+public class LoginController implements ViewController {
+    public AuthController authController;
 
-    private final LoginDao loginDao;
-    private final UserDao userDao;
+    public RegisterController registerController;
 
-    public LoginController(LoginDao loginDao, UserDao userDao) {
-        this.loginDao = loginDao;
-        this.userDao = userDao;
+    public void setAuthController(AuthController authController) {
+        this.authController = authController;
     }
 
-    private void setUserLoggedIn() {
-        userLoggedIn = userDao.getCurrent();
+    public void updateFields(String email) {
+        this.eMailInput.setText(email);
     }
 
-    public void login(String email, String password) {
-        String response = loginDao.login(email, password);
-        JSONObject objectJSON = new JSONObject(response);
-        JWT = "Bearer " + objectJSON.getString("jwt-token");
-        this.setUserLoggedIn();
+    @FXML
+    TextField eMailInput;
+
+    @FXML
+    PasswordField passwordInput;
+
+    private boolean checkEmailAddress(String email) {
+        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+        Matcher mat = pattern.matcher(email);
+        return mat.matches();
     }
 
-    public void register(String firstName, String lastName, String email, String password) {
-        String response = loginDao.register(firstName, lastName, email, password);
+    @FXML
+    public void login() {
+        String mail = eMailInput.getText();
+        String password = passwordInput.getText();
+        if (Objects.equals(mail, "") || !checkEmailAddress(mail)) {
+            Main.sceneController.showPopup(new MessageElement("Voer een geldige e-mail in", "Okay").getPopup());
+            return;
+        }
+        if (Objects.equals(password, "")) {
+            Main.sceneController.showPopup(new MessageElement("Voer een wachtwoord in", "Okay").getPopup());
+            return;
+        }
 
-        System.out.println(response);
-        JSONObject objectJSON = new JSONObject(response);
-        JWT = "Bearer " + objectJSON.getString("jwt-token");
-        this.setUserLoggedIn();
+        try {
+            authController.login(mail, password);
+        } catch (Exception e) {
+            Main.sceneController.showPopup(new MessageElement(e.getMessage(), "Okay").getPopup());
+            return;
+        }
+        System.out.println(Main.currentUser.getJWTtoken());
     }
 
-    public String getJWT() {
-        return this.JWT;
+    @FXML
+    public void showRegisterView() {
+        registerController = (RegisterController) Main.sceneController.showView("register-view.fxml");
+        registerController.setAuthController(authController);
+        registerController.updateFields(this.eMailInput.getText());
     }
 
-    public User getUserLoggedIn() {
-        return this.userLoggedIn;
+    @Override
+    public void updateView() {
+
     }
 }

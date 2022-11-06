@@ -16,6 +16,7 @@ import java.util.UUID;
 public class AdminBuildingsViewController implements ViewController{
     @FXML
     public VBox buildings_container;
+
     @FXML
     public VBox main_container;
 
@@ -31,7 +32,7 @@ public class AdminBuildingsViewController implements ViewController{
     public void onAddBuildingClick() {
         //ViewController controller = Main.sceneController.showView("admin-edit-building-view.fxml");
         //controller.updateView();
-        messagePopup.show(Main.publicStage);
+        Main.sceneController.showPopup(messagePopup);
     }
 
     public void onEditBuildingClick(Building building) {

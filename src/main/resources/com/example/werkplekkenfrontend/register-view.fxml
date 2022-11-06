@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.werkplekkenfrontend.controllers.RegisterController"
+      prefHeight="400.0" prefWidth="600.0">
+    <padding>
+        <Insets left="80.0" right="80.0" top="40.0"/>
+    </padding>
+    <Label>First name</Label>
+    <TextField fx:id="firstNameInput" promptText="Bijvoorbeeld: Jan..." maxHeight="20"/>
+    <Label>Last name</Label>
+    <TextField fx:id="lastNameInput" promptText="Bijvoorbeeld: Broeder..." maxHeight="20"/>
+    <Label>Email</Label>
+    <TextField fx:id="eMailInput" promptText="Bijvoorbeeld: jan_broeder@casema.nl..." maxHeight="20"/>
+    <Label>Wachtwoord</Label>
+    <PasswordField fx:id="passwordInput" promptText="Wij houden onder ons..." maxHeight="20"/>
+    <Button onAction="#register" text="Register"/>
+    <Button onAction="#showLoginView" text="Heb je al een account? Log in!"/>
+</VBox>

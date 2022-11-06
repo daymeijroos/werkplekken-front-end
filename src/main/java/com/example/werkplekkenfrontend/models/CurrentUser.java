@@ -5,9 +5,7 @@ public class CurrentUser {
     private String id;
     private String JWTtoken;
 
-    public CurrentUser(String JWTtoken) {
-        this.JWTtoken = JWTtoken;
-    }
+    public CurrentUser() {}
 
     public String getId() {
         return id;
