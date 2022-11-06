@@ -1,45 +1,35 @@
 package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Building;
-import com.example.werkplekkenfrontend.models.Reservation;
+import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.models.User;
 import com.example.werkplekkenfrontend.project_settings;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class BuildingDao implements Dao<Building>{
+public class SpaceDao implements Dao<Space> {
+
     private final HttpService httpService;
     private final ObjectMapper objectMapper;
 
-    public BuildingDao(HttpService httpService, ObjectMapper objectMapper) {
+    public SpaceDao(HttpService httpService, ObjectMapper objectMapper) {
         this.httpService = httpService;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public ArrayList<Building> getAll() {
-        String url = "/api/building";
+    public ArrayList<Space> getAll() {
+        String url = "/api/space";
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Building> buildings = mapper.readValue(response, new TypeReference<>() {
+            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
             });
-            return buildings;
+            return spaces;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -47,22 +37,22 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public Building get(UUID id) {
-        String url = "/api/building/" + id;
+    public Space get(UUID id) {
+        String url = "/api/space/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
-        Building building = null;
+        Space space = null;
         try {
-            building = mapper.readValue(response, Building.class);
+            space = mapper.readValue(response, Space.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return building;
+        return space;
     }
 
     @Override
-    public int post(Building object) {
-        String url = "/api/building";
+    public int post(Space object) {
+        String url = "/api/space";
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
@@ -74,8 +64,8 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int patch(Building object) {
-        String url = "/api/building/" + object.getId();
+    public int patch(Space object) {
+        String url = "/api/space/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
@@ -87,8 +77,8 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int delete(Building object) {
-        String url = "/api/building/" + object.getId();
+    public int delete(Space object) {
+        String url = "/api/space/" + object.getId();
         return httpService.deleteWithURL(url);
     }
 }

@@ -10,84 +10,87 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserDao implements Dao<User> {
+
+    private final HttpService httpService;
+    private final ObjectMapper objectMapper;
+
+
+    public UserDao(HttpService httpService, ObjectMapper objectMapper) {
+        this.httpService = httpService;
+        this.objectMapper = objectMapper;
+    }
+
     public User getCurrent() {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user/info";
-        String response = http.getWithURL(url);
+        String url = "/api/user/info";
+        String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         User user = null;
         try {
             user = mapper.readValue(response, User.class);
         } catch (Exception e) {
             e.printStackTrace();
-        };
+        }
         return user;
     }
 
     @Override
     public ArrayList<User> getAll() {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user";
-        String response = http.getWithURL(url);
+        String url = "/api/user";
+        String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<User> users = null;
         try {
-            users = mapper.readValue(response, new TypeReference<ArrayList<User>>(){});
+            users = mapper.readValue(response, new TypeReference<>() {
+            });
         } catch (Exception e) {
             e.printStackTrace();
-        };
+        }
         return users;
     }
 
     @Override
     public User get(UUID id) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user/" + id;
-        String response = http.getWithURL(url);
+        String url = "/api/user/" + id;
+        String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         User user = null;
         try {
             user = mapper.readValue(response, User.class);
         } catch (Exception e) {
             e.printStackTrace();
-        };
+        }
         return user;
     }
 
     @Override
     public int post(User object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user";
+        String url = "/api/user";
         ObjectMapper mapper = new ObjectMapper();
-        String json = null;
         try {
-            json = mapper.writeValueAsString(object);
+            String json = mapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json);
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
         }
-        return http.postWithURLandJSONreturnsCode(url, json);
     }
 
     @Override
     public int patch(User object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user/" + object.getId();
+        String url = "/api/user/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
-        String json = null;
         try {
-            json = mapper.writeValueAsString(object);
+            String json = mapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json);
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
         }
-        return http.patchWithURL(url, json);
     }
 
     @Override
     public int delete(User object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/user/" + object.getId();
-        return http.deleteWithURL(url);
+        String url = "/api/user/" + object.getId();
+        return httpService.deleteWithURL(url);
     }
 }
