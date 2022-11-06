@@ -27,16 +27,6 @@ public class Main extends Application {
         loginController.setAuthController(authController);
     }
 
-    private void testAdminBuildingsViewController(){
-        AdminBuildingsViewController controller = (AdminBuildingsViewController)Main.sceneController.showView("admin-buildings-view.fxml");
-        controller.updateView();
-    }
-
-    private void testAdminEditBuildingViewController(){
-        AdminEditBuildingViewController controller = (AdminEditBuildingViewController)Main.sceneController.showView("admin-edit-building-view.fxml");
-        controller.updateView();
-    }
-
     public static void main(String[] args) {
         Main.sceneController = new SceneController();
         launch();
