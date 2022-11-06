@@ -29,7 +29,7 @@
       <padding>
          <Insets left="110.0"/>
       </padding>
-      <TextArea prefHeight="34.0" prefWidth="338.0" promptText="naam">
+      <TextArea fx:id="capacity" prefHeight="34.0" prefWidth="338.0" promptText="naam">
          <FlowPane.margin>
             <Insets left="300.0"/>
          </FlowPane.margin>

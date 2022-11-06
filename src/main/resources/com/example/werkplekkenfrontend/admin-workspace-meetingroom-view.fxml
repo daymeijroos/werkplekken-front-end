@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="main_container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.AdminWorkspaceViewController">
+   <VBox prefHeight="56.0" prefWidth="600.0">
+      <Button cancelButton="true" onAction="#onCancelClick" prefHeight="50" prefWidth="200" text="Cancel" />
+      <Button mnemonicParsing="false" onAction="#OnNewWorkspaceButtonClick" prefHeight="25.0" prefWidth="240.0" text="New Werkplek/vergaderruimte">
+         <VBox.margin>
+            <Insets bottom="10.0" left="500.0" />
+         </VBox.margin>
+      </Button>
+   </VBox>
+   <FlowPane prefHeight="130.0" prefWidth="600.0">
+      <padding>
+         <Insets left="110.0" />
+      </padding>
+   </FlowPane>
+   <FlowPane prefHeight="125.0" prefWidth="600.0">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
+   </FlowPane>
+   <VBox fx:id="workspaces_container" prefHeight="345.0" prefWidth="1080.0" />
+</VBox>

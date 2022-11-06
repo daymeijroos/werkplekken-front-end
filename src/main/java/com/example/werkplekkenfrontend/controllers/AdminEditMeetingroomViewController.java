@@ -33,7 +33,7 @@ public class AdminEditMeetingroomViewController implements ViewController{
 
     private void updateMeetingroomDetails(Space space){
         capacity.setText(String.valueOf(space.getCapacity()));
-        facility.setText(space.getFloorId());
+        //floor.setText(space.getFloorId());
     }
 
 
@@ -45,8 +45,8 @@ public class AdminEditMeetingroomViewController implements ViewController{
             System.out.println("Patch request response: " + spaceDao.patch(updatedSpace));
         }
         else{
-            Space newSpace = new Space(Integer.valueOf(capacity.getText())); // the
             if (!uniqueCheckFromDao()) return;
+            Space newSpace = new Space(Integer.valueOf(capacity.getText())); // the
             System.out.println("Post request response: " + spaceDao.post(newSpace));
 
         }

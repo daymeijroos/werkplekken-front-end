@@ -22,11 +22,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
-        loginController.register("day", "meijroos", "daymeijroos4@gmail.com", "DumbShit");
+        loginController.register("day", "meijroos", "daymeijroos4557545@gmail.com", "DumbShit");
         spaceDao.post(new Space(2));
         publicStage = stage;
         Main.sceneController.setStage(stage);
-        ViewController controller = sceneController.showView("admin-workspace-view.fxml");
+        ViewController controller = sceneController.showView("admin-space-view-v2.fxml");
         controller.updateView();
         // testAdminBuildingsViewController();
         // testAdminEditBuildingViewController();

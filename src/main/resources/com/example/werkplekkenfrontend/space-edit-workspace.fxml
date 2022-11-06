@@ -17,8 +17,6 @@
         </HBox>
 
         <VBox>
-            <TextArea fx:id="name" prefHeight="23.0" prefWidth="600.0" />
-            <HBox />
             <TextArea fx:id="capacity" prefHeight="23.0" prefWidth="600.0">
             <VBox.margin>
                <Insets top="20.0" />

@@ -28,7 +28,6 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     private void updateWorkspaceDetails(Space space){
         capacity.setText(String.valueOf(space.getCapacity()));
-
     }
     @FXML
     void onApplyClick(ActionEvent event) {
@@ -42,13 +41,8 @@ public class AdminEditWorkspaceViewController implements ViewController{
             System.out.println("Post request response: " + spaceDao.post(newSpace));
 
         }
-        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
         controller.updateView();
-
-        if (spaceID == null){
-            Space newSpace = new Space((Integer.valueOf(capacity.getText()))); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + spaceDao);
-        }
 
     }
 
@@ -69,7 +63,7 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     @FXML
     void onCancelClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
         controller.updateView();
     }
 

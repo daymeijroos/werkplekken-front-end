@@ -14,6 +14,9 @@ public class Space {
         this.capacity = capacity;
     }
 
+    public Space() {
+    }
+
     public UUID getId() {
         return id;
     }
