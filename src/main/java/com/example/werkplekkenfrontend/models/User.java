@@ -3,10 +3,12 @@ package com.example.werkplekkenfrontend.models;
 import java.util.UUID;
 
 public class User {
-    String id;
-    String name;
-    String lastName;
-    String email;
+    public String id;
+    public String name;
+    public String lastName;
+    public String email;
+
+    public User() {};
 
     public User(String id, String name, String lastName, String email) {
         this.id = id;
