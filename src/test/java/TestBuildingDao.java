@@ -1,5 +1,7 @@
 import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.models.Building;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 public class TestBuildingDao {
 
-    private BuildingDao buildingDaoInTesting = new BuildingDao();
+    private BuildingDao buildingDaoInTesting = new BuildingDao(new HttpService(), new ObjectMapper());
     private Building testBuilding;
     private JSONObject jsonObject;
 
@@ -48,7 +50,7 @@ public class TestBuildingDao {
     public void should_returnBuildingWithSameID_when_getIsCalled(){
         //asses
         Building expectedBuilding = testBuilding;
-        BuildingDao buildingDaoMock = Mockito.spy(new BuildingDao());
+        BuildingDao buildingDaoMock = Mockito.spy(new BuildingDao(new HttpService(), new ObjectMapper()));
         //MockitoAnnotations.initMocks(this);
         //when(buildingDaoMock.fetchResponseBodyFromURL(anyString())).thenReturn("{\"zipcode\":\"zip\",\"city\":\"city\",\"name\":\"name\",\"address\":\"address\",\"id\":\"" + testBuilding.getId() + "\"}");
 

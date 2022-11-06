@@ -23,26 +23,33 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class BuildingDao implements Dao<Building>{
+    private final HttpService httpService;
+    private final ObjectMapper objectMapper;
+
+    public BuildingDao(HttpService httpService, ObjectMapper objectMapper) {
+        this.httpService = httpService;
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public ArrayList<Building> getAll() {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/building";
-        String response = http.getWithURL(url);
+        String url = "/api/building";
+        String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<Building> buildings = null;
         try {
-            buildings = mapper.readValue(response, new TypeReference<ArrayList<Building>>(){});
+            ArrayList<Building> buildings = mapper.readValue(response, new TypeReference<>() {
+            });
+            return buildings;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return buildings;
     }
 
     @Override
     public Building get(UUID id) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/building/" + id;
-        String response = http.getWithURL(url);
+        String url = "/api/building/" + id;
+        String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         Building building = null;
         try {
@@ -55,38 +62,33 @@ public class BuildingDao implements Dao<Building>{
 
     @Override
     public int post(Building object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/building";
+        String url = "/api/building";
         ObjectMapper mapper = new ObjectMapper();
-        String json = null;
         try {
-            json = mapper.writeValueAsString(object);
+            String json = mapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json);
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
         }
-        return http.postWithURLandJSONreturnsCode(url, json);
     }
 
     @Override
     public int patch(Building object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/building/" + object.getId();
+        String url = "/api/building/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
-        String json = null;
         try {
-            json = mapper.writeValueAsString(object);
+            String json = mapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json);
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
         }
-        return http.patchWithURL(url, json);
     }
 
     @Override
     public int delete(Building object) {
-        HttpService http = new HttpService();
-        String url = project_settings.baseURL + "/api/building/" + object.getId();
-        return http.deleteWithURL(url);
+        String url = "/api/building/" + object.getId();
+        return httpService.deleteWithURL(url);
     }
 }

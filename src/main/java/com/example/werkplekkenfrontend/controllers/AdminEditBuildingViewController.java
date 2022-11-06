@@ -4,6 +4,8 @@ import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -12,7 +14,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class AdminEditBuildingViewController implements ViewController{
-    private BuildingDao buildingDao = new BuildingDao();
+    private ViewController adminBuildingViewController;
+    private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
     public UUID buildingID = null;
 
     @FXML
@@ -56,8 +59,8 @@ public class AdminEditBuildingViewController implements ViewController{
             System.out.println("Post request response: " + buildingDao.post(newBuilding));
         }
         buildingID = null; // not sure if this is necessary
-        ViewController controller = Main.sceneController.showView("admin-buildings-view.fxml");
-        controller.updateView();
+        adminBuildingViewController = Main.sceneController.showView("admin-buildings-view.fxml");
+        adminBuildingViewController.updateView();
     }
 
     // check if values are valid

@@ -65,8 +65,9 @@ public class HttpService {
     public int patchWithURL(String endpoint, String json) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
+                .header("Content-Type", "application/json")
                 .header("Authorization", Main.loginController.getJWT())
-                .GET()
+                .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         try {
             return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())

@@ -6,6 +6,8 @@ import com.example.werkplekkenfrontend.elements.AdminBuildingElement;
 import com.example.werkplekkenfrontend.elements.MessageElement;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Building;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class AdminBuildingsViewController implements ViewController{
-    private BuildingDao buildingDao = new BuildingDao();
+    private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
 
     @FXML
     public VBox buildings_container;
