@@ -1,15 +1,18 @@
 package com.example.werkplekkenfrontend;
 
 import com.example.werkplekkenfrontend.controllers.*;
+import com.example.werkplekkenfrontend.models.User;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
     public static SceneController sceneController = new SceneController();
     public static Stage publicStage;
+    public static LoginController loginController = new LoginController();
 
     @Override
     public void start(Stage stage) {
+        loginController.register("day", "meijroos", "daymeijroos@gmail.com", "DumbShit");
         publicStage = stage;
         Main.sceneController.setStage(stage);
         ViewController controller = sceneController.showView("admin-buildings-view.fxml");
