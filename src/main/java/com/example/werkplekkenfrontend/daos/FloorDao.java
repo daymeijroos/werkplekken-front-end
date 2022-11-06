@@ -1,7 +1,6 @@
 package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Floor;
-import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.project_settings;
 
 import org.json.JSONArray;

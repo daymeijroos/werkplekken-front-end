@@ -3,19 +3,21 @@ package com.example.werkplekkenfrontend.models;
 import java.util.UUID;
 
 public class User {
-    UUID id;
-    String name;
-    String lastName;
-    String email;
+    public String id;
+    public String name;
+    public String lastName;
+    public String email;
 
-    public User(UUID id, String name, String lastName, String email) {
+    public User() {};
+
+    public User(String id, String name, String lastName, String email) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

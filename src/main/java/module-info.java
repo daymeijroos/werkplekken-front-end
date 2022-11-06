@@ -5,6 +5,8 @@ module com.example.werkplekkenfrontend {
     requires com.dlsc.formsfx;
     requires org.json;
     requires java.net.http;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.werkplekkenfrontend to javafx.fxml;
     exports com.example.werkplekkenfrontend;

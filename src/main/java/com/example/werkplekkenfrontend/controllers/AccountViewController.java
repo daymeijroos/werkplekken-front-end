@@ -18,7 +18,7 @@ public class AccountViewController implements ViewController{
     public Label lastName;
     public Label email;
 
-    private void displayUserInfo(UUID id){
+    private void displayUserInfo(String id){
         User user = DaoReplicator.getUserInfoFromID(id);
         firstName.setText(user.getName());
         lastName.setText(user.getLastName());
@@ -31,7 +31,7 @@ public class AccountViewController implements ViewController{
 
     @Override
     public void updateView() {
-        displayUserInfo(UUID.randomUUID());
+        displayUserInfo(UUID.randomUUID().toString());
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
     }
 }

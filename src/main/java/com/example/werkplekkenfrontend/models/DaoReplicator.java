@@ -26,7 +26,7 @@ public class DaoReplicator {
 
     }
 
-    public static User getUserInfoFromID(UUID id){
+    public static User getUserInfoFromID(String id){
         return new User(id, "Michael", "Afton", "FredbearEntertainment.Nightshift@gmail.com");
     }
 }
