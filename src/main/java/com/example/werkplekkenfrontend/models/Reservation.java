@@ -15,6 +15,10 @@ public class Reservation {
         this.spaceId = spaceId;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String id;
     public String userId;
     public Long dateIn;

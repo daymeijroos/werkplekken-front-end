@@ -1,8 +1,12 @@
 package com.example.werkplekkenfrontend.daos;
 
+import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.project_settings;
 
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +19,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
+
+    private final HttpService httpService;
+    private final ObjectMapper objectMapper;
+
+    public ReservationDao(HttpService httpService, ObjectMapper objectMapper) {
+        this.httpService = httpService;
+        this.objectMapper = objectMapper;
+    }
+
     private Reservation ReservationFromJSON(JSONObject objectJSON) {
         Reservation reservation = new Reservation();
         reservation.id = objectJSON.getString("id");
@@ -47,128 +60,63 @@ public class ReservationDao implements Dao<Reservation> {
 
     @Override
     public ArrayList<Reservation> getAll() {
-        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
-        String url = project_settings.baseURL + "/v1/api/reservation/";
-        String responseBody = fetchResponseBodyFromURL(url);
-        JSONArray responseJSON = new JSONArray(responseBody);
-
+        String url = "/api/reservation";
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            for (int i = 0; i < responseJSON.length(); i++) {
-                JSONObject objectJSON = responseJSON.getJSONObject(i);
-                Reservation reservation = ReservationFromJSON(objectJSON);
-
-                reservations.add(reservation);
-            }
-        } catch(Exception e){
-            System.out.println(e);
+            ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {
+            });
+            return reservations;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return reservations;
     }
 
     @Override
     public Reservation get(UUID id) {
-        Reservation reservation = new Reservation();
-
-        String url = project_settings.baseURL + "/reservation/" + id;
-        String responseBody = fetchResponseBodyFromURL(url);
-        JSONArray responseJSON = new JSONArray(responseBody);
-
+        String url = "/api/reservation/" + id;
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        Reservation reservation = null;
         try {
-            JSONObject objectJSON = responseJSON.getJSONObject(0);
-            reservation = ReservationFromJSON(objectJSON);
-        } catch(Exception e){
-            System.out.println(e);
+            reservation = mapper.readValue(response, Reservation.class);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return reservation;
     }
 
     @Override
     public int post(Reservation object) {
-        int response = 0;
+        String url = "/api/reservation";
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            URLConnection con = url.openConnection();
-            HttpURLConnection http = (HttpURLConnection) con;
-            http.setRequestMethod("POST");
-            http.setDoOutput(true);
-
-            String format = """     
-                            {
-                                id: {0},
-                                userId: {1},
-                                dateIn: {2},
-                                dateOut: {3},
-                                amountOfPeople: {4}, 
-                                spaceId: {5}
-                            }""";
-            String json = String.format(format, object.id, object.userId, object.dateIn, object.dateOut, object.amountOfPeople, object.spaceId);
-
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
+            String json = mapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return 400;
         }
-        return response;
     }
 
     //WE DO NOT CARE ABOUT PATCH
     @Override
     public int patch(Reservation object) {
-        int response = 0;
+        String url = "/api/reservation/" + object.getId();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            URLConnection con = url.openConnection();
-            HttpURLConnection http = (HttpURLConnection) con;
-            http.setRequestMethod("PATCH");
-            http.setDoOutput(true);
-
-            String format = """
-                    [
-                        { "op": "replace", "path": "/dateIn", "value": "{0}" },
-                        { "op": "replace", "path": "/dateOut", "value": "{1}" },
-                        { "op": "replace", "path": "/user_id", "value": "{2}" },
-                        { "op": "replace", "path": "/space_id", "value": "{3}" }
-                        { "op": "replace", "path": "/amountOfPeople", "value": "{4}" }
-                    ]""";
-            String json = String.format(format,  object.dateIn, object.dateOut, object.userId, object.spaceId, object.amountOfPeople);
-
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
+            String json = mapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return 400;
         }
-        return response;
     }
 
     @Override
     public int delete(Reservation object) {
-        int response = 0;
-        try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setRequestProperty(
-                    "Content-Type", "application/x-www-form-urlencoded");
-            httpCon.setRequestMethod("DELETE");
-            httpCon.connect();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return response;
+        String url = "/api/reservation/" + object.getId();
+        return httpService.deleteWithURL(url);
     }
 }
