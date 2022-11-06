@@ -1,6 +1,7 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
+import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class AdminEditBuildingViewController implements ViewController{
+    private BuildingDao buildingDao = new BuildingDao();
     public UUID buildingID = null;
 
     @FXML
@@ -20,14 +22,14 @@ public class AdminEditBuildingViewController implements ViewController{
     @FXML
     public TextArea city;
     @FXML
-    public TextArea adress;
+    public TextArea address;
 
     // show details from building that is being edited
     private void updateBuildingDetails(Building building){
         name.setText(building.getName());
         zipcode.setText(building.getZipcode());
         city.setText(building.getCity());
-        adress.setText(building.getAdress());
+        address.setText(building.getAddress());
     }
 
     // returns to admin buildings view without updating database
@@ -44,13 +46,14 @@ public class AdminEditBuildingViewController implements ViewController{
 
         // open confirmation window, if cancel is selected return
 
-        if (buildingID == null){
-            Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), adress.getText()); // there is a chance this generates a duplicate UUID
-            DaoReplicator.POST_Building(newBuilding);
+        if (buildingID != null) {
+            Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
+            System.out.println("Patch request response: " + buildingDao.patch(updatedBuilding));
         }
         else {
-            Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), adress.getText());
-            DaoReplicator.PATCH_Building(updatedBuilding);
+            if (!uniqueCheckFromDao()) return;
+            Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
+            System.out.println("Post request response: " + buildingDao.post(newBuilding));
         }
         buildingID = null; // not sure if this is necessary
         ViewController controller = Main.sceneController.showView("admin-buildings-view.fxml");
@@ -59,17 +62,16 @@ public class AdminEditBuildingViewController implements ViewController{
 
     // check if values are valid
     private boolean validityCheck(){
-        if (!uniqueCheckFromDao()) return false;
-        if (name.getText() == null || zipcode.getText() == null || city.getText() == null || adress.getText() == null) return false;
+        if (name.getText() == null || zipcode.getText() == null || city.getText() == null || address.getText() == null) return false;
         return true;
     }
 
     // check if name and address are not already in use.
     private boolean uniqueCheckFromDao(){
-        List<Building> buildingList = DaoReplicator.getBuildings();
+        List<Building> buildingList = buildingDao.getAll();
         for(Building building : buildingList){
             if (building.getId() == buildingID) continue;
-            if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAdress(), adress.getText())) return false;
+            if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAddress(), address.getText())) return false;
         }
         return true;
     }
@@ -77,7 +79,7 @@ public class AdminEditBuildingViewController implements ViewController{
     @Override
     public void updateView() {
         if(buildingID != null) {
-            Building buildingFromDao = DaoReplicator.getBuildingFromID(UUID.randomUUID());
+            Building buildingFromDao = buildingDao.get(buildingID);
             updateBuildingDetails(buildingFromDao);
         }
     }

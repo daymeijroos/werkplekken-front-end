@@ -7,14 +7,14 @@ public class Building {
     String name;
     String zipcode;
     String city;
-    String adress;
+    String address;
 
-    public Building(UUID id, String name, String zipcode, String city, String adress) {
+    public Building(UUID id, String name, String zipcode, String city, String address) {
         this.id = id;
         this.name = name;
         this.zipcode = zipcode;
         this.city = city;
-        this.adress = adress;
+        this.address = address;
     }
 
     public Building(){
@@ -37,8 +37,8 @@ public class Building {
         return city;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     public void setId(UUID id) {
@@ -57,7 +57,7 @@ public class Building {
         this.city = city;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
