@@ -1,12 +1,13 @@
 package com.example.werkplekkenfrontend.models;
 
 public class Facility {
-    public String id;
-    public String name;
-    public int quantity;
-    public Building building;
+    private String id;
 
-    public Facility() {}
+    private String name;
+
+    private int quantity;
+
+    private Building building;
 
     public Facility(String id, String name, int quantity, Building building) {
         this.id = id;
