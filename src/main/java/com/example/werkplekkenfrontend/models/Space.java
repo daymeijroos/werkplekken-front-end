@@ -1,35 +1,17 @@
 package com.example.werkplekkenfrontend.models;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class Space {
     UUID id;
 
-    String name;
-
     int capacity;
 
-    String Facilities;
+    String floorId;
 
-    public Space(UUID id, int capacity, String facilities, String name) {
-        this.id = id;
+    public Space(int capacity) {
         this.capacity = capacity;
-        this.Facilities = facilities;
-        this.name = name;
-    }
-
-    public Space(UUID id, int capacity,String name) {
-        this.id = id;
-        this.capacity = capacity;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFacilities() {
-        return Facilities;
     }
 
     public UUID getId() {
@@ -39,4 +21,9 @@ public class Space {
     public int getCapacity() {
         return capacity;
     }
+
+    public String getFloorId() {
+        return floorId;
+    }
+
 }

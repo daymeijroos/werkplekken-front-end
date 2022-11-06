@@ -1,19 +1,27 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
+import com.example.werkplekkenfrontend.daos.LoginDao;
+import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.elements.AdminWorkspaceElement;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
+import com.example.werkplekkenfrontend.models.Facility;
 import com.example.werkplekkenfrontend.models.Space;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class AdminWorkspaceViewController implements ViewController{
 
+    private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
     @FXML
     public VBox workspaces_container;
 
@@ -26,8 +34,9 @@ public class AdminWorkspaceViewController implements ViewController{
         controller.updateView();
     }
 
-    private void showSpacesOnView(List<Space> spaces){
-        for(Space space : spaces){
+    private void showSpacesOnView(){
+        List<Space> spacesFromDao = spaceDao.getAll();
+        for(Space space : spacesFromDao){
             AdminWorkspaceElement element = new AdminWorkspaceElement(this,space);
             workspaces_container.getChildren().add(element.getWorkspaceBox());
         }
@@ -43,17 +52,9 @@ public class AdminWorkspaceViewController implements ViewController{
 
     @Override
     public void updateView() {
-        List<Space> spacesFromDao = setupTestData();
-        showSpacesOnView(spacesFromDao);
+        showSpacesOnView();
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
 
-    }
-
-    public List<Space> setupTestData(){
-        List<Space> testSpaces = new ArrayList<>();
-        Space werkplek_1 = new Space(UUID.randomUUID(), 1,"werkplek_1");
-        testSpaces.add(werkplek_1);
-        return testSpaces;
     }
 
 

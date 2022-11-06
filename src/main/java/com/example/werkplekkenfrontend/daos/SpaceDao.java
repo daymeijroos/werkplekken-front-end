@@ -1,5 +1,6 @@
 package com.example.werkplekkenfrontend.daos;
 
+import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.models.User;
 import com.example.werkplekkenfrontend.project_settings;
@@ -12,84 +13,72 @@ import java.util.UUID;
 
 public class SpaceDao implements Dao<Space> {
 
-        public Space getCurrent() {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/user";
-            String response = http.getWithURL(url);
-            ObjectMapper mapper = new ObjectMapper();
-            Space space = null;
-            try {
-                space = mapper.readValue(response, Space.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            };
-            return space;
-        }
+    private final HttpService httpService;
+    private final ObjectMapper objectMapper;
 
-        @Override
-        public ArrayList<Space> getAll() {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/space";
-            String response = http.getWithURL(url);
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayList<Space> spaces = null;
-            try {
-                spaces = mapper.readValue(response, new TypeReference<ArrayList<Space>>(){});
-            } catch (Exception e) {
-                e.printStackTrace();
-            };
+    public SpaceDao(HttpService httpService, ObjectMapper objectMapper) {
+        this.httpService = httpService;
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    public ArrayList<Space> getAll() {
+        String url = "/api/space";
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            });
             return spaces;
-        }
-
-        @Override
-        public Space get(UUID id) {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/space/" + id;
-            String response = http.getWithURL(url);
-            ObjectMapper mapper = new ObjectMapper();
-            Space space = null;
-            try {
-                space = mapper.readValue(response, Space.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            };
-            return space;
-        }
-
-        @Override
-        public int post(Space object) {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/space";
-            ObjectMapper mapper = new ObjectMapper();
-            String json = null;
-            try {
-                json = mapper.writeValueAsString(object);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return 400;
-            }
-            return http.postWithURLandJSONreturnsCode(url, json);
-        }
-
-        @Override
-        public int patch(Space object) {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/space/" + object.getId();
-            ObjectMapper mapper = new ObjectMapper();
-            String json = null;
-            try {
-                json = mapper.writeValueAsString(object);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return 400;
-            }
-            return http.patchWithURL(url, json);
-        }
-
-        @Override
-        public int delete(Space object) {
-            HttpService http = new HttpService();
-            String url = project_settings.baseURL + "/api/space/" + object.getId();
-            return http.deleteWithURL(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
+
+    @Override
+    public Space get(UUID id) {
+        String url = "/api/space/" + id;
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        Space space = null;
+        try {
+            space = mapper.readValue(response, Space.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return space;
+    }
+
+    @Override
+    public int post(Space object) {
+        String url = "/api/space";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 400;
+        }
+    }
+
+    @Override
+    public int patch(Space object) {
+        String url = "/api/space/" + object.getId();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 400;
+        }
+    }
+
+    @Override
+    public int delete(Space object) {
+        String url = "/api/space/" + object.getId();
+        return httpService.deleteWithURL(url);
+    }
+}

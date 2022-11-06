@@ -16,7 +16,7 @@ public class AdminWorkspaceElement {
     public AdminWorkspaceElement(AdminWorkspaceViewController parent, Space space) {
         this.parent = parent;
         this.space = space;
-        Label name = new Label(space.getName());
+        Label name = new Label(Integer.toString(space.getCapacity()));
         name.setPrefHeight(50);
         name.setPrefWidth(650);
         Button edit = new Button("edit");

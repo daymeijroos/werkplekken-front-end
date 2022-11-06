@@ -1,9 +1,14 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
+import com.example.werkplekkenfrontend.daos.BuildingDao;
+import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.elements.AdminMeetingroomElement;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
+import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Space;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -19,6 +24,9 @@ public class AdminMeetingroomViewController implements ViewController{
     @FXML
     public VBox meetingrooms_container;
 
+
+    private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
+
     @FXML
     void OnNewMeetingroomButtonClick(ActionEvent event) {
         ViewController controller = Main.sceneController.showView("space-view-new-meetingroom.fxml");
@@ -27,13 +35,13 @@ public class AdminMeetingroomViewController implements ViewController{
 
 
 
-    private void showSpacesOnView(List<Space> spaces){
-        for(Space space : spaces){
+    private void showSpacesOnView(){
+        List<Space> spacesFromDao = spaceDao.getAll();
+        for(Space space : spacesFromDao){
             AdminMeetingroomElement element = new AdminMeetingroomElement(this, space);
             meetingrooms_container.getChildren().add(element.getMeetingroomBox());
         }
     }
-
     @FXML
     public void onEditMeetingRoomButtonClick(Space space) {
         AdminEditMeetingroomViewController controller = (AdminEditMeetingroomViewController)Main.sceneController.showView("space-edit-meetingroom.fxml");
@@ -42,20 +50,11 @@ public class AdminMeetingroomViewController implements ViewController{
 
     }
 
-    private List<Space> setupTestData(){
-        List<Space> testSpaces = new ArrayList<>();
-        Space vergaderruimte_1 = new Space(UUID.randomUUID(),10,"sponge", "vergaderingruimte_1");
-        testSpaces.add(vergaderruimte_1);
-        return testSpaces;
-    }
-
-
 
     @Override
     public void updateView() {
-        List<Space> spacesFromDao = setupTestData();
-        showSpacesOnView(spacesFromDao);
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
+        showSpacesOnView();
 
     }
 

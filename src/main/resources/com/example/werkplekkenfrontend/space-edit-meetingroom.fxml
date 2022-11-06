@@ -26,5 +26,6 @@
         </VBox>
     </VBox>
    <TextArea fx:id="facility" prefHeight="23.0" prefWidth="600.0" />
+    <TextArea fx:id="floor" prefHeight="23.0" prefWidth="600.0" />
 
 </VBox>
