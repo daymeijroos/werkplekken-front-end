@@ -9,30 +9,32 @@ public class LoginController {
     private String JWT = "";
     private User userLoggedIn = null;
 
+    private final LoginDao loginDao;
+    private final UserDao userDao;
+
+    public LoginController(LoginDao loginDao, UserDao userDao) {
+        this.loginDao = loginDao;
+        this.userDao = userDao;
+    }
+
     private void setUserLoggedIn() {
-        UserDao dao = new UserDao();
-        userLoggedIn = dao.getCurrent();
+        userLoggedIn = userDao.getCurrent();
     }
 
     public void login(String email, String password) {
-        JWT = "";
-        LoginDao dao = new LoginDao();
-        String response = dao.login(email, password);
-        if (response == null) return;
+        String response = loginDao.login(email, password);
         JSONObject objectJSON = new JSONObject(response);
         JWT = "Bearer " + objectJSON.getString("jwt-token");
-        setUserLoggedIn();
+        this.setUserLoggedIn();
     }
 
     public void register(String firstName, String lastName, String email, String password) {
-        JWT = "";
-        LoginDao dao = new LoginDao();
-        String response = dao.register(firstName, lastName, email, password);
-        if (response == null) return;
+        String response = loginDao.register(firstName, lastName, email, password);
+
         System.out.println(response);
         JSONObject objectJSON = new JSONObject(response);
         JWT = "Bearer " + objectJSON.getString("jwt-token");
-        setUserLoggedIn();
+        this.setUserLoggedIn();
     }
 
     public String getJWT() {
