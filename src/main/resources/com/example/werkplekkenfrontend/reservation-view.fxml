@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.ReservationViewController">
+    <VBox fx:id="main_container" alignment="CENTER_LEFT" layoutX="26.0" layoutY="82.0" maxWidth="600.0" prefHeight="341.0" prefWidth="556.0" spacing="50" style="-fx-border-color: black; -fx-padding: 50">
+        <HBox alignment="CENTER_LEFT" spacing="50">
+            <Label fx:id="building" maxHeight="50" prefWidth="50" style="-fx-border-color: black; -fx-padding: 25" />
+            <Label fx:id="floor" maxHeight="50" prefWidth="50" style="-fx-border-color: black; -fx-padding: 25" />
+            <Label fx:id="space_on_floor" maxHeight="50" prefWidth="50" style="-fx-border-color: black; -fx-padding: 25" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="50">
+            <Label fx:id="startTime" maxHeight="50" prefHeight="50" style="-fx-border-color: black; -fx-padding: 30" />
+            <Label fx:id="endTime" maxHeight="50" prefHeight="50" style="-fx-border-color: black; -fx-padding: 30" />
+            <Button maxWidth="800" onAction="#onClickCancel" prefHeight="50" text="Cancel" />
+            <Button maxWidth="800" onAction="#onClickCheckIn" prefHeight="50" text="Check In" />
+        </HBox>
+    </VBox>
+
+    <Button layoutX="524.0" layoutY="14.0" maxWidth="800" onAction="#onClickCreateReservation" prefHeight="61.0" prefWidth="62.0" text="Create" />
+</AnchorPane>
