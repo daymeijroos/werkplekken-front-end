@@ -14,21 +14,21 @@ public class DaoReplicator {
         return testBuildings;
     }
 
-    public static List<Space> getSpaces(){
-        List<Space> testSpaces = new ArrayList<>();
-        Space werkplek_1 = new Space(UUID.randomUUID(), 1,"werkplek_1");
-        Space vergaderruimte_1 = new Space(UUID.randomUUID(),10,"sponge", "vergaderingruimte_1");
-        testSpaces.add(werkplek_1);
-        testSpaces.add(vergaderruimte_1);
-        return testSpaces;
-    }
+//    public static List<Space> getSpaces(){
+//        List<Space> testSpaces = new ArrayList<>();
+//        Space werkplek_1 = new Space(UUID.randomUUID(), 1,"werkplek_1");
+//        Space vergaderruimte_1 = new Space(UUID.randomUUID(),10,"sponge", "vergaderingruimte_1");
+//        testSpaces.add(werkplek_1);
+//        testSpaces.add(vergaderruimte_1);
+//        return testSpaces;
+//    }
 
-    public static Space getWorkSpaceFromID(UUID id){
-        return new Space(id, 1,"workspace_1");
-    }
-    public static Space getMeetingroomFromID(UUID id){
-        return new Space(id, 1,"sponge","meetingroom_1");
-    }
+//    public static Space getWorkSpaceFromID(UUID id){
+//        return new Space(id, 1,"workspace_1");
+//    }
+//    public static Space getMeetingroomFromID(UUID id){
+//        return new Space(id, 1,"sponge","meetingroom_1");
+//    }
 
 
     public static Building getBuildingFromID(UUID id){

@@ -15,5 +15,6 @@ module com.example.werkplekkenfrontend {
     exports com.example.werkplekkenfrontend.elements;
     exports com.example.werkplekkenfrontend.daos;
     exports com.example.werkplekkenfrontend.services;
+    opens com.example.werkplekkenfrontend.models to com.fasterxml.jackson.databind;
     opens com.example.werkplekkenfrontend.controllers to javafx.fxml;
 }
