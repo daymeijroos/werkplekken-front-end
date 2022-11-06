@@ -18,12 +18,12 @@ public class AccountViewController implements ViewController{
     public Label lastName;
     public Label email;
 
-    private void displayUserInfo(String id){
-        User user = DaoReplicator.getUserInfoFromID(id);
-        firstName.setText(user.getName());
-        lastName.setText(user.getLastName());
-        email.setText(user.getEmail());
-    }
+    //private void displayUserInfo(String id){
+    //    User user = DaoReplicator.getUserInfoFromID(id);
+    //    firstName.setText(user.getName());
+     //   lastName.setText(user.getLastName());
+    //    email.setText(user.getEmail());
+    //}
 
     public void onLogOutClick() {
 
@@ -31,7 +31,7 @@ public class AccountViewController implements ViewController{
 
     @Override
     public void updateView() {
-        displayUserInfo(UUID.randomUUID().toString());
+        //displayUserInfo(UUID.randomUUID().toString());
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
     }
 }
