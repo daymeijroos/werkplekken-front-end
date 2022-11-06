@@ -1,5 +1,6 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.daos.UserDao;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.models.User;
@@ -17,12 +18,20 @@ public class AccountViewController implements ViewController{
     public Label firstName;
     public Label lastName;
     public Label email;
+    private User currentUser = null;
 
     private void displayUserInfo(String id){
-        User user = DaoReplicator.getUserInfoFromID(id);
-        firstName.setText(user.getName());
-        lastName.setText(user.getLastName());
-        email.setText(user.getEmail());
+        UserDao dao = new UserDao();
+        currentUser = dao.getCurrent();
+
+        firstName.setText(currentUser.getName());
+        lastName.setText(currentUser.getLastName());
+        email.setText(currentUser.getEmail());
+
+        System.out.println(currentUser);
+        System.out.println("current mf: " + currentUser.getName());
+        System.out.println("mail: " + currentUser.email);
+
     }
 
     public void onLogOutClick() {
