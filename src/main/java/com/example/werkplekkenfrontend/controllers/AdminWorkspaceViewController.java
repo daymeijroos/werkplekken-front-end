@@ -30,7 +30,7 @@ public class AdminWorkspaceViewController implements ViewController{
 
     @FXML
     void OnNewWorkspaceButtonClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("space-view-new-workspace.fxml");
+        ViewController controller = Main.sceneController.showView("space-edit-workspace.fxml");
         controller.updateView();
     }
 
@@ -44,7 +44,8 @@ public class AdminWorkspaceViewController implements ViewController{
 
     @FXML
     public void onEditWorkspaceButtonClick(Space space) {
-        ViewController controller = Main.sceneController.showView("space-edit-workspace.fxml");
+        AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("space-edit-workspace.fxml");
+        controller.spaceID = space.getId();
         controller.updateView();
 
     }

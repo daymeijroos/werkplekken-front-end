@@ -14,6 +14,12 @@ public class Space {
         this.capacity = capacity;
     }
 
+    public Space(UUID id, int capacity, String floorId) {
+        this.id = id;
+        this.capacity = capacity;
+        this.floorId = floorId;
+    }
+
     public Space() {
     }
 
