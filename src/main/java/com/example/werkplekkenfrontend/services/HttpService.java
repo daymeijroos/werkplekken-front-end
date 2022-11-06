@@ -66,7 +66,7 @@ public class HttpService {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
                 .header("Content-Type", "application/json")
-                .header("Authorization", Main.loginController.getJWT())
+                .header("Authorization", Main.currentUser.getJWTtoken())
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         try {
