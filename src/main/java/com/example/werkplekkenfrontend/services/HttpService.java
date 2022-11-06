@@ -16,7 +16,7 @@ public class HttpService {
         System.out.println(json);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .header("Authorization", Main.loginController.getJWT())
+                .header("Authorization", Main.currentUser.getJWTtoken())
                 .uri(URI.create(baseURL + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
@@ -33,7 +33,7 @@ public class HttpService {
     public int postWithURLandJSONreturnsCode(String endpoint, String json) {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .header("Authorization", Main.loginController.getJWT())
+                .header("Authorization", Main.currentUser.getJWTtoken())
                 .uri(URI.create(baseURL + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
@@ -49,7 +49,7 @@ public class HttpService {
     public String getWithURL(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
-                .header("Authorization", Main.loginController.getJWT())
+                .header("Authorization", Main.currentUser.getJWTtoken())
                 .GET()
                 .build();
         try {
@@ -81,7 +81,7 @@ public class HttpService {
     public int deleteWithURL(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
-                .header("Authorization", Main.loginController.getJWT())
+                .header("Authorization", Main.currentUser.getJWTtoken())
                 .DELETE()
                 .build();
         try {
