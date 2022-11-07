@@ -1,8 +1,11 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.daos.UserDao;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.models.User;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,13 +20,19 @@ public class AccountViewController implements ViewController{
     public Label firstName;
     public Label lastName;
     public Label email;
+    private User currentUser = null;
 
-    //private void displayUserInfo(String id){
-    //    User user = DaoReplicator.getUserInfoFromID(id);
-    //    firstName.setText(user.getName());
-     //   lastName.setText(user.getLastName());
-    //    email.setText(user.getEmail());
-    //}
+    private void displayUserInfo(String id){
+        UserDao dao = new UserDao(new HttpService(), new ObjectMapper());
+        currentUser = dao.getCurrent();
+
+        firstName.setText(currentUser.getName());
+        lastName.setText(currentUser.getLastName());
+        email.setText(currentUser.getEmail());
+
+        System.out.println(currentUser);
+        System.out.println("current mf: " + currentUser.getName());
+    }
 
     public void onLogOutClick() {
 
@@ -31,7 +40,7 @@ public class AccountViewController implements ViewController{
 
     @Override
     public void updateView() {
-        //displayUserInfo(UUID.randomUUID().toString());
+        displayUserInfo(UUID.randomUUID().toString());
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
     }
 }
