@@ -23,36 +23,6 @@ public class ReservationDao implements Dao<Reservation> {
         this.objectMapper = objectMapper;
     }
 
-    private Reservation ReservationFromJSON(JSONObject objectJSON) {
-        Reservation reservation = new Reservation();
-        reservation.id = objectJSON.getString("id");
-        reservation.userId = objectJSON.getString("userId");
-        reservation.dateIn = objectJSON.getLong("dateIn");
-        reservation.dateOut = objectJSON.getLong("dateOut");
-        reservation.amountOfPeople = objectJSON.getInt("amountOfPeople");
-        reservation.spaceId = objectJSON.getString("spaceId");
-        return reservation;
-    }
-
-    private String fetchResponseBodyFromURL(String url) {
-        String responseBody;
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-        try {
-            responseBody = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
-        } catch(Exception e) {
-            System.out.println("ERROR!");
-            System.out.println(e);
-            return null;
-        }
-
-        return responseBody;
-    }
-
     @Override
     public ArrayList<Reservation> getAll() {
         String url = "/api/reservation";

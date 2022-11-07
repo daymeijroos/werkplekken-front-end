@@ -1,7 +1,6 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.elements.NavBarElement;
-import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

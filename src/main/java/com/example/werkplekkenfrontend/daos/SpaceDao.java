@@ -1,9 +1,6 @@
 package com.example.werkplekkenfrontend.daos;
 
-import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Space;
-import com.example.werkplekkenfrontend.models.User;
-import com.example.werkplekkenfrontend.project_settings;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

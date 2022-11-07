@@ -1,6 +1,5 @@
 package com.example.werkplekkenfrontend.models;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class Space {
@@ -9,6 +8,8 @@ public class Space {
     int capacity;
 
     String floorId;
+
+    public Space() {}
 
     public Space(int capacity) {
         this.capacity = capacity;

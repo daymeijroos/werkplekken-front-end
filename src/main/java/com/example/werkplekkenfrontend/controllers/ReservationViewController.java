@@ -1,12 +1,10 @@
 package com.example.werkplekkenfrontend.controllers;
 
-import com.example.werkplekkenfrontend.daos.ReservationDao;
-import com.example.werkplekkenfrontend.daos.SpaceDAO;
-import com.example.werkplekkenfrontend.daos.UserDao;
+import com.example.werkplekkenfrontend.daos.*;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
-import com.example.werkplekkenfrontend.models.Reservation;
-import com.example.werkplekkenfrontend.models.Space;
-import com.example.werkplekkenfrontend.models.User;
+import com.example.werkplekkenfrontend.models.*;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,46 +12,49 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
 public class ReservationViewController implements ViewController {
     @FXML
     public VBox main_container;
-    public Label building;
-    public Label floor;
-    public Label space_on_floor;
+    public Label buildingName;
+    public Label floorDesignation;
     public Label startTime;
     public Label endTime;
 
     private void displayReservations() {
-        ReservationDao reservationDao = new ReservationDao();
+        ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
         ArrayList<Reservation> reservations = reservationDao.getAll();
 
-        UserDao userDao = new UserDao();
+        UserDao userDao = new UserDao(new HttpService(), new ObjectMapper());
         User user = userDao.getCurrent();
 
-        SpaceDAO spaceDAO = new SpaceDAO();
-        ArrayList<Space> spaces = spaceDAO.getAll();
+        SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
+        ArrayList<Space> spaces = spaceDao.getAll();
 
-        
+        FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
+        ArrayList<Floor> floors = floorDao.getAll();
+
+        BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
+        ArrayList<Building> buildings = buildingDao.getAll();
 
         for (Reservation reservation : reservations) {
-            if (Objects.equals(reservation.userId, user.id)) {
+            if (Objects.equals(reservation.getUserId(), user.getId())) {
                 for (Space space: spaces) {
-                    if (Objects.equals(reservation.spaceId, space.id)) {
-
-
+                    if (Objects.equals(reservation.spaceId, space.getId())) {
+                        for (Floor floor: floors) {
+                            for (Building building: buildings) {
+                                if (Objects.equals(floor.getBuildingId(), building.getId())) {
+                                    buildingName.setText(building.getAddress());
+                                    floorDesignation.setText(floor.getDesignation());
+                                    startTime.setText(reservation.dateIn);
+                                    endTime.setText(reservation.dateOut);
+                                }
+                            }
+                        }
                     }
                 }
-
             }
         }
-
-        building.setText(user.getName());
-        floor.setText(user.getLastName());
-        space_on_floor.setText(user.getEmail());
-        startTime.setText(user.getLastName());
-        endTime.setText(user.getEmail());
     }
 
     public void onClickCancel(ActionEvent actionEvent) {

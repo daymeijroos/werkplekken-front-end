@@ -8,10 +8,12 @@ module com.example.werkplekkenfrontend {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
 
+    opens com.example.werkplekkenfrontend.models to com.fasterxml.jackson.databind;
     opens com.example.werkplekkenfrontend to javafx.fxml;
     exports com.example.werkplekkenfrontend;
     exports com.example.werkplekkenfrontend.controllers;
     exports com.example.werkplekkenfrontend.models;
+    exports com.example.werkplekkenfrontend.models.enums;
     exports com.example.werkplekkenfrontend.elements;
     exports com.example.werkplekkenfrontend.daos;
     exports com.example.werkplekkenfrontend.services;
