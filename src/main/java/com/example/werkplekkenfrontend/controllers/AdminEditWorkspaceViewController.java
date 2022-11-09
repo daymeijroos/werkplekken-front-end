@@ -21,6 +21,8 @@ public class AdminEditWorkspaceViewController implements ViewController{
     @FXML
     private TextArea name;
 
+    private Space space_test;
+
 
     public UUID spaceID = null;
 
@@ -28,12 +30,11 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     private void updateWorkspaceDetails(Space space){
         capacity.setText(String.valueOf(space.getCapacity()));
-
     }
     @FXML
     void onApplyClick(ActionEvent event) {
         if(spaceID != null){
-            Space updatedSpace = new Space(Integer.valueOf(capacity.getText()));
+            Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()),space_test.getFloorId());
             System.out.println("Patch request response: " + spaceDao.patch(updatedSpace));
         }
         else{
@@ -42,13 +43,9 @@ public class AdminEditWorkspaceViewController implements ViewController{
             System.out.println("Post request response: " + spaceDao.post(newSpace));
 
         }
-        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
+        spaceID = null;
+        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
         controller.updateView();
-
-        if (spaceID == null){
-            Space newSpace = new Space((Integer.valueOf(capacity.getText()))); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + spaceDao);
-        }
 
     }
 
@@ -69,7 +66,7 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     @FXML
     void onCancelClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
         controller.updateView();
     }
 
@@ -78,8 +75,9 @@ public class AdminEditWorkspaceViewController implements ViewController{
         //Space spaceFromDao = DaoReplicator.getWorkSpaceFromID(UUID.randomUUID());
         //updateWorkspaceDetails(spaceFromDao);
         if(spaceID != null)  {
-            Space spaceFromDao = spaceDao.get(spaceID);
-            updateWorkspaceDetails(spaceFromDao);
+            space_test = spaceDao.get(spaceID);
+            //Space spaceFromDao = spaceDao.get(spaceID);
+            updateWorkspaceDetails(space_test);
         }
     }
 }

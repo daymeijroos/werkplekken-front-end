@@ -21,6 +21,7 @@ public class AdminBuildingsViewController implements ViewController{
 
     @FXML
     public VBox buildings_container;
+
     @FXML
     public VBox main_container;
 

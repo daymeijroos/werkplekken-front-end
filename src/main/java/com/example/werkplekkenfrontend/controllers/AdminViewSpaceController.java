@@ -10,16 +10,16 @@ public class AdminViewSpaceController implements ViewController {
 
     @FXML
     public VBox main_container;
-    @FXML
+    /*@FXML
     void OnMeetingroomButtonClick(ActionEvent event) {
         ViewController controller = Main.sceneController.showView("admin-meetingroom-view.fxml");
         controller.updateView();
-
     }
+     */
 
     @FXML
     void OnWorkspaceButtonClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-workspace-view.fxml");
+        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
         controller.updateView();
     }
 
