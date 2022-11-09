@@ -46,8 +46,8 @@ public class AdminFloorsViewController implements ViewController{
     }
 
     public void onSelectFloorClick(Floor floor) {
-        AdminWorkspaceViewController controller = (AdminWorkspaceViewController) Main.sceneController.showView("admin-edit-floor-view.fxml");
-        controller.floorId = UUID.fromString(floor.getId());
+        AdminWorkspaceViewController controller = (AdminWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+        controller.floorId = floor.getId();
         controller.updateView();
     }
 

@@ -19,7 +19,7 @@ public class AdminWorkspaceViewController implements ViewController {
 
     private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
 
-    public UUID floorId;
+    public String floorId;
 
     @FXML
     public VBox workspaces_container;
@@ -36,7 +36,7 @@ public class AdminWorkspaceViewController implements ViewController {
     private void showSpacesOnView() {
         List<Space> spacesFromDao = spaceDao.getAll();
         for (Space space : spacesFromDao) {
-            if (!Objects.equals(space.getFloorId(), floorId.toString())) continue;
+            if (!Objects.equals(space.getFloorId(), floorId)) continue;
             AdminWorkspaceElement element = new AdminWorkspaceElement(this, space);
             workspaces_container.getChildren().add(element.getWorkspaceBox());
         }
