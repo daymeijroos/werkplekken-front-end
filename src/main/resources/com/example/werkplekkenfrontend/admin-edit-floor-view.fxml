@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditFloorViewController">
+<VBox minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditFloorsViewController">
     <VBox alignment="TOP_CENTER" >
         <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
             <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>

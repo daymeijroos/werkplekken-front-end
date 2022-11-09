@@ -11,10 +11,10 @@ import javafx.scene.control.TextArea;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AdminEditFloorViewController implements ViewController{
+public class AdminEditFloorsViewController implements ViewController{
     private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
-    public UUID floorId = null;
-    public UUID buildingId = null;
+    public String floorId = null;
+    public String buildingId = null;
     private AdminFloorsViewController controller;
 
     @FXML
@@ -22,26 +22,27 @@ public class AdminEditFloorViewController implements ViewController{
 
     private void updateFloorDetails(Floor floor){
         designation.setText(floor.getDesignation());
-        buildingId = UUID.fromString(floor.getBuildingId());
+        buildingId = floor.getBuildingId();
     }
 
     public void onCancelClick(){
-        AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floors-view.fxml");
-        controller.buildingId = UUID.fromString(floorDao.get(floorId).getBuildingId());
+        AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        controller.buildingId = floorDao.get(UUID.fromString(floorId)).getBuildingId();
         controller.updateView();
     }
 
     public void onApplyClick(){
         if (!validityCheck()) return;
         if (floorId != null) {
-            Floor updatedFloor = new Floor(floorId.toString(), designation.getText(), floorDao.get(floorId).getBuildingId());
+            Floor updatedFloor = new Floor(floorId, designation.getText(), floorDao.get(UUID.fromString(floorId)).getBuildingId());
             floorDao.patch(updatedFloor);
         }
         else {
-            Floor newFloor = new Floor(UUID.randomUUID().toString(), designation.getText(), buildingId.toString());
+            Floor newFloor = new Floor(UUID.randomUUID().toString(), designation.getText(), buildingId);
             floorDao.post(newFloor);
         }
-        controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floors-view.fxml");
+        controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        controller.buildingId = buildingId;
         controller.updateView();
     }
 
@@ -52,7 +53,7 @@ public class AdminEditFloorViewController implements ViewController{
     @Override
     public void updateView() {
         if (floorId != null) {
-            Floor floorFromDao = floorDao.get(floorId);
+            Floor floorFromDao = floorDao.get(UUID.fromString(floorId));
             updateFloorDetails(floorFromDao);
         }
     }

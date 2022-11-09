@@ -7,7 +7,6 @@ import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 public class AdminFloorsViewController implements ViewController{
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
-    public UUID buildingId = null;
+    public String buildingId = null;
 
     @FXML
     public VBox floors_container;
@@ -28,21 +27,21 @@ public class AdminFloorsViewController implements ViewController{
     private void displayFloors() {
         List<Floor> floorsFromDao = floorDao.getAll();
         for (Floor floor : floorsFromDao){
-            if (!Objects.equals(floor.getBuildingId(), buildingId.toString())) continue;
+            if (!Objects.equals(floor.getBuildingId(), buildingId)) continue;
             AdminFloorElement element = new AdminFloorElement(this, floor);
             floors_container.getChildren().add(element.getBuildingBox());
         }
     }
 
     public void onAddFloorClick() {
-        AdminEditFloorViewController controller = (AdminEditFloorViewController) Main.sceneController.showView("admin-edit-floor-view.fxml");
+        AdminEditFloorsViewController controller = (AdminEditFloorsViewController) Main.sceneController.showView("admin-edit-floor-view.fxml");
         controller.buildingId = buildingId;
         controller.updateView();
     }
 
     public void onEditFloorClick(Floor floor) {
-        AdminEditFloorViewController controller = (AdminEditFloorViewController) Main.sceneController.showView("admin-edit-floor-view.fxml");
-        controller.floorId = UUID.fromString(floor.getId());
+        AdminEditFloorsViewController controller = (AdminEditFloorsViewController) Main.sceneController.showView("admin-edit-floor-view.fxml");
+        controller.floorId = floor.getId();
         controller.updateView();
     }
 
@@ -52,7 +51,7 @@ public class AdminFloorsViewController implements ViewController{
         controller.updateView();
     }
 
-    public void onReturnClick(ActionEvent actionEvent) {
+    public void onReturnClick() {
         ViewController controller = Main.sceneController.showView("admin-buildings-view.fxml");
         controller.updateView();
     }
