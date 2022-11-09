@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/.idea/discord.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
