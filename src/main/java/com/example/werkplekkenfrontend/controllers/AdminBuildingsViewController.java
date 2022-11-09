@@ -46,6 +46,10 @@ public class AdminBuildingsViewController implements ViewController{
         controller.updateView();
     }
 
+    public void onSelectBuildingClick(Building building) {
+
+    }
+
     private void showBuildingsOnView(){
         List<Building> buildingsFromDao = buildingDao.getAll();
         for(Building building : buildingsFromDao){
