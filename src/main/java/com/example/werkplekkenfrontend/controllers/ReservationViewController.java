@@ -1,5 +1,6 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.*;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.*;
@@ -10,8 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.UUID;
 
 public class ReservationViewController implements ViewController {
     @FXML
@@ -21,40 +21,15 @@ public class ReservationViewController implements ViewController {
     public Label startTime;
     public Label endTime;
 
+    private Reservation currentReservationFromUser;
+
     private void displayReservations() {
-        ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
-        ArrayList<Reservation> reservations = reservationDao.getAll();
-
-        UserDao userDao = new UserDao(new HttpService(), new ObjectMapper());
-        User user = userDao.getCurrent();
-
         SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
-        ArrayList<Space> spaces = spaceDao.getAll();
+        ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
+        System.out.println(reservationDao.getAll());
+        currentReservationFromUser = reservationDao.getByUser(UUID.fromString(Main.currentUser.getId()));
 
-        FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
-        ArrayList<Floor> floors = floorDao.getAll();
-
-        BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
-        ArrayList<Building> buildings = buildingDao.getAll();
-
-        for (Reservation reservation : reservations) {
-            if (Objects.equals(reservation.getUserId(), user.getId())) {
-                for (Space space: spaces) {
-                    if (Objects.equals(reservation.spaceId, space.getId())) {
-                        for (Floor floor: floors) {
-                            for (Building building: buildings) {
-                                if (Objects.equals(floor.getBuildingId(), building.getId())) {
-                                    buildingName.setText(building.getAddress());
-                                    floorDesignation.setText(floor.getDesignation());
-                                    startTime.setText(reservation.dateIn);
-                                    endTime.setText(reservation.dateOut);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        System.out.println("this is current mf reservation " + currentReservationFromUser);
     }
 
     public void onClickCancel(ActionEvent actionEvent) {
