@@ -10,7 +10,10 @@
             <Button text="Apply" onAction="#onApplyClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
         </HBox>
         <VBox maxWidth="800" maxHeight="400">
-            <TextArea fx:id="designation"/>
+            <VBox>
+                <Label text="designation: "/>
+                <TextArea fx:id="designation"/>
+            </VBox>
         </VBox>
     </VBox>
 </VBox>
