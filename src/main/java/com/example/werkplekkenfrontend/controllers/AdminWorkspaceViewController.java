@@ -20,10 +20,10 @@ public class AdminWorkspaceViewController implements ViewController {
 
     private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
 
-    private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
+    //private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
 
 
-    public String floorId;
+    public String floorId = null;
 
     @FXML
     public VBox workspaces_container;
@@ -31,9 +31,10 @@ public class AdminWorkspaceViewController implements ViewController {
     @FXML
     public VBox main_container;
 
-    @FXML
-    void OnNewWorkspaceButtonClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("space-edit-workspace.fxml");
+
+    public void OnNewWorkspaceButtonClick() {
+        AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("space-edit-workspace.fxml");
+        controller.floorId = floorId;
         controller.updateView();
     }
 
@@ -46,14 +47,11 @@ public class AdminWorkspaceViewController implements ViewController {
         }
     }
 
-    /*
-    @FXML
     public void onEditWorkspaceButtonClick(Space space) {
         AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("space-edit-workspace.fxml");
         controller.spaceID = space.getId();
         controller.updateView();
     }
-     */
 
 
     @Override
@@ -72,9 +70,8 @@ public class AdminWorkspaceViewController implements ViewController {
     }
 
     @FXML
-    void onCancelClick(ActionEvent event) {
+    public void onCancelClick() {
         ViewController controller = Main.sceneController.showView("admin-floor-view.fxml");
-        floorDao.get(UUID.fromString(floorId)).getBuildingId();
         controller.updateView();
     }
 
