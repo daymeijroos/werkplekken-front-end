@@ -5,12 +5,7 @@ import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 
-import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
@@ -83,5 +78,18 @@ public class ReservationDao implements Dao<Reservation> {
     public int delete(Reservation object) {
         String url = "/api/reservation/" + object.getId();
         return httpService.deleteWithURL(url);
+    }
+
+    public Reservation getByUser(UUID id) {
+        String url = "/api/reservation/user/" + id;
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        Reservation reservation = null;
+        try {
+            reservation = mapper.readValue(response, Reservation.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reservation;
     }
 }
