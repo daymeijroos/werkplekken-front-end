@@ -28,7 +28,7 @@ public class AuthController {
         JSONObject objectJSON = new JSONObject(response);
         //if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
-        AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
         controller.updateView();
     }
 
