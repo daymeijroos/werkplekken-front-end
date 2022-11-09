@@ -34,7 +34,7 @@ public class NavBarElement {
         Button reservationButton = new Button("reservation");
         adminButton.setOnAction(actionEvent -> onAdminButtonClick());
         accountButton.setOnAction(actionEvent -> onAccountButtonClick());
-        // reservationButton.setOnAction(actionEvent -> onReservationButtonClick());
+        reservationButton.setOnAction(actionEvent -> onReservationButtonClick());
         buildingBox = new HBox(accountButton, reservationButton, adminButton);
         buildingBox.setAlignment(Pos.CENTER);
     }
