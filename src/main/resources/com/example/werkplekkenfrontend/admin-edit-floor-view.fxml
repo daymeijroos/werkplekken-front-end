@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditFloorViewController">
+    <VBox alignment="TOP_CENTER" >
+        <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
+            <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
+            <Button text="Apply" onAction="#onApplyClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
+        </HBox>
+        <VBox maxWidth="800" maxHeight="400">
+            <TextArea fx:id="designation"/>
+        </VBox>
+    </VBox>
+</VBox>

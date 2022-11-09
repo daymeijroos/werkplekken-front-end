@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox fx:id="main_container" minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminFloorsViewController">
+    <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
+        <Button text="Return" onAction="#onReturnClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
+        <Button text="+" onAction="#onAddFloorClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
+    </HBox>
+    <VBox fx:id="floors_container" alignment="CENTER" spacing="50"/>
+</VBox>

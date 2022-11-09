@@ -47,7 +47,9 @@ public class AdminBuildingsViewController implements ViewController{
     }
 
     public void onSelectBuildingClick(Building building) {
-
+        AdminEditFloorViewController controller = (AdminEditFloorViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        controller.buildingId = building.getId();
+        controller.updateView();
     }
 
     private void showBuildingsOnView(){

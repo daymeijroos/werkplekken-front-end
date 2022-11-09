@@ -13,8 +13,8 @@ import java.util.UUID;
 
 public class AdminEditFloorViewController implements ViewController{
     private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
-    public UUID floorID = null;
-    public UUID buildingID = null;
+    public UUID floorId = null;
+    public UUID buildingId = null;
     private AdminFloorsViewController controller;
 
     @FXML
@@ -22,23 +22,23 @@ public class AdminEditFloorViewController implements ViewController{
 
     private void updateFloorDetails(Floor floor){
         designation.setText(floor.getDesignation());
-        buildingID = UUID.fromString(floor.getBuildingId());
+        buildingId = UUID.fromString(floor.getBuildingId());
     }
 
     public void onCancelClick(){
         AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floors-view.fxml");
-        controller.buildingID = UUID.fromString(floorDao.get(floorID).getBuildingId());
+        controller.buildingId = UUID.fromString(floorDao.get(floorId).getBuildingId());
         controller.updateView();
     }
 
     public void onApplyClick(){
         if (!validityCheck()) return;
-        if (floorID != null) {
-            Floor updatedFloor = new Floor(floorID.toString(), designation.getText(), floorDao.get(floorID).getBuildingId());
+        if (floorId != null) {
+            Floor updatedFloor = new Floor(floorId.toString(), designation.getText(), floorDao.get(floorId).getBuildingId());
             floorDao.patch(updatedFloor);
         }
         else {
-            Floor newFloor = new Floor(UUID.randomUUID().toString(), designation.getText(), buildingID.toString());
+            Floor newFloor = new Floor(UUID.randomUUID().toString(), designation.getText(), buildingId.toString());
             floorDao.post(newFloor);
         }
         controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floors-view.fxml");
@@ -51,8 +51,8 @@ public class AdminEditFloorViewController implements ViewController{
 
     @Override
     public void updateView() {
-        if (floorID != null) {
-            Floor floorFromDao = floorDao.get(floorID);
+        if (floorId != null) {
+            Floor floorFromDao = floorDao.get(floorId);
             updateFloorDetails(floorFromDao);
         }
     }
