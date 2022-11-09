@@ -1,5 +1,6 @@
 package com.example.werkplekkenfrontend.controllers;
 
+import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.UserDao;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.DaoReplicator;
@@ -29,15 +30,10 @@ public class AccountViewController implements ViewController{
         firstName.setText(currentUser.getName());
         lastName.setText(currentUser.getLastName());
         email.setText(currentUser.getEmail());
-
-        System.out.println(currentUser);
-        System.out.println("current mf: " + currentUser.getName());
-        System.out.println("mail: " + currentUser.email);
-
     }
 
     public void onLogOutClick() {
-
+        Main.sceneController.showView("login-view.fxml");
     }
 
     @Override
