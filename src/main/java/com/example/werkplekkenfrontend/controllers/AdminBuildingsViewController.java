@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +42,12 @@ public class AdminBuildingsViewController implements ViewController{
     public void onEditBuildingClick(Building building) {
         AdminEditBuildingViewController controller = (AdminEditBuildingViewController) Main.sceneController.showView("admin-edit-building-view.fxml");
         controller.buildingID = building.getId();
+        controller.updateView();
+    }
+
+    public void onSelectBuildingClick(Building building) {
+        AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        controller.buildingId = building.getId().toString();
         controller.updateView();
     }
 

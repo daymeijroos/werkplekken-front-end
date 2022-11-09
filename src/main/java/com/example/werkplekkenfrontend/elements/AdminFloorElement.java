@@ -1,32 +1,32 @@
 package com.example.werkplekkenfrontend.elements;
 
-import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.controllers.AdminBuildingsViewController;
+import com.example.werkplekkenfrontend.controllers.AdminFloorsViewController;
 import com.example.werkplekkenfrontend.models.Building;
-import javafx.fxml.FXML;
+import com.example.werkplekkenfrontend.models.Floor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-public class AdminBuildingElement {
-    AdminBuildingsViewController parent;
-    Building building;
+public class AdminFloorElement {
+    AdminFloorsViewController parent;
+    Floor floor;
     HBox buildingBox;
 
-    public AdminBuildingElement(AdminBuildingsViewController parent, Building building) {
+    public AdminFloorElement(AdminFloorsViewController parent, Floor floor) {
         this.parent = parent;
-        this.building = building;
-        Label name = new Label(building.getName());
+        this.floor = floor;
+        Label name = new Label(floor.getDesignation());
         name.setPrefHeight(80);
-        name.setPrefWidth(600);
+        name.setPrefWidth(650);
         Button edit = new Button("edit");
         edit.setMinWidth(80);
         edit.setMinHeight(80);
-        edit.setOnAction(actionEvent -> parent.onEditBuildingClick(this.building));
+        edit.setOnAction(actionEvent -> parent.onEditFloorClick(this.floor));
         Button select = new Button("select");
         select.setMinWidth(80);
         select.setMinHeight(80);
-        select.setOnAction(actionEvent -> parent.onSelectBuildingClick(this.building));
+        select.setOnAction(actionEvent -> parent.onSelectFloorClick(this.floor));
         buildingBox = new HBox(name, edit, select);
         buildingBox.setMaxWidth(800);
         buildingBox.setStyle("-fx-padding: 50; -fx-border-color: black");
