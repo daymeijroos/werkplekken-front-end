@@ -44,9 +44,8 @@ public class AdminEditWorkspaceViewController implements ViewController{
             spaceDao.patch(updatedSpace);
         }
         else{
-            //if (!uniqueCheckFromDao()) return;
             Space newSpace = new Space(UUID.randomUUID(),Integer.valueOf(capacity.getText()),floorId); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + spaceDao.post(newSpace));
+            spaceDao.post(newSpace);
 
         }
 
@@ -55,18 +54,6 @@ public class AdminEditWorkspaceViewController implements ViewController{
         controller.updateView();
 
     }
-/*
-    private boolean uniqueCheckFromDao(){
-        List<Space> spaceList = spaceDao.getAll();
-        for(Space space : spaceList){
-            if (space.getId() == spaceID) continue;
-            if (Objects.equals(space.getCapacity(), capacity.getText())) return false;
-            if (Objects.equals(space.getCapacity(), capacity.getText())) return false;
-        }
-        return true;
-    }
-
- */
     private boolean validityCheck(){
         return !Objects.equals(capacity.getText(), "");
     }
@@ -81,11 +68,8 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     @Override
     public void updateView() {
-        //Space spaceFromDao = DaoReplicator.getWorkSpaceFromID(UUID.randomUUID());
-        //updateWorkspaceDetails(spaceFromDao);
         if(spaceID != null)  {
             Space spaceFromDao = spaceDao.get(spaceID);
-            //Space spaceFromDao = spaceDao.get(spaceID);
             updateWorkspaceDetails(spaceFromDao);
         }
     }
