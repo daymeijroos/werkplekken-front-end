@@ -18,6 +18,10 @@ public class SceneController {
     @FXML
     Pane navBar;
 
+    @FXML
+    Pane popup;
+    PopupController popupController;
+
     public ViewController showView(String xmlFileName) {
         ViewController controller = null;
 
@@ -35,12 +39,30 @@ public class SceneController {
 
     public void init(Stage stage) {
         this.stage = stage;
+        loadDefault();
+    }
+
+    private void loadDefault() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/werkplekkenfrontend/default.fxml"));
             loader.setController(this);
             VBox root = loader.load();
             scene = new Scene(root);
             stage.setScene(scene);
+            loadError();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    VBox errorElement;
+    private void loadError() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/werkplekkenfrontend/popup.fxml"));
+            errorElement = loader.load();
+            popupController = loader.getController();
+            popupController.setParent(this);
+            popup.getChildren().setAll(errorElement);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,5 +70,15 @@ public class SceneController {
 
     public void showPopup(Popup popup) {
         popup.show(stage);
+    }
+
+    public void showError(String message) {
+        popupController.setMessage(message);
+        popup.setVisible(true);
+    }
+
+    @FXML
+    public void closeError() {
+        popup.setVisible(false);
     }
 }

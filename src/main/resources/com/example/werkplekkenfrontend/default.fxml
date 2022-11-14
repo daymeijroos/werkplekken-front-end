@@ -5,9 +5,11 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            alignment="CENTER">
     <StackPane>
-        <Pane fx:id="navBar"/>
-        <Pane fx:id="page"/>
+        <Pane fx:id="page" maxWidth="600"/>
+        <Pane fx:id="navBar" visible="false" maxWidth="600"/>
+        <Pane fx:id="popup" visible="false" maxWidth="600"/>
     </StackPane>
 </VBox>
