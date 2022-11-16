@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.daos.FloorDao;
 import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.elements.AdminWorkspaceElement;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
+import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,7 @@ public class AdminWorkspaceViewController implements ViewController {
 
     private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
 
-    //private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
+    private FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
 
 
     public String floorId = null;
@@ -71,7 +72,9 @@ public class AdminWorkspaceViewController implements ViewController {
 
     @FXML
     public void onCancelClick() {
-        ViewController controller = Main.sceneController.showView("admin-floor-view.fxml");
+        AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
+        Floor floorFromDao = floorDao.get(UUID.fromString(floorId));
+        controller.buildingId = (floorFromDao.getBuildingId());
         controller.updateView();
     }
 
