@@ -26,7 +26,7 @@ public class AuthController {
         String response = loginDao.login(email, password);
         System.out.println(response);
         JSONObject objectJSON = new JSONObject(response);
-        //if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
+//        if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
         AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
         controller.updateView();
