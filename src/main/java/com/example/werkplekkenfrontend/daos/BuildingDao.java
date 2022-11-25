@@ -17,7 +17,7 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public ArrayList<Building> getAll() {
+    public ArrayList<Building> getAll() throws Exception {
         String url = "/api/building";
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
@@ -32,7 +32,7 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public Building get(UUID id) {
+    public Building get(UUID id) throws Exception {
         String url = "/api/building/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +46,7 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int post(Building object) {
+    public int post(Building object) throws Exception {
         String url = "/api/building";
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -59,7 +59,7 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int patch(Building object) {
+    public int patch(Building object) throws Exception {
         String url = "/api/building/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -72,7 +72,7 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int delete(Building object) {
+    public int delete(Building object) throws Exception {
         String url = "/api/building/" + object.getId();
         return httpService.deleteWithURL(url);
     }

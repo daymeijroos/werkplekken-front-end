@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class AdminFloorsViewController implements ViewController{
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
@@ -25,11 +24,15 @@ public class AdminFloorsViewController implements ViewController{
     public VBox main_container;
 
     private void displayFloors() {
-        List<Floor> floorsFromDao = floorDao.getAll();
-        for (Floor floor : floorsFromDao){
-            if (!Objects.equals(floor.getBuildingId(), buildingId)) continue;
-            AdminFloorElement element = new AdminFloorElement(this, floor);
-            floors_container.getChildren().add(element.getBuildingBox());
+        try {
+            List<Floor> floorsFromDao = floorDao.getAll();
+            for (Floor floor : floorsFromDao){
+                if (!Objects.equals(floor.getBuildingId(), buildingId)) continue;
+                AdminFloorElement element = new AdminFloorElement(this, floor);
+                floors_container.getChildren().add(element.getBuildingBox());
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 

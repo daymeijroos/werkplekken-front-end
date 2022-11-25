@@ -50,13 +50,21 @@ public class AdminEditBuildingViewController implements ViewController{
         // open confirmation window, if cancel is selected return
 
         if (buildingID != null) {
-            Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
-            System.out.println("Patch request response: " + buildingDao.patch(updatedBuilding));
+            try {
+                Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
+                System.out.println("Patch request response: " + buildingDao.patch(updatedBuilding));
+            } catch (Exception e) {
+                Main.sceneController.showError("Oops");
+            }
         }
         else {
-            if (!uniqueCheckFromDao()) return;
-            Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + buildingDao.post(newBuilding));
+            try {
+                if (!uniqueCheckFromDao()) return;
+                Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
+                System.out.println("Post request response: " + buildingDao.post(newBuilding));
+            } catch (Exception e) {
+                Main.sceneController.showError("Oops");
+            }
         }
         buildingID = null; // not sure if this is necessary
         adminBuildingViewController = Main.sceneController.showView("admin-buildings-view.fxml");
@@ -71,19 +79,27 @@ public class AdminEditBuildingViewController implements ViewController{
 
     // check if name and address are not already in use.
     private boolean uniqueCheckFromDao(){
-        List<Building> buildingList = buildingDao.getAll();
-        for(Building building : buildingList){
-            if (building.getId() == buildingID) continue;
-            if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAddress(), address.getText())) return false;
+        try {
+            List<Building> buildingList = buildingDao.getAll();
+            for(Building building : buildingList){
+                if (building.getId() == buildingID) continue;
+                if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAddress(), address.getText())) return false;
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
         return true;
     }
 
     @Override
     public void updateView() {
-        if(buildingID != null) {
-            Building buildingFromDao = buildingDao.get(buildingID);
-            updateBuildingDetails(buildingFromDao);
+        try {
+            if(buildingID != null) {
+                Building buildingFromDao = buildingDao.get(buildingID);
+                updateBuildingDetails(buildingFromDao);
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 }

@@ -1,9 +1,6 @@
 package com.example.werkplekkenfrontend.daos;
 
-import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Space;
-import com.example.werkplekkenfrontend.models.User;
-import com.example.werkplekkenfrontend.project_settings;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,14 +19,12 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public ArrayList<Space> getAll() {
+    public ArrayList<Space> getAll() throws Exception {
         String url = "/api/space";
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
-            });
-            return spaces;
+            return mapper.readValue(response, new TypeReference<>() {});
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -37,7 +32,7 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public Space get(UUID id) {
+    public Space get(UUID id) throws Exception {
         String url = "/api/space/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
@@ -51,7 +46,7 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public int post(Space object) {
+    public int post(Space object) throws Exception {
         String url = "/api/space";
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -64,7 +59,7 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public int patch(Space object) {
+    public int patch(Space object) throws Exception {
         String url = "/api/space/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -77,7 +72,7 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public int delete(Space object) {
+    public int delete(Space object) throws Exception {
         String url = "/api/space/" + object.getId();
         return httpService.deleteWithURL(url);
     }

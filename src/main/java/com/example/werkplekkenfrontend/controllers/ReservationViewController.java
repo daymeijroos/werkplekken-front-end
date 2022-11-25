@@ -22,10 +22,14 @@ public class ReservationViewController implements ViewController{
     public VBox reservation_container;
 
     private void showReservations(String userId) {
-        List<Reservation> reservationList = reservationDao.getAllByUser(userId);
-        for (Reservation reservation : reservationList){
-            ReservationElement element = new ReservationElement(this, reservation);
-            reservation_container.getChildren().add(element.getBuildingBox());
+        try {
+            List<Reservation> reservationList = reservationDao.getAllByUser(userId);
+            for (Reservation reservation : reservationList){
+                ReservationElement element = new ReservationElement(this, reservation);
+                reservation_container.getChildren().add(element.getBuildingBox());
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 
@@ -37,8 +41,12 @@ public class ReservationViewController implements ViewController{
     }
 
     public void onAddReservation(ActionEvent actionEvent) {
-        Reservation reservation = new Reservation("id", Main.currentUser.getId(), 999999989L, 9999999999L, 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
-        reservationDao.post(reservation);
+        try {
+            Reservation reservation = new Reservation("id", Main.currentUser.getId(), 999999989L, 9999999999L, 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
+            reservationDao.post(reservation);
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
+        }
         updateView();
     }
 }

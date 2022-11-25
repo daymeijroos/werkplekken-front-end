@@ -13,21 +13,15 @@ public class HttpService {
     private final String baseURL = "http://localhost:8081";
 
     public String postWithURLandJSONreturnsString(String endpoint, String json) {
-        System.out.println(json);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .uri(URI.create(baseURL + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
     }
 
     public int postWithURLandJSONreturnsCode(String endpoint, String json) {
@@ -37,13 +31,9 @@ public class HttpService {
                 .uri(URI.create(baseURL + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
-        }
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::statusCode)
+                .join();
     }
 
     public String getWithURL(String endpoint) {
@@ -52,14 +42,9 @@ public class HttpService {
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .GET()
                 .build();
-        try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
     }
 
     public int patchWithURL(String endpoint, String json) {
@@ -69,13 +54,9 @@ public class HttpService {
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
-        }
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::statusCode)
+                .join();
     }
 
     public int deleteWithURL(String endpoint) {
@@ -84,12 +65,8 @@ public class HttpService {
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .DELETE()
                 .build();
-        try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
-        }
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::statusCode)
+                .join();
     }
 }

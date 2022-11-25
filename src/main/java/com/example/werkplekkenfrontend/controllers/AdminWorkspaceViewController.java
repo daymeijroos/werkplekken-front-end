@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class AdminWorkspaceViewController implements ViewController {
 
@@ -34,11 +33,17 @@ public class AdminWorkspaceViewController implements ViewController {
     }
 
     private void showSpacesOnView() {
-        List<Space> spacesFromDao = spaceDao.getAll();
-        for (Space space : spacesFromDao) {
-            if (!Objects.equals(space.getFloorId(), floorId)) continue;
-            AdminWorkspaceElement element = new AdminWorkspaceElement(this, space);
-            workspaces_container.getChildren().add(element.getWorkspaceBox());
+        try {
+            List<Space> spacesFromDao = spaceDao.getAll();
+            if (spacesFromDao != null) {
+                for (Space space : spacesFromDao) {
+                    if (!Objects.equals(space.getFloorId(), floorId)) continue;
+                    AdminWorkspaceElement element = new AdminWorkspaceElement(this, space);
+                    workspaces_container.getChildren().add(element.getWorkspaceBox());
+                }
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 
@@ -56,7 +61,6 @@ public class AdminWorkspaceViewController implements ViewController {
     public void updateView() {
         showSpacesOnView();
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
-
     }
 
 
@@ -64,14 +68,11 @@ public class AdminWorkspaceViewController implements ViewController {
     void onApplyClick(ActionEvent event) {
         ViewController controller = Main.sceneController.showView("admin-space-view-v2.fxml");
         controller.updateView();
-
     }
 
     @FXML
     void onCancelClick(ActionEvent event) {
         ViewController controller = Main.sceneController.showView("admin-space-view-v2.fxml");
         controller.updateView();
-
     }
-
 }

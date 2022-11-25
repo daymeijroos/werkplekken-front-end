@@ -11,13 +11,13 @@ public class FloorDao implements Dao<Floor> {
     private final HttpService httpService;
     private final ObjectMapper objectMapper;
 
-    public FloorDao(HttpService httpService, ObjectMapper objectMapper){
+    public FloorDao(HttpService httpService, ObjectMapper objectMapper) {
         this.httpService = httpService;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public ArrayList<Floor> getAll() {
+    public ArrayList<Floor> getAll() throws Exception {
         String url = "/api/floor";
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
@@ -32,7 +32,7 @@ public class FloorDao implements Dao<Floor> {
     }
 
     @Override
-    public Floor get(UUID id) {
+    public Floor get(UUID id) throws Exception {
         String url = "/api/floor/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +46,7 @@ public class FloorDao implements Dao<Floor> {
     }
 
     @Override
-    public int post(Floor object) {
+    public int post(Floor object) throws Exception {
         String url = "/api/floor";
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -59,7 +59,7 @@ public class FloorDao implements Dao<Floor> {
     }
 
     @Override
-    public int patch(Floor object) {
+    public int patch(Floor object) throws Exception {
         String url = "/api/floor/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -72,7 +72,7 @@ public class FloorDao implements Dao<Floor> {
     }
 
     @Override
-    public int delete(Floor object) {
+    public int delete(Floor object) throws Exception {
         String url = "/api/floor/" + object.getId();
         return httpService.deleteWithURL(url);
     }

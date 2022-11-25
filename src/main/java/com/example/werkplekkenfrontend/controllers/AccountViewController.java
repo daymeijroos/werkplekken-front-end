@@ -19,11 +19,14 @@ public class AccountViewController implements ViewController {
 
     private void displayUserInfo() {
         UserDao dao = new UserDao(new HttpService(), new ObjectMapper());
-        User currentUser = dao.getCurrent();
-
-        firstName.setText(currentUser.getName());
-        lastName.setText(currentUser.getLastName());
-        email.setText(currentUser.getEmail());
+        try {
+            User currentUser = dao.getCurrent();
+            firstName.setText(currentUser.getName());
+            lastName.setText(currentUser.getLastName());
+            email.setText(currentUser.getEmail());
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
+        }
     }
 
     public void onLogOutClick() {

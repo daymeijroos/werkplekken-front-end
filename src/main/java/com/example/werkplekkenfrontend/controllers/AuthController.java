@@ -5,8 +5,6 @@ import com.example.werkplekkenfrontend.daos.LoginDao;
 import com.example.werkplekkenfrontend.daos.UserDao;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public class AuthController {
     private final LoginDao loginDao;
     private final UserDao userDao;
@@ -16,7 +14,7 @@ public class AuthController {
         this.userDao = userDao;
     }
 
-    private void setUserLoggedIn(String JWTToken) {
+    private void setUserLoggedIn(String JWTToken) throws Exception {
         Main.currentUser.setJWTtoken("Bearer " + JWTToken);
         Main.currentUser.setId(userDao.getCurrent().id);
     }
@@ -24,7 +22,6 @@ public class AuthController {
     public void login(String email, String password) throws Exception {
         Main.currentUser.setJWTtoken("");
         String response = loginDao.login(email, password);
-        System.out.println(response);
         JSONObject objectJSON = new JSONObject(response);
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
         AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
@@ -34,8 +31,9 @@ public class AuthController {
     public void register(String firstName, String lastName, String email, String password) throws Exception {
         Main.currentUser.setJWTtoken("");
         String response = loginDao.register(firstName, lastName, email, password);
-        System.out.println(response);
         JSONObject objectJSON = new JSONObject(response);
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
+        AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
+        controller.updateView();
     }
 }

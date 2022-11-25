@@ -12,6 +12,7 @@ module com.example.werkplekkenfrontend {
     exports com.example.werkplekkenfrontend;
     exports com.example.werkplekkenfrontend.controllers;
     exports com.example.werkplekkenfrontend.models;
+    exports com.example.werkplekkenfrontend.views;
     exports com.example.werkplekkenfrontend.elements;
     exports com.example.werkplekkenfrontend.daos;
     exports com.example.werkplekkenfrontend.services;

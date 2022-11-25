@@ -1,21 +1,10 @@
 package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Reservation;
-import com.example.werkplekkenfrontend.models.Reservation;
-import com.example.werkplekkenfrontend.project_settings;
-
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.OutputStream;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class ReservationDao implements Dao<Reservation> {
@@ -28,76 +17,48 @@ public class ReservationDao implements Dao<Reservation> {
     }
 
     @Override
-    public ArrayList<Reservation> getAll() {
+    public ArrayList<Reservation> getAll() throws Exception {
         String url = "/api/reservation";
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {
-            });
-            return reservations;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return mapper.readValue(response, new TypeReference<>() {});
     }
 
     @Override
-    public Reservation get(UUID id) {
+    public Reservation get(UUID id) throws Exception {
         String url = "/api/reservation/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
-        Reservation reservation = null;
-        try {
-            reservation = mapper.readValue(response, Reservation.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Reservation reservation = mapper.readValue(response, Reservation.class);
         return reservation;
     }
 
-    public ArrayList<Reservation> getAllByUser(String id) {
+    public ArrayList<Reservation> getAllByUser(String id) throws Exception {
         String url = "/api/reservation/user/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {
-            });
-            return reservations;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {});
+        return reservations;
     }
 
     @Override
-    public int post(Reservation object) {
+    public int post(Reservation object) throws Exception {
         String url = "/api/reservation";
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = mapper.writeValueAsString(object);
+        return httpService.postWithURLandJSONreturnsCode(url, json);
     }
 
     @Override
-    public int patch(Reservation object) {
+    public int patch(Reservation object) throws Exception {
         String url = "/api/reservation/" + object.id;
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = mapper.writeValueAsString(object);
+        return httpService.patchWithURL(url, json);
     }
 
     @Override
-    public int delete(Reservation object) {
+    public int delete(Reservation object) throws Exception {
         String url = "/api/reservation/" + object.id;
         return httpService.deleteWithURL(url);
     }

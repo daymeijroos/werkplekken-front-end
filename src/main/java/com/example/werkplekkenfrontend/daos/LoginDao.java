@@ -15,25 +15,15 @@ public class LoginDao {
         this.objectMapper = objectMapper;
     }
 
-    public String login(String email, String password) {
+    public String login(String email, String password) throws Exception {
         String endpoint = "/api/auth/login";
         AuthRequest authRequest = new AuthRequest(email, password);
-        try {
-             return httpService.postWithURLandJSONreturnsString(endpoint, objectMapper.writeValueAsString(authRequest));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return httpService.postWithURLandJSONreturnsString(endpoint, objectMapper.writeValueAsString(authRequest));
     }
 
-    public String register(String firstName, String lastName, String email, String password) {
+    public String register(String firstName, String lastName, String email, String password) throws Exception {
         String endpoint = "/api/auth/register";
         AuthRequest registerRequest = new AuthRequest(firstName, lastName, email, password);
-        try {
-            return httpService.postWithURLandJSONreturnsString(endpoint, objectMapper.writeValueAsString(registerRequest));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return httpService.postWithURLandJSONreturnsString(endpoint, objectMapper.writeValueAsString(registerRequest));
     }
 }

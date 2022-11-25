@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AdminBuildingsViewController implements ViewController{
     private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
@@ -52,10 +51,14 @@ public class AdminBuildingsViewController implements ViewController{
     }
 
     private void showBuildingsOnView(){
-        List<Building> buildingsFromDao = buildingDao.getAll();
-        for(Building building : buildingsFromDao){
-            AdminBuildingElement element = new AdminBuildingElement(this, building);
-            buildings_container.getChildren().add(element.getBuildingBox());
+        try {
+            List<Building> buildingsFromDao = buildingDao.getAll();
+            for(Building building : buildingsFromDao){
+                AdminBuildingElement element = new AdminBuildingElement(this, building);
+                buildings_container.getChildren().add(element.getBuildingBox());
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 

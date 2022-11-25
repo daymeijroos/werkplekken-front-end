@@ -33,23 +33,26 @@ public class AdminEditWorkspaceViewController implements ViewController{
     }
     @FXML
     void onApplyClick(ActionEvent event) {
-        if(spaceID != null){
-            Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()),space_test.getFloorId());
-            System.out.println("Patch request response: " + spaceDao.patch(updatedSpace));
-        }
-        else{
-            if (!uniqueCheckFromDao()) return;
-            Space newSpace = new Space(Integer.valueOf(capacity.getText())); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + spaceDao.post(newSpace));
+        try {
+            if(spaceID != null){
+                Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()),space_test.getFloorId());
+                System.out.println("Patch request response: " + spaceDao.patch(updatedSpace));
+            }
+            else{
+                if (!uniqueCheckFromDao()) return;
+                Space newSpace = new Space(Integer.valueOf(capacity.getText())); // there is a chance this generates a duplicate UUID
+                System.out.println("Post request response: " + spaceDao.post(newSpace));
 
+            }
+            spaceID = null;
+            ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+            controller.updateView();
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
-        spaceID = null;
-        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
-        controller.updateView();
-
     }
 
-    private boolean uniqueCheckFromDao(){
+    private boolean uniqueCheckFromDao() throws Exception {
         List<Space> spaceList = spaceDao.getAll();
         for(Space space : spaceList){
             if (space.getId() == spaceID) continue;
@@ -74,10 +77,14 @@ public class AdminEditWorkspaceViewController implements ViewController{
     public void updateView() {
         //Space spaceFromDao = DaoReplicator.getWorkSpaceFromID(UUID.randomUUID());
         //updateWorkspaceDetails(spaceFromDao);
-        if(spaceID != null)  {
-            space_test = spaceDao.get(spaceID);
-            //Space spaceFromDao = spaceDao.get(spaceID);
-            updateWorkspaceDetails(space_test);
+        try {
+            if(spaceID != null)  {
+                space_test = spaceDao.get(spaceID);
+                //Space spaceFromDao = spaceDao.get(spaceID);
+                updateWorkspaceDetails(space_test);
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 }
