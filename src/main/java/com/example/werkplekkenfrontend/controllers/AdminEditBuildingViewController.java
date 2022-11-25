@@ -51,12 +51,12 @@ public class AdminEditBuildingViewController implements ViewController{
 
         if (buildingID != null) {
             Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
-            System.out.println("Patch request response: " + buildingDao.patch(updatedBuilding));
+            buildingDao.patch(updatedBuilding);
         }
         else {
             if (!uniqueCheckFromDao()) return;
             Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
-            System.out.println("Post request response: " + buildingDao.post(newBuilding));
+            buildingDao.post(newBuilding);
         }
         buildingID = null; // not sure if this is necessary
         adminBuildingViewController = Main.sceneController.showView("admin-buildings-view.fxml");

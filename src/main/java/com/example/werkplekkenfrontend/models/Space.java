@@ -22,7 +22,6 @@ public class Space {
 
     public Space() {
     }
-
     public UUID getId() {
         return id;
     }
