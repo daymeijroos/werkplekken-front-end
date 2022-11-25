@@ -3,6 +3,7 @@ package com.example.werkplekkenfrontend.controllers;
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.ReservationDao;
 import com.example.werkplekkenfrontend.daos.SpaceDao;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.elements.ReservationElement;
 import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.services.HttpService;
@@ -32,6 +33,7 @@ public class ReservationViewController implements ViewController{
     public void updateView() {
         reservation_container.getChildren().clear();
         showReservations(Main.currentUser.getId());
+        reservation_container.getChildren().add(new NavBarElement().getBuildingBox());
     }
 
     public void onAddReservation(ActionEvent actionEvent) {

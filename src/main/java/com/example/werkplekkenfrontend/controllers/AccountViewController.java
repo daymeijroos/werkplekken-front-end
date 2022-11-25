@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.UUID;
 
-public class AccountViewController implements ViewController{
+public class AccountViewController implements ViewController {
     @FXML
     public VBox main_container;
     public Label firstName;
