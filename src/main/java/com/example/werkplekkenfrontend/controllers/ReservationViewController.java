@@ -34,7 +34,7 @@ public class ReservationViewController implements ViewController{
         showReservations(Main.currentUser.getId());
     }
 
-    public void onAddReservation(ActionEvent actionEvent) {
+    public void onAddReservation() {
         Reservation reservation = new Reservation("id", Main.currentUser.getId(), "2022-11-29 11:30:00", "2022-11-29 17:30:00", 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
         reservationDao.post(reservation);
         updateView();

@@ -14,8 +14,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.UUID;
 
-import static java.lang.String.valueOf;
-
 public class ReservationElement {
     SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
@@ -36,6 +34,7 @@ public class ReservationElement {
     private Label reservationSize;
     private Label dateIn;
     private Label dateOut;
+    private Label state;
     private Button cancel;
     private Button checkIn;
 
@@ -63,6 +62,7 @@ public class ReservationElement {
         reservationSize = new Label("Reservation size: " + reservation.amountOfPeople);
         dateIn = new Label(reservation.dateIn);
         dateOut = new Label(reservation.dateOut);
+        state = new Label(reservation.state);
         cancel = new Button("cancel");
         checkIn = new Button("check in");
     }
@@ -71,7 +71,7 @@ public class ReservationElement {
         VBox dateContainer = new VBox(dateIn, dateOut);
         VBox buttonContainer = new VBox(cancel, checkIn);
 
-        VBox leftContainer = new VBox(building, dateContainer);
+        VBox leftContainer = new VBox(building, state, dateContainer);
         VBox rightContainer = new VBox(reservationSize, buttonContainer);
 
         reservationContainer = new HBox(leftContainer, floor, rightContainer);

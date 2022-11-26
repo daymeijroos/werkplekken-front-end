@@ -1,8 +1,5 @@
 package com.example.werkplekkenfrontend.models;
 
-import java.lang.reflect.Constructor;
-import java.util.UUID;
-
 public class Reservation {
     public Reservation() {}
 
