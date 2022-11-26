@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Reservation {
     public Reservation() {}
 
-    public Reservation(String id, String userId, Long dateIn, Long dateOut, int amountOfPeople, String spaceId, String state) {
+    public Reservation(String id, String userId, String dateIn, String dateOut, int amountOfPeople, String spaceId, String state) {
         this.id = id;
         this.userId = userId;
         this.dateIn = dateIn;
@@ -18,8 +18,8 @@ public class Reservation {
 
     public String id;
     public String userId;
-    public Long dateIn;
-    public Long dateOut;
+    public String dateIn;
+    public String dateOut;
     public int amountOfPeople;
     public String spaceId;
     public String state;

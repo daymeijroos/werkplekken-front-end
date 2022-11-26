@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ReservationViewController implements ViewController{
     ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
@@ -21,10 +21,10 @@ public class ReservationViewController implements ViewController{
     public VBox reservation_container;
 
     private void showReservations(String userId) {
-        List<Reservation> reservationList = reservationDao.getAllByUser(userId);
+        ArrayList<Reservation> reservationList = reservationDao.getAllByUser(userId);
         for (Reservation reservation : reservationList){
             ReservationElement element = new ReservationElement(this, reservation);
-            reservation_container.getChildren().add(element.getBuildingBox());
+            reservation_container.getChildren().add(element.getReservationContainer());
         }
     }
 
@@ -35,7 +35,7 @@ public class ReservationViewController implements ViewController{
     }
 
     public void onAddReservation(ActionEvent actionEvent) {
-        Reservation reservation = new Reservation("id", Main.currentUser.getId(), 999999989L, 9999999999L, 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
+        Reservation reservation = new Reservation("id", Main.currentUser.getId(), "2022-11-29 11:30:00", "2022-11-29 17:30:00", 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
         reservationDao.post(reservation);
         updateView();
     }
