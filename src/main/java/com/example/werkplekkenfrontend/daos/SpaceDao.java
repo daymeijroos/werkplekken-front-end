@@ -1,9 +1,6 @@
 package com.example.werkplekkenfrontend.daos;
 
-import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Space;
-import com.example.werkplekkenfrontend.models.User;
-import com.example.werkplekkenfrontend.project_settings;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +21,20 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public ArrayList<Space> getAll() {
         String url = "/api/space";
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            });
+            return spaces;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Space> getAllByFloorId(String floorId) {
+        String url = "/api/space/floor/" + floorId;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {

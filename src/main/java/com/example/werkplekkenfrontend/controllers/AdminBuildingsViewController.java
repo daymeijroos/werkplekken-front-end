@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AdminBuildingsViewController implements ViewController{
     private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());

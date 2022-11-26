@@ -1,6 +1,5 @@
 package com.example.werkplekkenfrontend.models;
 
-import java.util.Set;
 import java.util.UUID;
 
 public class Space {

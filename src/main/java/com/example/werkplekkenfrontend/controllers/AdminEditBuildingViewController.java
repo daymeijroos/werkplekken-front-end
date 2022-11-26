@@ -3,7 +3,6 @@ package com.example.werkplekkenfrontend.controllers;
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.models.Building;
-import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;

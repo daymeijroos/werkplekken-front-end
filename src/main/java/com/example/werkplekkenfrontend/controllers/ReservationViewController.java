@@ -7,7 +7,6 @@ import com.example.werkplekkenfrontend.elements.ReservationElement;
 import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -34,9 +33,14 @@ public class ReservationViewController implements ViewController{
         showReservations(Main.currentUser.getId());
     }
 
-    public void onAddReservation() {
+    public void depricatedOnAddReservation() {
         Reservation reservation = new Reservation("id", Main.currentUser.getId(), "2022-11-29 11:30:00", "2022-11-29 17:30:00", 1, spaceDao.getAll().get(0).getId().toString(), "OPEN");
         reservationDao.post(reservation);
         updateView();
+    }
+
+    public void onAddReservation() {
+        ReservationEditViewController controller = (ReservationEditViewController) Main.sceneController.showView("reservation-edit-view.fxml");
+        controller.updateView();
     }
 }

@@ -1,9 +1,7 @@
 package com.example.werkplekkenfrontend.elements;
 
-import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.controllers.AdminBuildingsViewController;
 import com.example.werkplekkenfrontend.models.Building;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
