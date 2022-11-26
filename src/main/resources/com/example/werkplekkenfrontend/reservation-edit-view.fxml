@@ -2,21 +2,39 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
-<VBox fx:id="main_container" minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.ReservationEditViewController">
-    <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
-        <Button text="+" onAction="#onReturn" prefHeight="120" prefWidth="600"/>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="main_container" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.ReservationEditViewController">
+    <HBox alignment="CENTER" prefHeight="380" prefWidth="1080" xmlns:fx="http://javafx.com/fxml">
+        <Button mnemonicParsing="false" onAction="#onAdd" prefHeight="126.0" prefWidth="250.0" text="add" />
+        <Button onAction="#onReturn" prefHeight="127.0" prefWidth="246.0" text="+" />
     </HBox>
-    <VBox>
+    <VBox prefHeight="383.0" prefWidth="600.0">
         <HBox fx:id="building_selector_container">
-            <Label text="Building" prefHeight="80" prefWidth="400"/>
+            <Label prefHeight="80" prefWidth="400" text="Building" />
         </HBox>
         <HBox fx:id="floor_selector_container">
-            <Label text="Floor" prefHeight="80" prefWidth="400"/>
+            <Label prefHeight="80" prefWidth="400" text="Floor" />
         </HBox>
         <HBox fx:id="space_selector_container">
-            <Label text="Space" prefHeight="80" prefWidth="400"/>
+            <Label prefHeight="80" prefWidth="400" text="Space" />
+        </HBox>
+        <HBox fx:id="space_selector_container1">
+            <children>
+                <Label prefHeight="80" prefWidth="400" text="AmountofPeople" />
+            </children>
+        </HBox>
+        <HBox fx:id="space_selector_container11">
+            <children>
+                <HBox fx:id="space_selector_container111">
+                    <children>
+                        <Label prefHeight="80" prefWidth="400" text="dateIn" />
+                    </children>
+                </HBox>
+                <Label prefHeight="80" prefWidth="400" text="dateOut" />
+            </children>
         </HBox>
     </VBox>
-    <VBox fx:id="reservation_container" alignment="CENTER" spacing="50"/>
+    <VBox fx:id="reservation_container" alignment="CENTER" spacing="50" />
 </VBox>

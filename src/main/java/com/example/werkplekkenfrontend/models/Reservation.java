@@ -20,4 +20,32 @@ public class Reservation {
     public int amountOfPeople;
     public String spaceId;
     public String state;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getDateIn() {
+        return dateIn;
+    }
+
+    public String getDateOut() {
+        return dateOut;
+    }
+
+    public int getAmountOfPeople() {
+        return amountOfPeople;
+    }
+
+    public String getSpaceId() {
+        return spaceId;
+    }
+
+    public String getState() {
+        return state;
+    }
 }

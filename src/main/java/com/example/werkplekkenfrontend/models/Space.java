@@ -3,7 +3,7 @@ package com.example.werkplekkenfrontend.models;
 import java.util.UUID;
 
 public class Space {
-    public UUID id;
+    public String id;
 
     public int capacity;
 
@@ -13,7 +13,7 @@ public class Space {
         this.capacity = capacity;
     }
 
-    public Space(UUID id, int capacity, String floorId) {
+    public Space(String id, int capacity, String floorId) {
         this.id = id;
         this.capacity = capacity;
         this.floorId = floorId;
@@ -21,7 +21,7 @@ public class Space {
 
     public Space() {
     }
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
