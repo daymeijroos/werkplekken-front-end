@@ -205,9 +205,11 @@ public class ReservationEditViewController  implements ViewController {
                         if (reservationID != null) {
                             Reservation updatedReservation = new Reservation(reservationID, user.getId(), datein.getText(), dateout.getText(), Integer.parseInt(people.getText()), spaceId, "OPEN");
                             reservationDao.patch(updatedReservation);
+                            break;
                         } else {
                             Reservation newReservation = new Reservation(UUID.randomUUID().toString(), user.getId(), datein.getText(), dateout.getText(), Integer.parseInt(people.getText()), spaceId, "OPEN");
                             reservationDao.post(newReservation);
+                            break;
                         }
                     }
                 }
