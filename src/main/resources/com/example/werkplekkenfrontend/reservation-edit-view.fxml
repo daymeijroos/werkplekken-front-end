@@ -24,19 +24,19 @@
         <HBox fx:id="people_selector_container">
             <children>
                 <Label prefHeight="80" prefWidth="400" text="AmountofPeople" />
-                <TextField fx:id="people"/>
+                <TextField fx:id="people" />
             </children>
         </HBox>
         <HBox fx:id="dateout_selector_container">
             <children>
-                <Label prefHeight="80" prefWidth="400" text="dateOut" />
-                <TextField fx:id="dateout"/>
+                <Label prefHeight="80" prefWidth="400" text="dateOut (yyyy-MM-dd HH:mm:ss)" />
+                <TextField fx:id="dateout" />
             </children>
         </HBox>
         <HBox fx:id="datein_selector_container" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <Label prefHeight="80" prefWidth="400" text="dateIn" />
-                <TextField fx:id="datein"/>
+                <Label prefHeight="80" prefWidth="400" text="dateIn (yyyy-MM-dd HH:mm:ss)" />
+                <TextField fx:id="datein" />
             </children>
         </HBox>
     </VBox>
