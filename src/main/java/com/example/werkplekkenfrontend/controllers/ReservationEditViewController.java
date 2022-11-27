@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 import java.lang.reflect.Array;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import static java.lang.String.valueOf;
 
 public class ReservationEditViewController  implements ViewController {
+
     BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
     SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
@@ -31,19 +33,29 @@ public class ReservationEditViewController  implements ViewController {
     UserDao userDao = new UserDao(new HttpService(), new ObjectMapper());
     ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
 
+    public String reservationID = null;
+
     public HBox building_selector_container;
     public HBox floor_selector_container;
     public HBox space_selector_container;
+    public HBox datein_selector_container;
+    public HBox people_selector_container;
+    public HBox dateout_selector_container;
+    public TextField datein;
+    public TextField dateout;
+    public TextField people;
     ComboBox buildingOptions;
 
     ComboBox floorOptions;
 
     ComboBox spaceOptions;
 
-    //    private void updateReservationDetails(Reservation reservation){
-//        space.setText(String.valueOf(space.getCapacity()));
-//        floorId = space.getFloorId();
-//    }
+    private void updateReservationDetails(Reservation reservation) {
+        datein.setText(String.valueOf(reservation.getDateIn()));
+        dateout.setText(String.valueOf(reservation.getDateOut()));
+        people.setText(String.valueOf(reservation.getAmountOfPeople()));
+    }
+
     private ArrayList<String> getBuildingNames() {
         ArrayList<String> buildingNames = new ArrayList<>();
         ArrayList<Building> buildings = buildingDao.getAll();
@@ -144,10 +156,18 @@ public class ReservationEditViewController  implements ViewController {
         space_selector_container.getChildren().add(spaceOptions);
     }
 
+    private void setPeopleOptions() {
+        TextField peopleOptions = new TextField();
+    }
+
 
     @Override
     public void updateView() {
         setBuildingOptions();
+        if (reservationID != null) {
+            Reservation reservationFromDao = reservationDao.get(UUID.fromString(reservationID));
+            updateReservationDetails(reservationFromDao);
+        }
     }
 
     public void onReturn() {
@@ -175,23 +195,27 @@ public class ReservationEditViewController  implements ViewController {
         ArrayList<Space> spaces = spaceDao.getAll();
 
         User user = userDao.getCurrent();
-
         for (Building building : buildings) {
             for (Floor floor : floors) {
                 for (Space space : spaces) {
-                    if ((building.getName().equals(Selected_building_name)) && (floor.getDesignation().equals(Selected_floor_name) && (space.getCapacity() == (Selected_space_number)))){
+                    if ((building.getName().equals(Selected_building_name)) && (floor.getDesignation().equals(Selected_floor_name) && (space.getCapacity() == (Selected_space_number)))) {
                         //buildingId = building.getId();
                         //floorId = floor.getId();
                         spaceId = space.getId();
-                        Reservation newReservation = new Reservation(UUID.randomUUID().toString(),user.getId(),"2034-07-18 14:55:14","2034-07-18 14:56:14",5,spaceId,"OPEN");
-                        reservationDao.post(newReservation);
+                        if (reservationID != null) {
+                            Reservation updatedReservation = new Reservation(reservationID, user.getId(), datein.getText(), dateout.getText(), Integer.parseInt(people.getText()), spaceId, "OPEN");
+                            reservationDao.patch(updatedReservation);
+                        } else {
+                            Reservation newReservation = new Reservation(UUID.randomUUID().toString(), user.getId(), datein.getText(), dateout.getText(), Integer.parseInt(people.getText()), spaceId, "OPEN");
+                            reservationDao.post(newReservation);
+                        }
                     }
                 }
             }
-
-            //returns to reservation view
-            //ReservationViewController controller = (ReservationViewController) Main.sceneController.showView("reservation-view.fxml");
-            //controller.updateView();
         }
+
+        //returns to reservation view
+        ReservationViewController controller = (ReservationViewController) Main.sceneController.showView("reservation-view.fxml");
+        controller.updateView();
     }
 }
