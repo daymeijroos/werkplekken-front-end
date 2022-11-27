@@ -1,8 +1,6 @@
 package com.example.werkplekkenfrontend.elements;
 
-import com.example.werkplekkenfrontend.controllers.AdminBuildingsViewController;
 import com.example.werkplekkenfrontend.controllers.AdminFloorsViewController;
-import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Floor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -3,7 +3,6 @@ package com.example.werkplekkenfrontend.controllers;
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.models.Building;
-import com.example.werkplekkenfrontend.models.DaoReplicator;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
@@ -52,7 +51,7 @@ public class AdminEditBuildingViewController implements ViewController{
         if (buildingID != null) {
             try {
                 Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
-                System.out.println("Patch request response: " + buildingDao.patch(updatedBuilding));
+                buildingDao.patch(updatedBuilding);
             } catch (Exception e) {
                 Main.sceneController.showError("Oops");
             }
@@ -61,7 +60,7 @@ public class AdminEditBuildingViewController implements ViewController{
             try {
                 if (!uniqueCheckFromDao()) return;
                 Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
-                System.out.println("Post request response: " + buildingDao.post(newBuilding));
+                buildingDao.post(newBuilding);
             } catch (Exception e) {
                 Main.sceneController.showError("Oops");
             }

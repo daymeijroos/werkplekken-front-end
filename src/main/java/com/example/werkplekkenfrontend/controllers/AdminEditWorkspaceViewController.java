@@ -18,6 +18,8 @@ public class AdminEditWorkspaceViewController implements ViewController{
     @FXML
     private TextArea capacity;
 
+    private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
+
     @FXML
     private TextArea name;
 
@@ -26,61 +28,51 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     public UUID spaceID = null;
 
-    private SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
+    public String floorId = null;
+
+    private AdminWorkspaceViewController controller;
 
     private void updateWorkspaceDetails(Space space){
         capacity.setText(String.valueOf(space.getCapacity()));
+        floorId = space.getFloorId();
     }
+
     @FXML
-    void onApplyClick(ActionEvent event) {
+    void onApplyClick() {
         try {
-            if(spaceID != null){
+            if (spaceID != null) {
                 Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()),space_test.getFloorId());
-                System.out.println("Patch request response: " + spaceDao.patch(updatedSpace));
+                spaceDao.patch(updatedSpace);
             }
-            else{
+            else {
                 if (!uniqueCheckFromDao()) return;
                 Space newSpace = new Space(Integer.valueOf(capacity.getText())); // there is a chance this generates a duplicate UUID
-                System.out.println("Post request response: " + spaceDao.post(newSpace));
+                spaceDao.post(newSpace);
 
             }
             spaceID = null;
-            ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+            controller = (AdminWorkspaceViewController)Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
             controller.updateView();
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
         }
     }
 
-    private boolean uniqueCheckFromDao() throws Exception {
-        List<Space> spaceList = spaceDao.getAll();
-        for(Space space : spaceList){
-            if (space.getId() == spaceID) continue;
-            if (Objects.equals(space.getCapacity(), capacity.getText())) return false;
-            if (Objects.equals(space.getCapacity(), capacity.getText())) return false;
-        }
-        return true;
-    }
     private boolean validityCheck(){
-        if (capacity.getText() == null) return false;
-        return true;
+        return !Objects.equals(capacity.getText(), "");
     }
 
-
-    @FXML
-    void onCancelClick(ActionEvent event) {
-        ViewController controller = Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+    public void onCancelClick() {
+        AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+        controller.floorId = spaceDao.get(spaceID).getFloorId();
         controller.updateView();
     }
 
     @Override
     public void updateView() {
-        //Space spaceFromDao = DaoReplicator.getWorkSpaceFromID(UUID.randomUUID());
-        //updateWorkspaceDetails(spaceFromDao);
         try {
             if(spaceID != null)  {
                 space_test = spaceDao.get(spaceID);
-                //Space spaceFromDao = spaceDao.get(spaceID);
                 updateWorkspaceDetails(space_test);
             }
         } catch (Exception e) {

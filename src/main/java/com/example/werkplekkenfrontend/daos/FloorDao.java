@@ -1,11 +1,12 @@
 package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Floor;
-
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class FloorDao implements Dao<Floor> {
     private final HttpService httpService;
@@ -19,6 +20,20 @@ public class FloorDao implements Dao<Floor> {
     @Override
     public ArrayList<Floor> getAll() throws Exception {
         String url = "/api/floor";
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayList<Floor> floors = mapper.readValue(response, new TypeReference<>() {
+            });
+            return floors;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Floor> getAllByBuildingId(String id) {
+        String url = "/api/floor/building/" + id;
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {

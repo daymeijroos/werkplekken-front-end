@@ -31,6 +31,20 @@ public class SpaceDao implements Dao<Space> {
         }
     }
 
+    public ArrayList<Space> getAllByFloorId(String floorId) {
+        String url = "/api/space/floor/" + floorId;
+        String response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            });
+            return spaces;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public Space get(UUID id) throws Exception {
         String url = "/api/space/" + id;

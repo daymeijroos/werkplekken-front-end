@@ -5,7 +5,8 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ReservationDao implements Dao<Reservation> {
     private final HttpService httpService;
