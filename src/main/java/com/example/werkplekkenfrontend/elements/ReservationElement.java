@@ -53,7 +53,6 @@ public class ReservationElement {
         reservationContainer.setStyle("-fx-padding: 50; -fx-border-color: black");
         edit.setOnAction(actionEvent -> parent.onEditButtonClick(this.reservation));
         cancel.setOnAction(actionEvent -> parent.onCancelReservation(this.reservation));
-        checkIn.setOnAction(actionEvent -> parent.onIncheckReservation(this.reservation));
     }
 
     private void getInformationFromDaos(){
