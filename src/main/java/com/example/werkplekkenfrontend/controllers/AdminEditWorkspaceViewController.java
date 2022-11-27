@@ -45,7 +45,6 @@ public class AdminEditWorkspaceViewController implements ViewController{
                 spaceDao.patch(updatedSpace);
             }
             else {
-                if (!uniqueCheckFromDao()) return;
                 Space newSpace = new Space(Integer.valueOf(capacity.getText())); // there is a chance this generates a duplicate UUID
                 spaceDao.post(newSpace);
 
@@ -63,9 +62,13 @@ public class AdminEditWorkspaceViewController implements ViewController{
     }
 
     public void onCancelClick() {
-        AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
-        controller.floorId = spaceDao.get(spaceID).getFloorId();
-        controller.updateView();
+        try {
+            AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+            controller.floorId = spaceDao.get(spaceID).getFloorId();
+            controller.updateView();
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
+        }
     }
 
     @Override
