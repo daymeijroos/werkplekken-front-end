@@ -11,26 +11,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main {
+
     public static SceneController sceneController = new SceneController();
     public static CurrentUser currentUser = new CurrentUser();
 
-    public AuthController authController = new AuthController(
+    public static AuthController authController = new AuthController(
             new LoginDao(new HttpService(), new ObjectMapper()),
             new UserDao(new HttpService(), new ObjectMapper())
     );
 
-    LoginController loginController;
+    static LoginController loginController;
 
-    @Override
-    public void start(Stage stage) {
-        Main.sceneController.init(stage);
-        loginController = (LoginController) Main.sceneController.showView("login-view.fxml");
-        loginController.setAuthController(authController);
+
+    public static class Launcher extends Application {
+
+
+        @Override
+        public void start(Stage stage) {
+            sceneController.init(stage);
+            loginController = (LoginController) sceneController.showView("login-view.fxml");
+            loginController.setAuthController(authController);
+        }
+
+        public static void main(String[] args) {
+            sceneController = new SceneController();
+            launch();
+        }
     }
 
     public static void main(String[] args) {
-        Main.sceneController = new SceneController();
-        launch();
+        Launcher.main(args);
     }
 }

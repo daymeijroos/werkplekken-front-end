@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -21,12 +22,11 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public ArrayList<Space> getAll() {
         String url = "/api/space";
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response.body(), new TypeReference<>() {
             });
-            return spaces;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -35,12 +35,10 @@ public class SpaceDao implements Dao<Space> {
 
     public ArrayList<Space> getAllByFloorId(String floorId) {
         String url = "/api/space/floor/" + floorId;
-        String response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
+        HttpResponse<String> response = httpService.getWithURL(url);
         try {
-            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
-            return spaces;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -50,11 +48,10 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public Space get(UUID id) {
         String url = "/api/space/" + id;
-        String response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
+        HttpResponse<String> response = httpService.getWithURL(url);
         Space space = null;
         try {
-            space = mapper.readValue(response, Space.class);
+            space = objectMapper.readValue(response.body(), Space.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,10 +61,9 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public int post(Space object) {
         String url = "/api/space";
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json);
+            String json = objectMapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -77,10 +73,9 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public int patch(Space object) {
         String url = "/api/space/" + object.getId();
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json);
+            String json = objectMapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -90,6 +85,6 @@ public class SpaceDao implements Dao<Space> {
     @Override
     public int delete(Space object) {
         String url = "/api/space/" + object.getId();
-        return httpService.deleteWithURL(url);
+        return httpService.deleteWithURL(url).statusCode();
     }
 }

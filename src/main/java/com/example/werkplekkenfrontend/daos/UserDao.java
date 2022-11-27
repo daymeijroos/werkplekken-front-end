@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -21,10 +22,10 @@ public class UserDao implements Dao<User> {
 
     public User getCurrent() {
         String url = "/api/user/info";
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         User user = null;
         try {
-            user = mapper.readValue(response, User.class);
+            user = mapper.readValue(response.body(), User.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,10 +35,10 @@ public class UserDao implements Dao<User> {
     @Override
     public ArrayList<User> getAll() {
         String url = "/api/user";
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         ArrayList<User> users = null;
         try {
-            users = mapper.readValue(response, new TypeReference<>() {
+            users = mapper.readValue(response.body(), new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,10 +49,10 @@ public class UserDao implements Dao<User> {
     @Override
     public User get(UUID id) {
         String url = "/api/user/" + id;
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         User user = null;
         try {
-            user = mapper.readValue(response, User.class);
+            user = mapper.readValue(response.body(), User.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +64,7 @@ public class UserDao implements Dao<User> {
         String url = "/api/user";
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json);
+            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -75,7 +76,7 @@ public class UserDao implements Dao<User> {
         String url = "/api/user/" + object.getId();
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json);
+            return httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -85,6 +86,6 @@ public class UserDao implements Dao<User> {
     @Override
     public int delete(User object) {
         String url = "/api/user/" + object.getId();
-        return httpService.deleteWithURL(url);
+        return httpService.deleteWithURL(url).statusCode();
     }
 }

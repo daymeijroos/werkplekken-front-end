@@ -66,10 +66,6 @@ public class RegisterController implements ViewController {
             Main.sceneController.showPopup(new MessageElement("Voer een geldige e-mail in", "Okay").getPopup());
             return;
         }
-        if (Objects.equals(mail, "") || !checkEmailAddress(mail)) {
-            Main.sceneController.showPopup(new MessageElement("Voer een geldige e-mail in", "Okay").getPopup());
-            return;
-        }
         if (Objects.equals(password, "")) {
             Main.sceneController.showPopup(new MessageElement("Voer een wachtwoord in", "Okay").getPopup());
             return;
