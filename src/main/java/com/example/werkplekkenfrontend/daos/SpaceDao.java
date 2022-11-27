@@ -24,9 +24,8 @@ public class SpaceDao implements Dao<Space> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return spaces;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -38,9 +37,8 @@ public class SpaceDao implements Dao<Space> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Space> spaces = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return spaces;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

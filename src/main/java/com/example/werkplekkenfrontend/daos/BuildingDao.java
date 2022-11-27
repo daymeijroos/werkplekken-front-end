@@ -23,9 +23,8 @@ public class BuildingDao implements Dao<Building>{
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Building> buildings = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return buildings;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

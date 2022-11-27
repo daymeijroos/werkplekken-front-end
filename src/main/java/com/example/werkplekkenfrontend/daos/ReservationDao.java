@@ -23,9 +23,8 @@ public class ReservationDao implements Dao<Reservation> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return reservations;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -51,9 +50,8 @@ public class ReservationDao implements Dao<Reservation> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Reservation> reservations = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return reservations;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

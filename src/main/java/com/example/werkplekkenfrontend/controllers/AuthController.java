@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.daos.LoginDao;
 import com.example.werkplekkenfrontend.daos.UserDao;
 import org.json.JSONObject;
 
+import java.net.http.HttpResponse;
 import java.util.Objects;
 
 public class AuthController {
@@ -21,11 +22,11 @@ public class AuthController {
         Main.currentUser.setId(userDao.getCurrent().id);
     }
 
-    public void login(String email, String password) throws Exception {
+    public void login(String email, String password) {
         Main.currentUser.setJWTtoken("");
-        String response = loginDao.login(email, password);
-        System.out.println(response);
-        JSONObject objectJSON = new JSONObject(response);
+        HttpResponse<String> response = loginDao.login(email, password);
+        System.out.println(response.body());
+        JSONObject objectJSON = new JSONObject(response.body());
 //        if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
         AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
@@ -34,10 +35,11 @@ public class AuthController {
 
     public void register(String firstName, String lastName, String email, String password) throws Exception {
         Main.currentUser.setJWTtoken("");
-        String response = loginDao.register(firstName, lastName, email, password);
+        HttpResponse<String> response = loginDao.register(firstName, lastName, email, password);
         System.out.println(response);
-        JSONObject objectJSON = new JSONObject(response);
-        if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
+        JSONObject objectJSON = new JSONObject(response.body());
+        System.out.println(objectJSON);
+        if (!Objects.equals(response.statusCode(), 200)) throw new Exception(response.toString());
         this.setUserLoggedIn(objectJSON.getString("jwt-token"));
     }
 }

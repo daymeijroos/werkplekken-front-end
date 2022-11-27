@@ -12,7 +12,7 @@ public class HttpService {
     private final HttpClient client = HttpClient.newHttpClient();
     private final String baseURL = "http://localhost:8081";
 
-    public String postWithURLandJSONreturnsString(String endpoint, String json) {
+    public HttpResponse<String>  postWithURLandJSONreturnsString(String endpoint, String json) {
         System.out.println(json);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
@@ -21,9 +21,7 @@ public class HttpService {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

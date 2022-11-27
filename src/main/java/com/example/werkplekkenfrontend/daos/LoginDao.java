@@ -5,6 +5,8 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpResponse;
+
 public class LoginDao {
 
     private final HttpService httpService;
@@ -15,7 +17,7 @@ public class LoginDao {
         this.objectMapper = objectMapper;
     }
 
-    public String login(String email, String password) {
+    public HttpResponse<String> login(String email, String password) {
         String endpoint = "/api/auth/login";
         AuthRequest authRequest = new AuthRequest(email, password);
         try {
@@ -26,7 +28,7 @@ public class LoginDao {
         }
     }
 
-    public String register(String firstName, String lastName, String email, String password) {
+    public HttpResponse<String> register(String firstName, String lastName, String email, String password) {
         String endpoint = "/api/auth/register";
         AuthRequest registerRequest = new AuthRequest(firstName, lastName, email, password);
         try {

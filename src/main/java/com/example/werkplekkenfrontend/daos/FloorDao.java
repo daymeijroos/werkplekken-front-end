@@ -23,9 +23,8 @@ public class FloorDao implements Dao<Floor> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Floor> floors = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return floors;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -37,9 +36,8 @@ public class FloorDao implements Dao<Floor> {
         String response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            ArrayList<Floor> floors = mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response, new TypeReference<>() {
             });
-            return floors;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
