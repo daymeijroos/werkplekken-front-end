@@ -22,7 +22,7 @@ public class AdminEditWorkspaceViewController implements ViewController{
     private TextArea name;
 
 
-    public String spaceID = null;
+    public UUID spaceID = null;
 
     public String floorId = null;
 
@@ -37,11 +37,11 @@ public class AdminEditWorkspaceViewController implements ViewController{
     public void onApplyClick() {
         if (!validityCheck()) return;
         if(spaceID != null){
-            Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()), spaceDao.get(UUID.fromString(spaceID)).getFloorId());
+            Space updatedSpace = new Space(spaceID,Integer.valueOf(capacity.getText()), spaceDao.get(spaceID).getFloorId());
             spaceDao.patch(updatedSpace);
         }
         else{
-            Space newSpace = new Space(UUID.randomUUID().toString(),Integer.valueOf(capacity.getText()),floorId); // there is a chance this generates a duplicate UUID
+            Space newSpace = new Space(UUID.randomUUID(),Integer.valueOf(capacity.getText()),floorId); // there is a chance this generates a duplicate UUID
             spaceDao.post(newSpace);
 
         }
@@ -59,14 +59,14 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
     public void onCancelClick() {
         AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
-        controller.floorId = spaceDao.get(UUID.fromString(spaceID)).getFloorId();
+        controller.floorId = spaceDao.get(spaceID).getFloorId();
         controller.updateView();
     }
 
     @Override
     public void updateView() {
         if(spaceID != null)  {
-            Space spaceFromDao = spaceDao.get(UUID.fromString(spaceID));
+            Space spaceFromDao = spaceDao.get(spaceID);
             updateWorkspaceDetails(spaceFromDao);
         }
     }
