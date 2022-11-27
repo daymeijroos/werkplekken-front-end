@@ -49,7 +49,7 @@ public class RegisterController implements ViewController {
 
     @FXML
     public void register() {
-        String firstName = firstNameInput.getText().substring(0, 1).toUpperCase() + lastNameInput.getText().substring(1);
+        String firstName = firstNameInput.getText().substring(0, 1).toUpperCase() + firstNameInput.getText().substring(1);
         String lastName = lastNameInput.getText().substring(0, 1).toUpperCase() + lastNameInput.getText().substring(1);
         String mail = eMailInput.getText();
         String password = passwordInput.getText();
@@ -60,10 +60,6 @@ public class RegisterController implements ViewController {
         }
         if (Objects.equals(lastName, "")) {
             Main.sceneController.showPopup(new MessageElement("Voer een achternaam in", "Okay").getPopup());
-            return;
-        }
-        if (Objects.equals(mail, "") || !checkEmailAddress(mail)) {
-            Main.sceneController.showPopup(new MessageElement("Voer een geldige e-mail in", "Okay").getPopup());
             return;
         }
         if (Objects.equals(mail, "") || !checkEmailAddress(mail)) {

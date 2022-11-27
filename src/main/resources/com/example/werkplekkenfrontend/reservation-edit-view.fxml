@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<VBox fx:id="main_container" minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.ReservationEditViewController">
+    <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" xmlns:fx="http://javafx.com/fxml">
+        <Button text="+" onAction="#onReturn" prefHeight="120" prefWidth="600"/>
+    </HBox>
+    <VBox>
+        <HBox fx:id="building_selector_container">
+            <Label text="Building" prefHeight="80" prefWidth="400"/>
+        </HBox>
+        <HBox fx:id="floor_selector_container">
+            <Label text="Floor" prefHeight="80" prefWidth="400"/>
+        </HBox>
+        <HBox fx:id="space_selector_container">
+            <Label text="Space" prefHeight="80" prefWidth="400"/>
+        </HBox>
+    </VBox>
+    <VBox fx:id="reservation_container" alignment="CENTER" spacing="50"/>
+</VBox>

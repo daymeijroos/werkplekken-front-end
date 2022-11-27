@@ -1,174 +1,90 @@
 package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Reservation;
-import com.example.werkplekkenfrontend.project_settings;
+import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.OutputStream;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ReservationDao implements Dao<Reservation> {
-    private Reservation ReservationFromJSON(JSONObject objectJSON) {
-        Reservation reservation = new Reservation();
-        reservation.id = objectJSON.getString("id");
-        reservation.userId = objectJSON.getString("userId");
-        reservation.dateIn = objectJSON.getLong("dateIn");
-        reservation.dateOut = objectJSON.getLong("dateOut");
-        reservation.amountOfPeople = objectJSON.getInt("amountOfPeople");
-        reservation.spaceId = objectJSON.getString("spaceId");
-        return reservation;
-    }
+    private final HttpService httpService;
+    private final ObjectMapper objectMapper;
 
-    private String fetchResponseBodyFromURL(String url) {
-        String responseBody;
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-        try {
-            responseBody = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
-        } catch(Exception e) {
-            System.out.println("ERROR!");
-            System.out.println(e);
-            return null;
-        }
-
-        return responseBody;
+    public ReservationDao(HttpService httpService, ObjectMapper objectMapper) {
+        this.httpService = httpService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
     public ArrayList<Reservation> getAll() {
-        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
-        String url = project_settings.baseURL + "/v1/api/reservation/";
-        String responseBody = fetchResponseBodyFromURL(url);
-        JSONArray responseJSON = new JSONArray(responseBody);
-
+        String url = "/api/reservation";
+        HttpResponse<String> response = httpService.getWithURL(url);
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            for (int i = 0; i < responseJSON.length(); i++) {
-                JSONObject objectJSON = responseJSON.getJSONObject(i);
-                Reservation reservation = ReservationFromJSON(objectJSON);
-
-                reservations.add(reservation);
-            }
-        } catch(Exception e){
-            System.out.println(e);
+            return mapper.readValue(response.body(), new TypeReference<>() {
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return reservations;
     }
 
     @Override
     public Reservation get(UUID id) {
-        Reservation reservation = new Reservation();
-
-        String url = project_settings.baseURL + "/reservation/" + id;
-        String responseBody = fetchResponseBodyFromURL(url);
-        JSONArray responseJSON = new JSONArray(responseBody);
-
+        String url = "/api/reservation/" + id;
+        HttpResponse<String> response = httpService.getWithURL(url);
+        Reservation reservation = null;
         try {
-            JSONObject objectJSON = responseJSON.getJSONObject(0);
-            reservation = ReservationFromJSON(objectJSON);
-        } catch(Exception e){
-            System.out.println(e);
+            reservation = objectMapper.readValue(response.body(), Reservation.class);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return reservation;
     }
 
-    @Override
-    public int post(Reservation object) {
-        int response = 0;
+    public ArrayList<Reservation> getAllByUser(String id) {
+        String url = "/api/reservation/user/" + id;
+        HttpResponse<String> response = httpService.getWithURL(url);
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            URLConnection con = url.openConnection();
-            HttpURLConnection http = (HttpURLConnection) con;
-            http.setRequestMethod("POST");
-            http.setDoOutput(true);
-
-            String format = """     
-                            {
-                                id: {0},
-                                userId: {1},
-                                dateIn: {2},
-                                dateOut: {3},
-                                amountOfPeople: {4}, 
-                                spaceId: {5}
-                            }""";
-            String json = String.format(format, object.id, object.userId, object.dateIn, object.dateOut, object.amountOfPeople, object.spaceId);
-
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
+            return objectMapper.readValue(response.body(), new TypeReference<>() {
+            });
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return null;
         }
-        return response;
     }
 
-    //WE DO NOT CARE ABOUT PATCH
+    @Override
+    public int post(Reservation object) {
+        String url = "/api/reservation";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 400;
+        }
+    }
+
     @Override
     public int patch(Reservation object) {
-        int response = 0;
+        String url = "/api/reservation/" + object.id;
         try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            URLConnection con = url.openConnection();
-            HttpURLConnection http = (HttpURLConnection) con;
-            http.setRequestMethod("PATCH");
-            http.setDoOutput(true);
-
-            String format = """
-                    [
-                        { "op": "replace", "path": "/dateIn", "value": "{0}" },
-                        { "op": "replace", "path": "/dateOut", "value": "{1}" },
-                        { "op": "replace", "path": "/user_id", "value": "{2}" },
-                        { "op": "replace", "path": "/space_id", "value": "{3}" }
-                        { "op": "replace", "path": "/amountOfPeople", "value": "{4}" }
-                    ]""";
-            String json = String.format(format,  object.dateIn, object.dateOut, object.userId, object.spaceId, object.amountOfPeople);
-
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try(OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
+            String json = objectMapper.writeValueAsString(object);
+            return httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            return 400;
         }
-        return response;
     }
 
     @Override
     public int delete(Reservation object) {
-        int response = 0;
-        try {
-            URL url = new URL(project_settings.baseURL + "/reservation/" + object.id);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setRequestProperty(
-                    "Content-Type", "application/x-www-form-urlencoded");
-            httpCon.setRequestMethod("DELETE");
-            httpCon.connect();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return response;
+        String url = "/api/reservation/" + object.id;
+        return httpService.deleteWithURL(url).statusCode();
     }
 }

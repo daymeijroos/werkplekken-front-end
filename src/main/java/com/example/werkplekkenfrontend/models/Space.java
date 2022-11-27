@@ -1,37 +1,20 @@
 package com.example.werkplekkenfrontend.models;
 
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Space {
+
     public UUID id;
-
     public int capacity;
-
     public String floorId;
-
-    public Space(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public Space(UUID id, int capacity, String floorId) {
-        this.id = id;
-        this.capacity = capacity;
-        this.floorId = floorId;
-    }
-
-    public Space() {
-    }
-    public UUID getId() {
-        return id;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String getFloorId() {
-        return floorId;
-    }
 
 }

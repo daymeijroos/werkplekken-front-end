@@ -27,7 +27,8 @@ public class AccountViewController implements ViewController{
     }
 
     public void onLogOutClick() {
-        Main.sceneController.showView("login-view.fxml");
+        LoginController controller = (LoginController) Main.sceneController.showView("login-view.fxml");
+        controller.setAuthController(Main.authController);
     }
 
     @Override

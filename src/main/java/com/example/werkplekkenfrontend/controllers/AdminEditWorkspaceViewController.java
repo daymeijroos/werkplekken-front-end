@@ -1,16 +1,13 @@
 package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
-import com.example.werkplekkenfrontend.daos.FloorDao;
 import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 

@@ -1,8 +1,9 @@
 package com.example.werkplekkenfrontend.controllers;
+
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.elements.MessageElement;
-import javafx.scene.control.PasswordField;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.util.Objects;

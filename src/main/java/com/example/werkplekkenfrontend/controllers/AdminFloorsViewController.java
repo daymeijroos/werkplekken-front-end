@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class AdminFloorsViewController implements ViewController{
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
