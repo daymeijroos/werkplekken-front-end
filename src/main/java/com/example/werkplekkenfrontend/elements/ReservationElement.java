@@ -52,6 +52,7 @@ public class ReservationElement {
         reservationContainer.setMaxWidth(800);
         reservationContainer.setStyle("-fx-padding: 50; -fx-border-color: black");
         edit.setOnAction(actionEvent -> parent.onEditButtonClick(this.reservation));
+        cancel.setOnAction(actionEvent -> parent.onCancelReservation(this.reservation));
     }
 
     private void getInformationFromDaos(){

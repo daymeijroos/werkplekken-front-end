@@ -45,6 +45,13 @@ public class ReservationViewController implements ViewController{
         controller.updateView();
     }
 
+    public void onCancelReservation(Reservation reservation){
+        Reservation deletedReservation = reservation;
+        reservationDao.delete(deletedReservation);
+        ReservationViewController controller = (ReservationViewController) Main.sceneController.showView("reservation-view.fxml");
+        controller.updateView();
+    }
+
     public void onEditButtonClick(Reservation reservation){
         ReservationEditViewController controller = (ReservationEditViewController) Main.sceneController.showView("reservation-edit-view.fxml");
         controller.reservationID = reservation.getId();

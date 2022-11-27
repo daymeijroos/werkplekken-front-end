@@ -172,6 +172,8 @@ public class ReservationEditViewController  implements ViewController {
 
     public void onReturn() {
         //return to reservation view
+        ReservationViewController controller = (ReservationViewController) Main.sceneController.showView("reservation-view.fxml");
+        controller.updateView();
     }
 
     public void onAdd() {
