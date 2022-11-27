@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -20,10 +21,9 @@ public class FloorDao implements Dao<Floor> {
     @Override
     public ArrayList<Floor> getAll() {
         String url = "/api/floor";
-        String response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
+        HttpResponse<String> response = httpService.getWithURL(url);
         try {
-            return mapper.readValue(response, new TypeReference<>() {
+            return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,10 +33,10 @@ public class FloorDao implements Dao<Floor> {
 
     public ArrayList<Floor> getAllByBuildingId(String id) {
         String url = "/api/floor/building/" + id;
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.readValue(response, new TypeReference<>() {
+            return mapper.readValue(response.body(), new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,11 +47,11 @@ public class FloorDao implements Dao<Floor> {
     @Override
     public Floor get(UUID id) {
         String url = "/api/floor/" + id;
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         Floor floor = null;
         try {
-            floor = mapper.readValue(response, Floor.class);
+            floor = mapper.readValue(response.body(), Floor.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class FloorDao implements Dao<Floor> {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json);
+            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -77,7 +77,7 @@ public class FloorDao implements Dao<Floor> {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json);
+            return httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -87,6 +87,6 @@ public class FloorDao implements Dao<Floor> {
     @Override
     public int delete(Floor object) {
         String url = "/api/floor/" + object.getId();
-        return httpService.deleteWithURL(url);
+        return httpService.deleteWithURL(url).statusCode();
     }
 }

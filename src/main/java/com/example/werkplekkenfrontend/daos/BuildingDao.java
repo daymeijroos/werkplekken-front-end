@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -20,10 +21,9 @@ public class BuildingDao implements Dao<Building>{
     @Override
     public ArrayList<Building> getAll() {
         String url = "/api/building";
-        String response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
+        HttpResponse<String> response = httpService.getWithURL(url);
         try {
-            return mapper.readValue(response, new TypeReference<>() {
+            return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,11 +34,11 @@ public class BuildingDao implements Dao<Building>{
     @Override
     public Building get(UUID id) {
         String url = "/api/building/" + id;
-        String response = httpService.getWithURL(url);
+        HttpResponse<String> response = httpService.getWithURL(url);
         ObjectMapper mapper = new ObjectMapper();
         Building building = null;
         try {
-            building = mapper.readValue(response, Building.class);
+            building = mapper.readValue(response.body(), Building.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,10 +48,9 @@ public class BuildingDao implements Dao<Building>{
     @Override
     public int post(Building object) {
         String url = "/api/building";
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json);
+            String json = objectMapper.writeValueAsString(object);
+            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -64,7 +63,7 @@ public class BuildingDao implements Dao<Building>{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json);
+            return httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
             return 400;
@@ -74,6 +73,6 @@ public class BuildingDao implements Dao<Building>{
     @Override
     public int delete(Building object) {
         String url = "/api/building/" + object.getId();
-        return httpService.deleteWithURL(url);
+        return httpService.deleteWithURL(url).statusCode();
     }
 }

@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.services;
 
 import com.example.werkplekkenfrontend.Main;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -22,13 +23,13 @@ public class HttpService {
                 .build();
         try {
             return client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public int postWithURLandJSONreturnsCode(String endpoint, String json) {
+    public HttpResponse<String> postWithURLandJSONreturnsCode(String endpoint, String json) {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("Authorization", Main.currentUser.getJWTtoken())
@@ -36,31 +37,28 @@ public class HttpService {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public String getWithURL(String endpoint) {
+    public HttpResponse<String> getWithURL(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .GET()
                 .build();
         try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .join();
-        } catch (Exception e) {
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public int patchWithURL(String endpoint, String json) {
+    public HttpResponse<String> patchWithURL(String endpoint, String json) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
                 .header("Content-Type", "application/json")
@@ -68,26 +66,24 @@ public class HttpService {
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        }  catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public int deleteWithURL(String endpoint) {
+    public HttpResponse<String> deleteWithURL(String endpoint) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseURL + endpoint))
                 .header("Authorization", Main.currentUser.getJWTtoken())
                 .DELETE()
                 .build();
         try {
-            return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::statusCode)
-                    .join();
-        } catch (Exception e) {
-            return 400;
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        }  catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
