@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.*;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.*;
 import com.example.werkplekkenfrontend.services.HttpService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -171,6 +172,7 @@ public class ReservationEditViewController  implements ViewController{
     @Override
     public void updateView() {
         setBuildingOptions();
+        main_container.getChildren().add(new NavBarElement().getBuildingBox());
         if (reservationID != null) {
             try {
                 Reservation reservationFromDao = reservationDao.get(UUID.fromString(reservationID).toString());
