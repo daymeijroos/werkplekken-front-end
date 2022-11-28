@@ -5,6 +5,7 @@ import com.example.werkplekkenfrontend.daos.UserDao;
 import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.User;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.example.werkplekkenfrontend.views.LoginView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,8 +33,8 @@ public class AccountViewController implements ViewController{
 
 
     public void onLogOutClick() {
-        LoginController controller = (LoginController) Main.sceneController.showView("login-view.fxml");
-        controller.setAuthController(Main.authController);
+        Main.loginView = (LoginView) Main.sceneController.showView("login-view.fxml");
+        Main.loginView.getController().setAuthController(Main.authController);
     }
 
     @Override
