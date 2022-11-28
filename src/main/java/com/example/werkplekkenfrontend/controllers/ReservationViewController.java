@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.ReservationDao;
+import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.elements.ReservationElement;
 import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.services.HttpService;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class ReservationViewController implements ViewController{
+    public VBox main_container;
     ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
 
     @FXML
@@ -34,6 +36,7 @@ public class ReservationViewController implements ViewController{
     @Override
     public void updateView() {
         reservation_container.getChildren().clear();
+        main_container.getChildren().add(new NavBarElement().getBuildingBox());
         showReservations(Main.currentUser.getId());
     }
 
