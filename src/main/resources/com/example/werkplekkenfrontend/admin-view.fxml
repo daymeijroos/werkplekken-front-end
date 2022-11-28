@@ -11,5 +11,4 @@
     <Label text="Admin" style="-fx-font-size: 30; -fx-border-color: black; -fx-padding: 5" prefWidth="600" alignment="CENTER"/>
     <Label prefWidth="800" prefHeight="10" style="-fx-background-color: #0555ff"/>
     <Button text="Buildings" onAction="#onBuildingsButtonClick" prefHeight="300" prefWidth="800"/>
-    <Button text="Roles" onAction="#onRolesButtonClick" prefHeight="300" prefWidth="800"/>
 </VBox>

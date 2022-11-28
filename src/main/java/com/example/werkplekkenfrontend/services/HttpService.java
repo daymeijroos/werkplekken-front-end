@@ -14,7 +14,6 @@ public class HttpService {
     private final String baseURL = "http://localhost:8081";
 
     public HttpResponse<String>  postWithURLandJSONreturnsString(String endpoint, String json) {
-        System.out.println(json);
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("Authorization", Main.currentUser.getJWTtoken())

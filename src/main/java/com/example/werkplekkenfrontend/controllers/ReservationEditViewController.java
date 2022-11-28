@@ -157,11 +157,6 @@ public class ReservationEditViewController  implements ViewController{
     private void setSpaceOptions(String floorId){
         spaceOptions = new ComboBox<>(FXCollections.observableArrayList(getSpaceCapacities(floorId)));
 
-        EventHandler<ActionEvent> spaceEvent =
-                e -> System.out.println(spaceOptions.getValue());
-
-        spaceOptions.setOnAction(spaceEvent);
-
         ObservableList<javafx.scene.Node> children = space_selector_container.getChildren();
         if (children.size() > 1){
             children.remove(1);

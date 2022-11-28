@@ -30,7 +30,6 @@ public class AuthController {
         try {
             Main.currentUser.setJWTtoken("");
             HttpResponse<String> response = loginDao.login(email, password);
-            System.out.println(response.body());
             JSONObject objectJSON = new JSONObject(response.body());
             this.setUserLoggedIn(objectJSON.getString("jwt-token"));
             AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
