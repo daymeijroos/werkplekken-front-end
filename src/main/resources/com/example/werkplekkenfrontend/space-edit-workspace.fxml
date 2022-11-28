@@ -37,5 +37,6 @@
                 </VBox.margin></TextArea>
         </VBox>
     </VBox>
+   <Label prefHeight="10" prefWidth="800" style="-fx-background-color: #0555ff" />
 
 </VBox>

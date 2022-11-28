@@ -68,13 +68,9 @@ public class AdminEditWorkspaceViewController implements ViewController{
 
 
     public void onCancelClick() {
-        AdminEditWorkspaceViewController controller = (AdminEditWorkspaceViewController) Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
-        try {
-            controller.floorId = spaceDao.get(String.valueOf(UUID.fromString(spaceID))).getFloorId();
-            controller.updateView();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        controller = (AdminWorkspaceViewController)Main.sceneController.showView("admin-workspace-meetingroom-view.fxml");
+        controller.floorId = floorId;
+        controller.updateView();
 
     }
 

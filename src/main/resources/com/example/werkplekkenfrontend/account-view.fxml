@@ -5,19 +5,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox fx:id="main_container" minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AccountViewController">
-    <padding>
-        <Insets top="20.0"/>
-    </padding>
-    <Label text="Account" style="-fx-font-size: 30; -fx-border-color: black; -fx-padding: 5" prefWidth="600" alignment="CENTER"/>
-    <Label prefWidth="800" prefHeight="10" style="-fx-background-color: #0555ff"/>
-    <VBox maxWidth="800" prefHeight="400" spacing="50" alignment="CENTER_LEFT" style="-fx-border-color: black; -fx-padding: 50">
-        <HBox alignment="CENTER_LEFT" spacing="50">
-            <Label fx:id="firstName" maxHeight="20" prefWidth="200" style="-fx-border-color: black; -fx-padding: 50"/>
-            <Label fx:id="lastName" maxHeight="50" prefWidth="200" style="-fx-border-color: black; -fx-padding: 50"/>
-        </HBox>
-        <Label fx:id="email" prefWidth="400" prefHeight="50" style="-fx-border-color: black; -fx-padding: 50"/>
-    </VBox>
-    <Button text="Log Out" onAction="#onLogOutClick" prefHeight="50" maxWidth="800"/>
-</VBox>
 
+<VBox fx:id="main_container" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1080.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="com.example.werkplekkenfrontend.controllers.AccountViewController">
+    <padding>
+        <Insets top="20.0" />
+    </padding>
+    <Label alignment="CENTER" prefWidth="600" style="-fx-font-size: 30; -fx-border-color: black; -fx-padding: 5" text="Account" />
+    <Label prefHeight="10" prefWidth="800" style="-fx-background-color: #0555ff" />
+    <VBox alignment="CENTER_LEFT" maxWidth="800" prefHeight="400" spacing="50" style="-fx-border-color: black; -fx-padding: 50">
+        <HBox alignment="CENTER_LEFT" spacing="50">
+         <Label prefHeight="17.0" prefWidth="178.0" text="first name" />
+            <Label fx:id="firstName" maxHeight="20" prefWidth="200" style="-fx-border-color: black; -fx-padding: 50" />
+         <Label prefHeight="17.0" prefWidth="89.0" text="last name" />
+            <Label fx:id="lastName" maxHeight="50" prefWidth="200" style="-fx-border-color: black; -fx-padding: 50" />
+        </HBox>
+      <Label prefHeight="17.0" prefWidth="152.0" text="email address" />
+        <Label fx:id="email" prefHeight="50" prefWidth="400" style="-fx-border-color: black; -fx-padding: 50" />
+    </VBox>
+    <Button maxWidth="800" onAction="#onLogOutClick" prefHeight="50" text="Log Out" />
+</VBox>

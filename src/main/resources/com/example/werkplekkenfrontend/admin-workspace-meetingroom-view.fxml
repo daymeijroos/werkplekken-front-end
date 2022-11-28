@@ -44,4 +44,5 @@
       </children>
     </FlowPane>
     <VBox fx:id="workspaces_container" prefHeight="345.0" prefWidth="1080.0" />
+   <Label prefHeight="10" prefWidth="800" style="-fx-background-color: #0555ff" />
 </VBox>

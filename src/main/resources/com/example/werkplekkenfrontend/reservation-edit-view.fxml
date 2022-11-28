@@ -58,4 +58,5 @@
         </HBox>
     </VBox>
     <VBox fx:id="reservation_container" alignment="CENTER" spacing="50" />
+   <Label prefHeight="10" prefWidth="800" style="-fx-background-color: #0555ff" />
 </VBox>
