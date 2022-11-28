@@ -67,9 +67,8 @@ public class RegisterController implements ViewController {
         }
     }
 
-    LoginView loginView;
     public void showLoginView(String mail) {
-        loginView = (LoginView) Main.sceneController.showView("login-view.fxml");
+        LoginView loginView = (LoginView) Main.sceneController.showView("login-view.fxml");
         loginView.getController().setAuthController(authController);
         loginView.setMail(mail);
     }

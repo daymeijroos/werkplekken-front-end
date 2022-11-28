@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.views.LoginView;
+import javafx.event.ActionEvent;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

@@ -52,6 +52,7 @@ public class AdminWorkspaceViewController implements ViewController {
             }
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 
@@ -79,7 +80,7 @@ public class AdminWorkspaceViewController implements ViewController {
     public void onCancelClick() {
         try {
             AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
-            Floor floorFromDao = floorDao.get(UUID.fromString(floorId).toString());
+            Floor floorFromDao = floorDao.get(String.valueOf(UUID.fromString(floorId)));
             controller.buildingId = (floorFromDao.getBuildingId());
             controller.updateView();
         } catch (JsonProcessingException e) {

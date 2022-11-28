@@ -31,6 +31,7 @@ public class AdminEditFloorsViewController implements ViewController{
             controller.updateView();
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 
@@ -50,6 +51,7 @@ public class AdminEditFloorsViewController implements ViewController{
             controller.updateView();
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 
@@ -66,6 +68,7 @@ public class AdminEditFloorsViewController implements ViewController{
             }
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 }

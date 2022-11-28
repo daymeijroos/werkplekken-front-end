@@ -54,6 +54,7 @@ public class AdminEditBuildingViewController implements ViewController{
                 buildingDao.patch(updatedBuilding);
             } catch (Exception e) {
                 Main.sceneController.showError("Oops");
+                e.printStackTrace();
             }
         }
         else {
@@ -63,6 +64,7 @@ public class AdminEditBuildingViewController implements ViewController{
                 buildingDao.post(newBuilding);
             } catch (Exception e) {
                 Main.sceneController.showError("Oops");
+                e.printStackTrace();
             }
         }
         buildingID = null; // not sure if this is necessary
@@ -85,6 +87,7 @@ public class AdminEditBuildingViewController implements ViewController{
             }
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
         return true;
     }
@@ -98,6 +101,7 @@ public class AdminEditBuildingViewController implements ViewController{
             }
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 }

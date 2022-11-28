@@ -1,7 +1,6 @@
 package com.example.werkplekkenfrontend;
 
 import com.example.werkplekkenfrontend.controllers.AuthController;
-import com.example.werkplekkenfrontend.controllers.LoginController;
 import com.example.werkplekkenfrontend.controllers.SceneController;
 import com.example.werkplekkenfrontend.daos.LoginDao;
 import com.example.werkplekkenfrontend.daos.UserDao;

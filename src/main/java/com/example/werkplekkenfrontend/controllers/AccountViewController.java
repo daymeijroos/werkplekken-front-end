@@ -26,6 +26,7 @@ public class AccountViewController implements ViewController{
             email.setText(currentUser.getEmail());
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 

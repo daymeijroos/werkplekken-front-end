@@ -59,6 +59,7 @@ public class AdminBuildingsViewController implements ViewController{
             }
         } catch (Exception e) {
             Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 
