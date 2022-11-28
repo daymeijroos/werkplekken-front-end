@@ -11,12 +11,12 @@
 <VBox fx:id="main_container" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1080.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.werkplekkenfrontend.controllers.ReservationEditViewController">
    <HBox prefHeight="127.0" prefWidth="600.0">
       <children>
-         <Label prefHeight="177.0" prefWidth="1080.0" style="-fx-background-color: DCDCDC; -fx-alignment: center;" text="Reservations">
+         <Label prefHeight="177.0" prefWidth="1080.0" style="-fx-background-color: DCDCDC; -fx-alignment: center;" text="Reservations editor">
             <HBox.margin>
                <Insets />
             </HBox.margin>
             <font>
-               <Font name="Calibri Bold" size="36.0" />
+               <Font name="Calibri" size="36.0" />
             </font>
          </Label>
       </children>
