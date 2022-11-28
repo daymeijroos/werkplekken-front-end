@@ -21,7 +21,7 @@ public class Main {
             new UserDao(new HttpService(), new ObjectMapper())
     );
 
-    static LoginView loginView;
+    public static LoginView loginView;
 
 
     public static class Launcher extends Application {

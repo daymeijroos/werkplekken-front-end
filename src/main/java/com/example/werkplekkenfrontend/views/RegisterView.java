@@ -24,7 +24,7 @@ public class RegisterView  implements View<RegisterController>, ViewController {
     @FXML
     public void register() {
         registerController.register(
-                firstNameInput.getText().substring(0, 1).toUpperCase() + lastNameInput.getText().substring(1),
+                firstNameInput.getText().substring(0, 1).toUpperCase() + firstNameInput.getText().substring(1),
                 lastNameInput.getText().substring(0, 1).toUpperCase() + lastNameInput.getText().substring(1),
                 eMailInput.getText(),
                 passwordInput.getText()
