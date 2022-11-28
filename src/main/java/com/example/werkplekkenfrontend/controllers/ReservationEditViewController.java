@@ -2,23 +2,20 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.daos.BuildingDao;
 import com.example.werkplekkenfrontend.daos.FloorDao;
-import com.example.werkplekkenfrontend.daos.ReservationDao;
 import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.UntypedObjectDeserializer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static java.lang.String.valueOf;
@@ -27,7 +24,6 @@ public class ReservationEditViewController  implements ViewController{
     BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
     FloorDao floorDao = new FloorDao(new HttpService(), new ObjectMapper());
     SpaceDao spaceDao = new SpaceDao(new HttpService(), new ObjectMapper());
-    ReservationDao reservationDao = new ReservationDao(new HttpService(), new ObjectMapper());
 
     public HBox building_selector_container;
     public HBox floor_selector_container;
@@ -35,50 +31,64 @@ public class ReservationEditViewController  implements ViewController{
 
     private ArrayList<String> getBuildingNames(){
         ArrayList<String> buildingNames = new ArrayList<>();
-        ArrayList<Building> buildings = buildingDao.getAll();
-        for (Building building : buildings){
-            buildingNames.add(building.getName());
+        try {
+            ArrayList<Building> buildings = buildingDao.getAll();
+            for (Building building : buildings){
+                buildingNames.add(building.getName());
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
         return buildingNames;
     }
 
     private ArrayList<String> getFloorDesignations(String buildingId){
         ArrayList<String> floorDesignations = new ArrayList<>();
-        ArrayList<Floor> floors = floorDao.getAllByBuildingId(buildingId);
-        for (Floor floor : floors){
-            floorDesignations.add(floor.getDesignation());
+        try {
+            ArrayList<Floor> floors = floorDao.getAllByBuildingId(buildingId);
+            for (Floor floor : floors){
+                floorDesignations.add(floor.getDesignation());
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
+
         return floorDesignations;
     }
 
     private ArrayList<String> getSpaceCapacities(String floorId){
         ArrayList<String> spaceCapacities = new ArrayList<>();
-        ArrayList<Space> spaces = spaceDao.getAllByFloorId(floorId);
-        for (Space space : spaces){
-            String capacity = valueOf(space.getCapacity());
-            if (spaceCapacities.contains(capacity)) continue;
-            spaceCapacities.add(capacity);
+        try {
+            ArrayList<Space> spaces = spaceDao.getAllByFloorId(floorId);
+            for (Space space : spaces){
+                String capacity = valueOf(space.getCapacity());
+                if (spaceCapacities.contains(capacity)) continue;
+                spaceCapacities.add(capacity);
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
         return spaceCapacities;
     }
 
     private void setBuildingOptions(){
-        ComboBox buildingOptions = new ComboBox(FXCollections.observableArrayList(getBuildingNames()));
+        ComboBox<Object> buildingOptions = new ComboBox<>(FXCollections.observableArrayList(getBuildingNames()));
 
         EventHandler<ActionEvent> buildingEvent =
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e)
-                    {
-                        String chosenBuildingName = buildingOptions.getValue().toString();
-                        String buildingId;
+                e -> {
+                    String chosenBuildingName = buildingOptions.getValue().toString();
+                    String buildingId;
 
+                    try {
                         ArrayList<Building> buildings = buildingDao.getAll();
                         for (Building building : buildings){
                             if (building.getName().equals(chosenBuildingName)){
-                                buildingId = building.getId().toString();
+                                buildingId = building.getId();
                                 setFloorOptions(buildingId);
                             }
                         }
+                    } catch (JsonProcessingException ex) {
+                        ex.printStackTrace();
                     }
                 };
 
@@ -88,15 +98,14 @@ public class ReservationEditViewController  implements ViewController{
     }
 
     private void setFloorOptions(String buildingId){
-        ComboBox floorOptions = new ComboBox(FXCollections.observableArrayList(getFloorDesignations(buildingId)));
+        ComboBox<Object> floorOptions = new ComboBox<>(FXCollections.observableArrayList(getFloorDesignations(buildingId)));
 
         EventHandler<ActionEvent> floorEvent =
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e)
-                    {
-                        String chosenFloorName = floorOptions.getValue().toString();
-                        String floorId;
+                e -> {
+                    String chosenFloorName = floorOptions.getValue().toString();
+                    String floorId;
 
+                    try {
                         ArrayList<Floor> floors = floorDao.getAll();
                         for (Floor floor : floors){
                             if (floor.getDesignation().equals(chosenFloorName)){
@@ -104,7 +113,10 @@ public class ReservationEditViewController  implements ViewController{
                                 setSpaceOptions(floorId);
                             }
                         }
+                    } catch (JsonProcessingException ex) {
+                        ex.printStackTrace();
                     }
+
                 };
 
         floorOptions.setOnAction(floorEvent);
@@ -117,15 +129,10 @@ public class ReservationEditViewController  implements ViewController{
     }
 
     private void setSpaceOptions(String floorId){
-        ComboBox spaceOptions = new ComboBox(FXCollections.observableArrayList(getSpaceCapacities(floorId)));
+        ComboBox<Object> spaceOptions = new ComboBox<>(FXCollections.observableArrayList(getSpaceCapacities(floorId)));
 
         EventHandler<ActionEvent> spaceEvent =
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e)
-                    {
-                        System.out.println(spaceOptions.getValue());
-                    }
-                };
+                e -> System.out.println(spaceOptions.getValue());
 
         spaceOptions.setOnAction(spaceEvent);
 

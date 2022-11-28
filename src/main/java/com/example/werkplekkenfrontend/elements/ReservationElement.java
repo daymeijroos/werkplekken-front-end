@@ -6,6 +6,7 @@ import com.example.werkplekkenfrontend.daos.FloorDao;
 import com.example.werkplekkenfrontend.daos.SpaceDao;
 import com.example.werkplekkenfrontend.models.Reservation;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,11 +50,14 @@ public class ReservationElement {
     }
 
     private void getInformationFromDaos(){
-        floorId = spaceDao.get(UUID.fromString(reservation.spaceId)).getFloorId();
-        buildingId = floorDao.get(UUID.fromString(floorId)).getBuildingId();
-
-        buildingName = buildingDao.get(UUID.fromString(buildingId)).getName();
-        floorName = floorDao.get(UUID.fromString(floorId)).getDesignation();
+        try {
+            floorId = spaceDao.get(UUID.fromString(reservation.spaceId).toString()).getFloorId();
+            buildingId = floorDao.get(UUID.fromString(floorId).toString()).getBuildingId();
+            buildingName = buildingDao.get(UUID.fromString(buildingId).toString()).getName();
+            floorName = floorDao.get(UUID.fromString(floorId).toString()).getDesignation();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createElements(){

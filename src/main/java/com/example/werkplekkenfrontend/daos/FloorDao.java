@@ -2,12 +2,12 @@ package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class FloorDao implements Dao<Floor> {
     private final HttpService httpService;
@@ -19,69 +19,39 @@ public class FloorDao implements Dao<Floor> {
     }
 
     @Override
-    public ArrayList<Floor> getAll() {
+    public ArrayList<Floor> getAll() throws JsonProcessingException {
         String url = "/api/floor";
         HttpResponse<String> response = httpService.getWithURL(url);
-        try {
-            return objectMapper.readValue(response.body(), new TypeReference<>() {
+        return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
-    public ArrayList<Floor> getAllByBuildingId(String id) {
+    public ArrayList<Floor> getAllByBuildingId(String id) throws JsonProcessingException {
         String url = "/api/floor/building/" + id;
         HttpResponse<String> response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(response.body(), new TypeReference<>() {
+        return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     @Override
-    public Floor get(UUID id) {
+    public Floor get(String id) throws JsonProcessingException {
         String url = "/api/floor/" + id;
         HttpResponse<String> response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
-        Floor floor = null;
-        try {
-            floor = mapper.readValue(response.body(), Floor.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return floor;
+        return objectMapper.readValue(response.body(), Floor.class);
     }
 
     @Override
-    public int post(Floor object) {
+    public int post(Floor object) throws JsonProcessingException {
         String url = "/api/floor";
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = objectMapper.writeValueAsString(object);
+        return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
     }
 
     @Override
-    public int patch(Floor object) {
+    public void patch(Floor object) throws JsonProcessingException {
         String url = "/api/floor/" + object.getId();
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json).statusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = objectMapper.writeValueAsString(object);
+        httpService.patchWithURL(url, json).statusCode();
     }
 
     @Override

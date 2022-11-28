@@ -15,7 +15,7 @@ import javafx.stage.Popup;
 import java.util.List;
 
 public class AdminBuildingsViewController implements ViewController{
-    private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
+    private final BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
 
     @FXML
     public VBox buildings_container;
@@ -46,15 +46,19 @@ public class AdminBuildingsViewController implements ViewController{
 
     public void onSelectBuildingClick(Building building) {
         AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
-        controller.buildingId = building.getId().toString();
+        controller.buildingId = building.getId();
         controller.updateView();
     }
 
     private void showBuildingsOnView(){
-        List<Building> buildingsFromDao = buildingDao.getAll();
-        for(Building building : buildingsFromDao){
-            AdminBuildingElement element = new AdminBuildingElement(this, building);
-            buildings_container.getChildren().add(element.getBuildingBox());
+        try {
+            List<Building> buildingsFromDao = buildingDao.getAll();
+            for(Building building : buildingsFromDao){
+                AdminBuildingElement element = new AdminBuildingElement(this, building);
+                buildings_container.getChildren().add(element.getBuildingBox());
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 

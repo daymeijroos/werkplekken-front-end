@@ -8,6 +8,7 @@ import com.example.werkplekkenfrontend.elements.NavBarElement;
 import com.example.werkplekkenfrontend.models.Floor;
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,11 +41,17 @@ public class AdminWorkspaceViewController implements ViewController {
     }
 
     private void showSpacesOnView() {
-        List<Space> spacesFromDao = spaceDao.getAll();
-        for (Space space : spacesFromDao) {
-            if (!Objects.equals(space.getFloorId(), floorId)) continue;
-            AdminWorkspaceElement element = new AdminWorkspaceElement(this, space);
-            workspaces_container.getChildren().add(element.getWorkspaceBox());
+        try {
+            List<Space> spacesFromDao = spaceDao.getAll();
+            if (spacesFromDao != null) {
+                for (Space space : spacesFromDao) {
+                    if (!Objects.equals(space.getFloorId(), floorId)) continue;
+                    AdminWorkspaceElement element = new AdminWorkspaceElement(this, space);
+                    workspaces_container.getChildren().add(element.getWorkspaceBox());
+                }
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
         }
     }
 
@@ -59,7 +66,6 @@ public class AdminWorkspaceViewController implements ViewController {
     public void updateView() {
         showSpacesOnView();
         main_container.getChildren().add(new NavBarElement().getBuildingBox());
-
     }
 
 
@@ -67,15 +73,18 @@ public class AdminWorkspaceViewController implements ViewController {
     void onApplyClick(ActionEvent event) {
         ViewController controller = Main.sceneController.showView("admin-space-view-v2.fxml");
         controller.updateView();
-
     }
 
     @FXML
     public void onCancelClick() {
-        AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
-        Floor floorFromDao = floorDao.get(UUID.fromString(floorId));
-        controller.buildingId = (floorFromDao.getBuildingId());
-        controller.updateView();
-    }
+        try {
+            AdminFloorsViewController controller = (AdminFloorsViewController) Main.sceneController.showView("admin-floor-view.fxml");
+            Floor floorFromDao = floorDao.get(UUID.fromString(floorId).toString());
+            controller.buildingId = (floorFromDao.getBuildingId());
+            controller.updateView();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
+    }
 }

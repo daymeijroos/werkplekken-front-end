@@ -1,8 +1,9 @@
 package com.example.werkplekkenfrontend.models;
 
-import lombok.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -10,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Building {
 
-    private UUID id;
+    private String id;
     private String name;
     private String zipcode;
     private String city;

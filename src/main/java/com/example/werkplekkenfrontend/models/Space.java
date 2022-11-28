@@ -5,16 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Space {
 
-    public UUID id;
+    public String id;
     public int capacity;
     public String floorId;
 
+    public Space(int capacity) {
+        this.capacity = capacity;
+    }
 }
