@@ -2,12 +2,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <VBox minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminEditBuildingViewController">
-    <VBox alignment="TOP_CENTER" >
-        <HBox prefWidth="1080" prefHeight="380" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20.0"/>
+    </padding>
+    <Label text="Building Editor" style="-fx-font-size: 30; -fx-border-color: black; -fx-padding: 5" prefWidth="600" alignment="CENTER"/>
+    <VBox alignment="TOP_CENTER">
+        <HBox prefWidth="1080" prefHeight="100" alignment="CENTER" spacing="200" xmlns:fx="http://javafx.com/fxml">
             <Button text="Cancel" onAction="#onCancelClick" cancelButton="true" prefHeight="50" prefWidth="200"/>
-            <Button text="Apply" onAction="#onApplyClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
+            <Button text="Confirm" onAction="#onApplyClick" defaultButton="true" prefHeight="80" prefWidth="80"/>
         </HBox>
+        <Label prefWidth="800" prefHeight="10" style="-fx-background-color: #0555ff"/>
         <VBox maxWidth="800" maxHeight="400">
             <VBox>
                 <Label text="name: "/>
