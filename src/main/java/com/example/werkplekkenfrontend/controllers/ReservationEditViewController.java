@@ -97,7 +97,7 @@ public class ReservationEditViewController  implements ViewController{
     }
 
     private void setBuildingOptions(){
-        ComboBox<Object> buildingOptions = new ComboBox<>(FXCollections.observableArrayList(getBuildingNames()));
+        buildingOptions = new ComboBox<>(FXCollections.observableArrayList(getBuildingNames()));
 
         EventHandler<ActionEvent> buildingEvent =
                 e -> {
@@ -123,7 +123,7 @@ public class ReservationEditViewController  implements ViewController{
     }
 
     private void setFloorOptions(String buildingId){
-        ComboBox<Object> floorOptions = new ComboBox<>(FXCollections.observableArrayList(getFloorDesignations(buildingId)));
+        floorOptions = new ComboBox<>(FXCollections.observableArrayList(getFloorDesignations(buildingId)));
 
         EventHandler<ActionEvent> floorEvent =
                 e -> {
@@ -154,7 +154,7 @@ public class ReservationEditViewController  implements ViewController{
     }
 
     private void setSpaceOptions(String floorId){
-        ComboBox<Object> spaceOptions = new ComboBox<>(FXCollections.observableArrayList(getSpaceCapacities(floorId)));
+        spaceOptions = new ComboBox<>(FXCollections.observableArrayList(getSpaceCapacities(floorId)));
 
         EventHandler<ActionEvent> spaceEvent =
                 e -> System.out.println(spaceOptions.getValue());
