@@ -2,6 +2,7 @@ package com.example.werkplekkenfrontend.controllers;
 
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.views.LoginView;
+import com.example.werkplekkenfrontend.views.RegisterView;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -45,11 +46,11 @@ public class LoginController implements ViewController {
         }
     }
 
-    RegisterController registerController;
+    RegisterView registerView;
     public void showRegisterView(String mail) {
-        registerController = (RegisterController) Main.sceneController.showView("register-view.fxml");
-        registerController.setAuthController(authController);
-        registerController.updateFields(mail);
+        registerView = (RegisterView) Main.sceneController.showView("register-view.fxml");
+        registerView.getController().setAuthController(authController);
+        registerView.setMail(mail);
     }
 
     @Override
