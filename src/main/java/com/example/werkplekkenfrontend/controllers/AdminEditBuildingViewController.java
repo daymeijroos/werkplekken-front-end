@@ -15,7 +15,7 @@ import java.util.UUID;
 public class AdminEditBuildingViewController implements ViewController{
     private ViewController adminBuildingViewController;
     private BuildingDao buildingDao = new BuildingDao(new HttpService(), new ObjectMapper());
-    public UUID buildingID = null;
+    public String buildingID = null;
 
     @FXML
     public TextArea name;
@@ -44,45 +44,68 @@ public class AdminEditBuildingViewController implements ViewController{
     }
 
     public void onApplyClick(){
-        if (!validityCheck()) return;
+        List<String> textAreas = List.of(name.getText(), zipcode.getText(), city.getText(), address.getText());
+        if (!validityCheck(textAreas)) return;
 
         // open confirmation window, if cancel is selected return
 
         if (buildingID != null) {
-            Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
-            buildingDao.patch(updatedBuilding);
+            try {
+                Building updatedBuilding = new Building(buildingID, name.getText(), zipcode.getText(), city.getText(), address.getText());
+                buildingDao.patch(updatedBuilding);
+            } catch (Exception e) {
+                Main.sceneController.showError("Oops");
+                e.printStackTrace();
+            }
         }
         else {
-            if (!uniqueCheckFromDao()) return;
-            Building newBuilding = new Building(UUID.randomUUID(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
-            buildingDao.post(newBuilding);
+            try {
+                if (!uniqueCheckFromDao()) return;
+                Building newBuilding = new Building(UUID.randomUUID().toString(), name.getText(), zipcode.getText(), city.getText(), address.getText()); // there is a chance this generates a duplicate UUID
+                buildingDao.post(newBuilding);
+            } catch (Exception e) {
+                Main.sceneController.showError("Oops");
+                e.printStackTrace();
+            }
         }
         buildingID = null; // not sure if this is necessary
         adminBuildingViewController = Main.sceneController.showView("admin-buildings-view.fxml");
         adminBuildingViewController.updateView();
     }
 
-    // check if values are valid
-    private boolean validityCheck(){
-        if (name.getText() == null || zipcode.getText() == null || city.getText() == null || address.getText() == null) return false;
+    // check if values do not contain empty strings
+    public boolean validityCheck(List<String> items){
+        for (String item : items) {
+            if (item.equals("")) return false;
+        }
         return true;
     }
 
     // check if name and address are not already in use.
     private boolean uniqueCheckFromDao(){
-        List<Building> buildingList = buildingDao.getAll();
-        for(Building building : buildingList){
-            if (building.getId() == buildingID) continue;
-            if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAddress(), address.getText())) return false;
+        try {
+            List<Building> buildingList = buildingDao.getAll();
+            for(Building building : buildingList){
+                if (Objects.equals(building.getId(), buildingID)) continue;
+                if (Objects.equals(building.getName(), name.getText()) || Objects.equals(building.getAddress(), address.getText())) return false;
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
         return true;
     }
 
     @Override
     public void updateView() {
-        if(buildingID != null) {
-            Building buildingFromDao = buildingDao.get(buildingID);
-            updateBuildingDetails(buildingFromDao);
+        try {
+            if(buildingID != null) {
+                Building buildingFromDao = buildingDao.get(buildingID);
+                updateBuildingDetails(buildingFromDao);
+            }
+        } catch (Exception e) {
+            Main.sceneController.showError("Oops");
+            e.printStackTrace();
         }
     }
 }

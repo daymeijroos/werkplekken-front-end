@@ -2,12 +2,12 @@ package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Space;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class SpaceDao implements Dao<Space> {
 
@@ -20,66 +20,37 @@ public class SpaceDao implements Dao<Space> {
     }
 
     @Override
-    public ArrayList<Space> getAll() {
+    public ArrayList<Space> getAll() throws JsonProcessingException {
         String url = "/api/space";
         HttpResponse<String> response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(response.body(), new TypeReference<>() {
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return objectMapper.readValue(response.body(), new TypeReference<>() {});
     }
 
-    public ArrayList<Space> getAllByFloorId(String floorId) {
+    public ArrayList<Space> getAllByFloorId(String floorId) throws JsonProcessingException {
         String url = "/api/space/floor/" + floorId;
         HttpResponse<String> response = httpService.getWithURL(url);
-        try {
-            return objectMapper.readValue(response.body(), new TypeReference<>() {
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return objectMapper.readValue(response.body(), new TypeReference<>() {});
     }
 
     @Override
-    public Space get(UUID id) {
+    public Space get(String id) throws JsonProcessingException {
         String url = "/api/space/" + id;
         HttpResponse<String> response = httpService.getWithURL(url);
-        Space space = null;
-        try {
-            space = objectMapper.readValue(response.body(), Space.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return space;
+        return objectMapper.readValue(response.body(), Space.class);
     }
 
     @Override
-    public int post(Space object) {
+    public int post(Space object) throws JsonProcessingException {
         String url = "/api/space";
-        try {
-            String json = objectMapper.writeValueAsString(object);
-            return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = objectMapper.writeValueAsString(object);
+        return httpService.postWithURLandJSONreturnsCode(url, json).statusCode();
     }
 
     @Override
-    public int patch(Space object) {
+    public void patch(Space object) throws JsonProcessingException {
         String url = "/api/space/" + object.getId();
-        try {
-            String json = objectMapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json).statusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 400;
-        }
+        String json = objectMapper.writeValueAsString(object);
+        httpService.patchWithURL(url, json).statusCode();
     }
 
     @Override

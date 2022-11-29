@@ -2,12 +2,12 @@ package com.example.werkplekkenfrontend.daos;
 
 import com.example.werkplekkenfrontend.models.Building;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class BuildingDao implements Dao<Building>{
     private final HttpService httpService;
@@ -19,30 +19,18 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public ArrayList<Building> getAll() {
+    public ArrayList<Building> getAll() throws JsonProcessingException {
         String url = "/api/building";
         HttpResponse<String> response = httpService.getWithURL(url);
-        try {
-            return objectMapper.readValue(response.body(), new TypeReference<>() {
+        return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     @Override
-    public Building get(UUID id) {
+    public Building get(String id) throws JsonProcessingException {
         String url = "/api/building/" + id;
         HttpResponse<String> response = httpService.getWithURL(url);
-        ObjectMapper mapper = new ObjectMapper();
-        Building building = null;
-        try {
-            building = mapper.readValue(response.body(), Building.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return building;
+        return objectMapper.readValue(response.body(), Building.class);
     }
 
     @Override
@@ -58,15 +46,14 @@ public class BuildingDao implements Dao<Building>{
     }
 
     @Override
-    public int patch(Building object) {
+    public void patch(Building object) {
         String url = "/api/building/" + object.getId();
         ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(object);
-            return httpService.patchWithURL(url, json).statusCode();
+            httpService.patchWithURL(url, json).statusCode();
         } catch (Exception e) {
             e.printStackTrace();
-            return 400;
         }
     }
 

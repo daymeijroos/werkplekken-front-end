@@ -1,12 +1,12 @@
 package com.example.werkplekkenfrontend;
 
 import com.example.werkplekkenfrontend.controllers.AuthController;
-import com.example.werkplekkenfrontend.controllers.LoginController;
 import com.example.werkplekkenfrontend.controllers.SceneController;
 import com.example.werkplekkenfrontend.daos.LoginDao;
 import com.example.werkplekkenfrontend.daos.UserDao;
 import com.example.werkplekkenfrontend.models.CurrentUser;
 import com.example.werkplekkenfrontend.services.HttpService;
+import com.example.werkplekkenfrontend.views.LoginView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -21,7 +21,7 @@ public class Main {
             new UserDao(new HttpService(), new ObjectMapper())
     );
 
-    static LoginController loginController;
+    public static LoginView loginView;
 
 
     public static class Launcher extends Application {
@@ -30,8 +30,8 @@ public class Main {
         @Override
         public void start(Stage stage) {
             sceneController.init(stage);
-            loginController = (LoginController) sceneController.showView("login-view.fxml");
-            loginController.setAuthController(authController);
+            loginView = (LoginView) sceneController.showView("login-view.fxml");
+            loginView.getController().setAuthController(authController);
         }
 
         public static void main(String[] args) {

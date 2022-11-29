@@ -3,10 +3,10 @@ package com.example.werkplekkenfrontend.controllers;
 import com.example.werkplekkenfrontend.Main;
 import com.example.werkplekkenfrontend.daos.LoginDao;
 import com.example.werkplekkenfrontend.daos.UserDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONObject;
 
 import java.net.http.HttpResponse;
-import java.util.Objects;
 
 public class AuthController {
     private final LoginDao loginDao;
@@ -19,27 +19,37 @@ public class AuthController {
 
     private void setUserLoggedIn(String JWTToken) {
         Main.currentUser.setJWTtoken("Bearer " + JWTToken);
-        Main.currentUser.setId(userDao.getCurrent().id);
+        try {
+            Main.currentUser.setId(userDao.getCurrent().id);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void login(String email, String password) {
-        Main.currentUser.setJWTtoken("");
-        HttpResponse<String> response = loginDao.login(email, password);
-        System.out.println(response.body());
-        JSONObject objectJSON = new JSONObject(response.body());
-//        if (!Objects.equals(objectJSON.getInt("status"), 200)) throw new Exception(objectJSON.getString("message"));
-        this.setUserLoggedIn(objectJSON.getString("jwt-token"));
-        AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
-        controller.updateView();
+        try {
+            Main.currentUser.setJWTtoken("");
+            HttpResponse<String> response = loginDao.login(email, password);
+            JSONObject objectJSON = new JSONObject(response.body());
+            this.setUserLoggedIn(objectJSON.getString("jwt-token"));
+            AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
+            controller.updateView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void register(String firstName, String lastName, String email, String password) throws Exception {
-        Main.currentUser.setJWTtoken("");
-        HttpResponse<String> response = loginDao.register(firstName, lastName, email, password);
-        System.out.println(response);
-        JSONObject objectJSON = new JSONObject(response.body());
-        System.out.println(objectJSON);
-        if (!Objects.equals(response.statusCode(), 200)) throw new Exception(response.toString());
-        this.setUserLoggedIn(objectJSON.getString("jwt-token"));
+    public void register(String firstName, String lastName, String email, String password) {
+        try {
+            Main.currentUser.setJWTtoken("");
+            HttpResponse<String> response = loginDao.register(firstName, lastName, email, password);
+            JSONObject objectJSON = new JSONObject(response.body());
+            this.setUserLoggedIn(objectJSON.getString("jwt-token"));
+            AdminViewController controller = (AdminViewController) Main.sceneController.showView("admin-view.fxml");
+            controller.updateView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
