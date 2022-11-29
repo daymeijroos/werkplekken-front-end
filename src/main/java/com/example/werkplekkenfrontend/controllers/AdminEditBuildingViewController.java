@@ -44,7 +44,8 @@ public class AdminEditBuildingViewController implements ViewController{
     }
 
     public void onApplyClick(){
-        if (!validityCheck()) return;
+        List<String> textAreas = List.of(name.getText(), zipcode.getText(), city.getText(), address.getText());
+        if (!validityCheck(textAreas)) return;
 
         // open confirmation window, if cancel is selected return
 
@@ -72,9 +73,12 @@ public class AdminEditBuildingViewController implements ViewController{
         adminBuildingViewController.updateView();
     }
 
-    // check if values are valid
-    private boolean validityCheck(){
-        return name.getText() != null && zipcode.getText() != null && city.getText() != null && address.getText() != null;
+    // check if values do not contain empty strings
+    public boolean validityCheck(List<String> items){
+        for (String item : items) {
+            if (item.equals("")) return false;
+        }
+        return true;
     }
 
     // check if name and address are not already in use.
