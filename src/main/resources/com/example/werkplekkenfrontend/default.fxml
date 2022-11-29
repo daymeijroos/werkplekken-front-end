@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0"
+            alignment="CENTER">
+    <StackPane>
+        <Pane fx:id="page" maxWidth="1080"/>
+        <Pane fx:id="navBar" visible="false" maxWidth="1080"/>
+        <Pane fx:id="popup" visible="false" maxWidth="1080"/>
+    </StackPane>
+</VBox>

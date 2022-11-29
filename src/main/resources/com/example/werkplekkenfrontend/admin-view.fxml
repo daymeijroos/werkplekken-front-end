@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<VBox fx:id="main_container" minWidth="1080" minHeight="1080" alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.werkplekkenfrontend.controllers.AdminViewController">
+    <padding>
+        <Insets top="20.0"/>
+    </padding>
+    <Label text="Admin" style="-fx-font-size: 30; -fx-border-color: black; -fx-padding: 5" prefWidth="600" alignment="CENTER"/>
+    <Label prefWidth="800" prefHeight="10" style="-fx-background-color: #0555ff"/>
+    <Button text="Buildings" onAction="#onBuildingsButtonClick" prefHeight="300" prefWidth="800"/>
+</VBox>
